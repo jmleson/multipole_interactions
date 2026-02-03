@@ -1,0 +1,30 @@
+from Index import Index
+from sympy import pretty
+
+class R:
+
+    def __init__(self, index_sign:str):
+        self.index = Index(index_sign)
+        self.exponent = 1
+
+    def to_string(self):
+        if self.exponent != 1:
+            return  "R_" + pretty(self.index.index) + f"^({self.exponent})"
+        return "R_" + pretty(self.index.index)
+
+    def has_index(self, test_index:Index):
+        return test_index.index == self.index.index
+
+    def replace_index(self, to_be_replaced: Index, replacement: Index):
+        if not self.has_index(test_index=to_be_replaced):
+            return
+        self.index = Index(str(replacement.index))
+
+    def simplify(self):
+        to_be_replaced, replacement = self.index, Index("z")
+        return to_be_replaced, replacement
+
+    def is_zero(self):
+        if str(self.index.index) in ["x", "y"]:
+            return True
+        return False
