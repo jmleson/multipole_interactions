@@ -13,6 +13,8 @@ class R:
         return "R_" + pretty(self.index.index)
 
     def has_index(self, test_index:Index):
+        if not isinstance(test_index, Index):
+            raise TypeError("test_index must be an Index")
         return test_index.index == self.index.index
 
     def replace_index(self, to_be_replaced: Index, replacement: Index):

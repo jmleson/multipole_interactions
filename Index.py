@@ -12,3 +12,7 @@ class Index:
         if not isinstance(other, Index):
             return NotImplemented
         return str(self.index) < str(other.index)
+
+    def is_coordinate(self):
+        if str(self.index) in ["x", "y", "z"]:
+            return True

@@ -45,6 +45,68 @@ class MultipoleMoment:
 
 
     def is_zero(self):
-        if len(self.indices) == 1 and str(self.indices[0].index) in ["x", "z"]:
-            return True
+        if len(self.indices) == 1:
+            # dipole: index must be y
+            if str(self.indices[0].index) in ["x", "z"]:
+                return True
+        elif len(self.indices) == 2:
+            # Quadrupole: indices must be identical
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            if index1.is_coordinate() and index2.is_coordinate() and str(index1.index) != str(index2.index):
+                return True
+        elif len(self.indices) == 3:
+            # octopole:
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            index3 = self.indices[2]
+            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate():
+                string_list = sorted([str(i.index) for i in [index1,index2,index3]])
+                index_string = "".join(string_list)
+                if index_string not in ["xxy", "yyy", "yzz"]:
+                    return True
+        elif len(self.indices) == 4:
+            # hexadecapole:
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            index3 = self.indices[2]
+            index4 = self.indices[3]
+            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
+                string_list = sorted([str(i.index) for i in [index1, index2, index3]])
+                index_string = "".join(string_list)
+                if index_string not in ["xxxx", "xxyy", "xxzz", "yyyy", "yyzz", "zzzz"]:
+                    return True
+            pass
+        else:
+            raise Exception("not yet implemented")
         return False
+
+
+    def simplify(self):
+        to_be_replaced, replacement = None, None
+        if len(self.indices) == 1:
+            #Dipole
+            to_be_replaced, replacement = self.indices[0], Index("y")
+            #
+        elif len(self.indices) == 2:
+            #Quadrupole
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            if index1.is_coordinate() and not index2.is_coordinate():
+                to_be_replaced, replacement = index2, index1
+            elif not index1.is_coordinate() and index2.is_coordinate():
+                to_be_replaced, replacement = index1, index2
+            else:
+                existing = sorted([str(index1.index), str(index2.index)])
+                to_be_replaced, replacement = existing[1], existing[0]
+            #
+        elif len(self.indices) == 3:
+            pass
+            #
+        elif len(self.indices) == 4:
+            pass
+            #
+        else:
+            raise Exception("not yet implemented")
+
+        return to_be_replaced, replacement

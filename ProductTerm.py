@@ -27,26 +27,40 @@ class ProductTerm:
             strings.append( factor.to_string() )
         return " * ".join(strings)
 
+    def simplify(self, type):
+        for x in self.factors:
+            if isinstance(x, type):
+                to_be_replaced, replacement = x.simplify()
+
+                if to_be_replaced is not None and replacement is not None:
+                    for i in self.factors:
+                        if i.has_index(to_be_replaced):
+                            i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
+
+                    to_be_replaced, replacement = x.simplify()
 
     def simplify_delta(self):
-        for d in self.factors:
-            if isinstance(d, Delta):
-                to_be_replaced, replacement = d.simplify()
-
-                for i in self.factors:
-                    if i.has_index(to_be_replaced):
-                        i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
+        return self.simplify(type=Delta)
+        # for d in self.factors:
+        #     if isinstance(d, Delta):
+        #         to_be_replaced, replacement = d.simplify()
+        #
+        #         for i in self.factors:
+        #             if i.has_index(to_be_replaced):
+        #                 i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
 
     def simplify_R(self):
-        for r in self.factors:
-            if isinstance(r, R):
-                to_be_replaced, replacement = r.simplify()
-                # print("to_be_replaced:", to_be_replaced.index, "replacement:", replacement.index)
+        return self.simplify(type=R)
+        # for r in self.factors:
+        #     if isinstance(r, R):
+        #         to_be_replaced, replacement = r.simplify()
+        #
+        #         for i in self.factors:
+        #             if i.has_index(to_be_replaced):
+        #                 i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
 
-                for i in self.factors:
-                    if i.has_index(to_be_replaced):
-                        i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
-
+    def simplify_Multipole(self):
+        return self.simplify(type=MultipoleMoment)
 
     def clean_up(self, set_to_zero:bool = True):
         new_factors = []

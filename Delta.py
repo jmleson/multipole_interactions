@@ -40,7 +40,7 @@ class Delta:
 
     def simplify(self):
         identical_values = sorted([self.index1, self.index2])
-        to_be_replaced, replacement = identical_values[0], identical_values[1]
+        to_be_replaced, replacement = identical_values[1], identical_values[0]
         return to_be_replaced, replacement
 
     def is_zero(self):

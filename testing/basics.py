@@ -87,11 +87,9 @@ class TestingBasics(unittest.TestCase):
         assert "3 * R_α * R_β * μ_α * μ_β" == p1.to_string()
 
         p2.simplify_delta()
-        assert "-1 * R_z * R_z * delta(β, β) * μ_β * μ_β" == p2.to_string()
+        assert "-1 * R_z * R_z * delta(α, α) * μ_α * μ_α" == p2.to_string()
         p2.clean_up(set_to_zero=True)
-        assert "-1 * μ_β * μ_β * R_z^(2)" == p2.to_string()
-
-
+        assert "-1 * μ_α * μ_α * R_z^(2)" == p2.to_string()
 
     def test_SimplifyR(self):
         p1, p2 = copy.deepcopy(self.p1), copy.deepcopy(self.p2)
@@ -120,3 +118,37 @@ class TestingBasics(unittest.TestCase):
         assert "-2 * μ_z * μ_z * R_z^(2)" == p4.to_string()
         p4.clean_up(set_to_zero=True)
         assert p4.to_string() == "0"
+
+    def test_SimplifyMultipole(self):
+        # p1, p2 = copy.deepcopy(self.p1), copy.deepcopy(self.p2)
+        #
+        # p1.simplify_Multipole()
+        # assert "3 * R_y * R_y * μ_y * μ_y" == p1.to_string()
+        #
+        # p2.simplify_Multipole()
+        # assert "-1 * R_z * R_z * delta(y, y) * μ_y * μ_y" == p2.to_string()
+        # p2.clean_up(set_to_zero=True)
+        # assert "-1 * μ_y * μ_y * R_z^(2)" == p2.to_string()
+
+        # p = ProductTerm()
+        # p.set_elements( [ MultipoleMoment(["alpha", "beta"]) ], prefactor=2)
+        # p.simplify_Multipole()
+        # assert "2 * Θ_αβ" == p.to_string()
+        #
+        # p = ProductTerm()
+        # p.set_elements([MultipoleMoment(["x", "beta"])], prefactor=2)
+        # p.simplify_Multipole()
+        # assert "2 * Θ_xx" == p.to_string()
+        #
+        # p = ProductTerm()
+        # p.set_elements([MultipoleMoment(["alpha", "y"])], prefactor=2)
+        # p.simplify_Multipole()
+        # assert "2 * Θ_yy" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "y"])], prefactor=2)
+        p.simplify_Multipole()
+        assert "2 * Θ_xy" == p.to_string()
+        p.clean_up(set_to_zero=True)
+        assert "0" == p.to_string()
+
