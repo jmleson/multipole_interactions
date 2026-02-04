@@ -1,6 +1,7 @@
 
 import sympy as sp
 
+from settings import symbol_order
 
 
 class Index:
@@ -11,7 +12,13 @@ class Index:
     def __lt__(self, other):
         if not isinstance(other, Index):
             return NotImplemented
-        return str(self.index) < str(other.index)
+        return (
+            symbol_order.get(self.index, float("inf")),
+            str(self.index),
+        ) < (
+            symbol_order.get(other.index, float("inf")),
+            str(other.index),
+        )
 
     def is_coordinate(self):
         if str(self.index) in ["x", "y", "z"]:

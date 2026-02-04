@@ -2,6 +2,7 @@ import sympy as sp
 from sympy import pretty
 
 from Index import Index
+from settings import symbol_order
 
 
 class MultipoleMoment:
@@ -23,6 +24,8 @@ class MultipoleMoment:
 
         self.indices = [Index(i) for i in indices]
 
+        self.prefactor_in_potential = (-1) ** len(self.indices)
+
 
     def to_string(self):
         return pretty(self.symbol) + "_" + "".join([pretty(i.index) for i in self.indices])
@@ -40,7 +43,7 @@ class MultipoleMoment:
             else:
                 new_indices.append(i)
 
-        new_indices = sorted([str(i.index) for i in new_indices])
+        new_indices = sorted([str(i.index) for i in new_indices], key=lambda s: symbol_order[str(s)])
         self.indices = [Index(i) for i in new_indices]
 
 
@@ -61,7 +64,7 @@ class MultipoleMoment:
             index2 = self.indices[1]
             index3 = self.indices[2]
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate():
-                string_list = sorted([str(i.index) for i in [index1,index2,index3]])
+                string_list = sorted([str(i.index) for i in [index1,index2,index3]], key=lambda s: symbol_order[str(s)])
                 index_string = "".join(string_list)
                 if index_string not in ["xxy", "yyy", "yzz"]:
                     return True
@@ -72,7 +75,7 @@ class MultipoleMoment:
             index3 = self.indices[2]
             index4 = self.indices[3]
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
-                string_list = sorted([str(i.index) for i in [index1, index2, index3]])
+                string_list = sorted([str(i.index) for i in [index1, index2, index3]], key=lambda s: symbol_order[str(s)])
                 index_string = "".join(string_list)
                 if index_string not in ["xxxx", "xxyy", "xxzz", "yyyy", "yyzz", "zzzz"]:
                     return True
@@ -97,7 +100,7 @@ class MultipoleMoment:
             elif not index1.is_coordinate() and index2.is_coordinate():
                 to_be_replaced, replacement = index1, index2
             else:
-                existing = sorted([str(index1.index), str(index2.index)])
+                existing = sorted([str(index1.index), str(index2.index)], key=lambda s: symbol_order[str(s)])
                 to_be_replaced, replacement = existing[1], existing[0]
             #
         elif len(self.indices) == 3:

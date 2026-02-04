@@ -2,11 +2,15 @@ from Index import Index
 import sympy as sp
 from sympy import pretty
 
+from settings import symbol_order
+
+
 class Delta:
 
     def __init__(self, index_sign_1:str, index_sign_2:str):
-        self.index1 = Index(index_sign_1)
-        self.index2 = Index(index_sign_2)
+        indices = sorted([index_sign_1, index_sign_2], key=lambda s: symbol_order[str(s)])
+        self.index1 = Index(indices[0])
+        self.index2 = Index(indices[1])
 
     def has_index(self, test_index:Index):
         chance_1 = test_index.index == self.index1.index
