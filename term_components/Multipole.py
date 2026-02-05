@@ -9,21 +9,23 @@ from term_components.Index import Index
 class MultipoleMoment:
 
     def __init__(self, indices:list[str]):
+        if not isinstance(indices, list):
+            raise Exception("wrong format of input")
 
         if len(indices) == 0:
             raise Exception("no Charge")
-        if len(indices) == 1:
+        elif len(indices) == 1:
             self.symbol = sp.Symbol("mu")
-        if len(indices) == 2:
+        elif len(indices) == 2:
             self.symbol = sp.Symbol("Theta")
-        if len(indices) == 3:
+        elif len(indices) == 3:
             self.symbol = sp.Symbol("Omega")
-        if len(indices) == 4:
+        elif len(indices) == 4:
             self.symbol = sp.Symbol("Phi")
-        if len(indices) > 4:
+        elif len(indices) > 4:
             raise Exception("not yet implemented")
 
-        self.indices = [Index(i) for i in indices]
+        self.indices = sorted([Index(i) for i in indices])
 
         self.prefactor_in_potential = (-1) ** len(self.indices)
 
@@ -116,8 +118,22 @@ class MultipoleMoment:
         else:
             raise Exception("not yet implemented")
 
-        if not isinstance(to_be_replaced, Index):
+        if to_be_replaced is not None and not isinstance(to_be_replaced, Index):
             raise TypeError("test_index must be an Index")
-        if not isinstance(replacement, Index):
+        if replacement is not None and not isinstance(replacement, Index):
             raise TypeError("test_index must be an Index")
         return to_be_replaced, replacement
+
+
+    def __eq__(self, other):
+        if not isinstance(other, MultipoleMoment):
+            return NotImplemented
+        return self.indices == other.indices and self.prefactor_in_potential == other.prefactor_in_potential
+
+
+
+    def __lt__(self, other):
+        # sorting
+        if not isinstance(other, MultipoleMoment):
+            return NotImplemented
+        return (len(self.indices), self.indices) < (len(other.indices), other.indices)

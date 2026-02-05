@@ -57,5 +57,16 @@ class Delta:
             return True
         return False
 
+    def __eq__(self, other):
+        if not isinstance(other, Delta):
+            return NotImplemented
+        return self.index1 == other.index1 and self.index2 == other.index2
+
+    def __lt__(self, other):
+        # sorting
+        if not isinstance(other, Delta):
+            return NotImplemented
+        return (self.index1, self.index2) < (other.index1, other.index2)
+
 
 

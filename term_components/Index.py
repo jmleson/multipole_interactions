@@ -31,3 +31,8 @@ class Index:
         if str(self.index) in ["x", "y", "z"]:
             return str(self.index)
         return r"\ "[0] + str(self.index) + r"{}"
+
+    def __eq__(self, other):
+        if not isinstance(other, Index):
+            return NotImplemented
+        return self.index == other.index and str(self.index) == str(other.index)

@@ -10,6 +10,7 @@ class ProductTerm:
         self.prefactor = 1
 
     def set_elements(self, elements:list, prefactor:float):
+        self.factors = []
         for element in elements:
             if isinstance(element, R):
                 self.factors.append(element)
@@ -18,6 +19,8 @@ class ProductTerm:
             if isinstance(element, Delta):
                 self.factors.append(element)
         self.prefactor = prefactor
+        if len(elements) == 0:
+            self.prefactor = 0
 
 
     def to_string(self):
@@ -102,6 +105,34 @@ class ProductTerm:
 
         self.factors = new_factors
         return
+
+    def sort_elements(self):
+        type_order = {R: 0, MultipoleMoment: 1, Delta: 2}
+        self.factors = sorted(
+            self.factors,
+            key=lambda x: (type_order.get(type(x), 99), x)
+        )
+
+    def addable(self, other):
+        if not isinstance(other, ProductTerm):
+            return False
+        if len(self.factors) != len(other.factors):
+            return False
+
+        self.sort_elements()
+        other.sort_elements()
+        for i in range(len(self.factors)):
+            if type(self.factors[i]) != type(other.factors[i]):
+                return False
+            if type(self.factors[i]) == MultipoleMoment:
+                if self.factors[i].indices != other.factors[i].indices:
+                    print([i.to_string() for i in self.factors],
+                          [i.to_string() for i in other.factors], flush=True )
+                    return False
+            elif self.factors[i] != other.factors[i]:
+                return False
+        return True
+
 
 
 

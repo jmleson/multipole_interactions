@@ -35,3 +35,16 @@ class R:
         if str(self.index.index) in ["x", "y"]:
             return True
         return False
+
+
+    def __eq__(self, other):
+        if not isinstance(other, R):
+            return NotImplemented
+        return self.index == other.index and self.exponent == other.exponent
+
+
+    def __lt__(self, other):
+        # sorting
+        if not isinstance(other, R):
+            return NotImplemented
+        return (self.index, self.exponent) < (other.index, other.exponent)
