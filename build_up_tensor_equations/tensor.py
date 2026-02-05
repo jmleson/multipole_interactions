@@ -21,7 +21,10 @@ class Tensor:
         return f"T_{''.join([pretty(i.index) for i in self.indices])}"
 
     def to_string(self):
-        return f"{self.get_prefactor()} * {self.get_tensor_notation()} * {self.multipole.to_string()}"
+        prefactor = self.get_prefactor()
+        if prefactor >= 0:
+            return f"+ {prefactor} * {self.get_tensor_notation()} * {self.multipole.to_string()}"
+        return f"- {abs(prefactor)} * {self.get_tensor_notation()} * {self.multipole.to_string()}"
 
 
 
@@ -46,4 +49,6 @@ class TensorTerm:
         m1 = self.tensor1.multipole.to_string()
         m2 = self.tensor2.multipole.to_string()
 
-        return f"{prefactor} * {self.get_tensor_notation()} * {m1} * {m2}"
+        if prefactor >= 0:
+            return f"+ {prefactor} * {self.get_tensor_notation()} * {m1} * {m2}"
+        return f"- {abs(prefactor)} * {self.get_tensor_notation()} * {m1} * {m2}"

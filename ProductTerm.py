@@ -22,7 +22,10 @@ class ProductTerm:
 
 
     def to_string(self):
-        strings = [f"{self.prefactor}"]
+        if self.prefactor >= 0:
+            strings = [f"+ {self.prefactor}"]
+        else:
+            strings = [f"- {abs(self.prefactor)}"]
         for factor in self.factors:
             strings.append( factor.to_string() )
         return " * ".join(strings)
