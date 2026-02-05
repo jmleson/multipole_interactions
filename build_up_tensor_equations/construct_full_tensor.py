@@ -5,7 +5,6 @@ from Delta import Delta
 from R import R
 from ProductTerm import ProductTerm
 from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta
-from settings import global_symbols
 
 
 def prefactor_expansion(order:int):
@@ -17,14 +16,8 @@ def prefactor_expansion(order:int):
 
 
 def r_zero_part(order:int) -> list[ProductTerm]:
-    # terms = []
-    # for i in range(order):
-    #     symbol = global_symbols[i]
-    #     r = R(index_sign = str(symbol))
-    #     terms.append(r)
-    #
-    # p = ProductTerm()
-    # p.set_elements(elements = terms, prefactor = )
+    if order < 1:
+        return []
     p = variations_between_R_and_delta(amount_of_delta=0, amount_of_r=order)
     if len(p) != 1:
         raise Exception("something wrong with function variations_between_R_and_delta")
@@ -34,19 +27,9 @@ def r_zero_part(order:int) -> list[ProductTerm]:
 
 
 def r_two_part(order:int) -> list[ProductTerm]:
-    if order <= 1:
-        return []
-
     results = []
-    # terms = [r]
-    # i = 0
-    # while i < order -2 :
-    #     symbol = global_symbols[i]
-    #     r = R(index_sign = str(symbol))
-    #     terms.append(r)
-    #     i += 1
-    # d = Delta(str(global_symbols[order - 1]), str(global_symbols[order - 2]))
-    # terms.append(d)
+    if order < 2:
+        return results
 
     p_r = variations_between_R_and_delta(amount_of_r=order-2, amount_of_delta=1)
     for part in p_r:
@@ -59,17 +42,56 @@ def r_two_part(order:int) -> list[ProductTerm]:
 
     return results
 
+def r_four_part(order:int) -> list[ProductTerm]:
+    results = []
+    if order < 4:
+        return results
+
+    p_r = variations_between_R_and_delta(amount_of_r=order-4, amount_of_delta=2)
+    for part in p_r:
+        r = R("z")
+        r.exponent = 4
+
+        p = ProductTerm()
+        p.set_elements(elements=[r]+part.factors, prefactor=prefactor_expansion(order=order-2))
+        results.append(p)
+
+    return results
+
+
+def r_six_part(order:int) -> list[ProductTerm]:
+    results = []
+    if order < 6:
+        return results
+
+    p_r = variations_between_R_and_delta(amount_of_r=order - 6, amount_of_delta=3)
+    for part in p_r:
+        r = R("z")
+        r.exponent = 4
+
+        p = ProductTerm()
+        p.set_elements(elements=[r] + part.factors, prefactor=prefactor_expansion(order=order - 3))
+        results.append(p)
+    return results
 
 
 
 def construct_full_tensor(order:int):
     summand_terms = []
-    if order >= 1:
-        p = r_zero_part(order)
-        summand_terms.append(p)
+    p = r_zero_part(order)
+    for i in p:
+        summand_terms.append(i)
 
-    if order >= 2:
-        p = r_one_part(order)
-        summand_terms.append(p)
+    p = r_two_part(order)
+    for i in p:
+        summand_terms.append(i)
+
+    p = r_four_part(order)
+    for i in p:
+        summand_terms.append(i)
+
+    p = r_six_part(order)
+    for i in p:
+        summand_terms.append(i)
 
     return summand_terms
