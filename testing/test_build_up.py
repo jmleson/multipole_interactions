@@ -1,7 +1,7 @@
 import unittest
 import sympy as sp
 
-from Multipole import MultipoleMoment
+from term_components.Multipole import MultipoleMoment
 from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms, r_part
 from build_up_tensor_equations.tensor import TensorTerm, Tensor
 from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta

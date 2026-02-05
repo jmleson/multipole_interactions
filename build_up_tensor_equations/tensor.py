@@ -2,7 +2,7 @@
 import sympy as sp
 from sympy import pretty
 
-from Multipole import MultipoleMoment
+from term_components.Multipole import MultipoleMoment
 
 
 class Tensor:
@@ -52,3 +52,12 @@ class TensorTerm:
         if prefactor >= 0:
             return f"+ {prefactor} * {self.get_tensor_notation()} * {m1} * {m2}"
         return f"- {abs(prefactor)} * {self.get_tensor_notation()} * {m1} * {m2}"
+
+    def to_latex(self):
+        prefactor = self.get_prefactor()
+        m1 = self.tensor1.multipole.to_latex()
+        m2 = self.tensor2.multipole.to_latex()
+
+        if prefactor >= 0:
+            return fr"+ {prefactor} \cdot {self.get_tensor_notation()} \cdot {m1} \cdot {m2}"
+        return fr"- {abs(prefactor)} \cdot {self.get_tensor_notation()} \cdot {m1} \cdot {m2}"

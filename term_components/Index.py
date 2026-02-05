@@ -2,7 +2,7 @@
 import sympy as sp
 
 from settings import symbol_order
-
+from sympy import pretty
 
 class Index:
 
@@ -23,3 +23,11 @@ class Index:
     def is_coordinate(self):
         if str(self.index) in ["x", "y", "z"]:
             return True
+
+    def to_string(self):
+        return pretty(self.index)
+
+    def to_latex(self):
+        if str(self.index) in ["x", "y", "z"]:
+            return str(self.index)
+        return r"\ "[0] + str(self.index) + r"{}"

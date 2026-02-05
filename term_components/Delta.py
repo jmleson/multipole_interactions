@@ -1,8 +1,9 @@
-from Index import Index
+
 import sympy as sp
-from sympy import pretty
+
 
 from settings import symbol_order
+from term_components.Index import Index
 
 
 class Delta:
@@ -19,7 +20,11 @@ class Delta:
 
     def to_string(self):
         delta = sp.Symbol("delta")
-        return str(delta) + "(" + pretty(self.index1.index) + ", " + pretty(self.index2.index) + ")"
+        return str(delta) + "(" + self.index1.to_string() + ", " + self.index2.to_string() + ")"
+
+    def to_latex(self):
+        delta = r"\delta{}"
+        return delta + r"\left(" + self.index1.to_latex() + ", " + self.index2.to_latex() + r"\right)"
 
 
     def replace_index(self, to_be_replaced:Index, replacement:Index):

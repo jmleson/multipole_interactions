@@ -1,8 +1,8 @@
 
 import sympy as sp
 
-from R import R
-from ProductTerm import ProductTerm
+from term_components.R import R
+from term_components.ProductTerm import ProductTerm
 from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta
 
 

@@ -1,6 +1,6 @@
-from Delta import Delta
-from ProductTerm import ProductTerm
-from R import R
+from term_components.Delta import Delta
+from term_components.ProductTerm import ProductTerm
+from term_components.R import R
 from settings import global_symbols
 
 import itertools

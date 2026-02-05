@@ -1,7 +1,7 @@
-from Delta import Delta
-from Multipole import MultipoleMoment
-from ProductTerm import ProductTerm
-from R import R
+from term_components.Delta import Delta
+from term_components.Multipole import MultipoleMoment
+from term_components.ProductTerm import ProductTerm
+from term_components.R import R
 
 
 #### CASE 1 = Dipole-Dipole-Interaction ####

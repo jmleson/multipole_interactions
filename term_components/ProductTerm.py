@@ -1,7 +1,6 @@
-from Index import Index
-from Delta import Delta
-from Multipole import MultipoleMoment
-from R import R
+from term_components.Delta import Delta
+from term_components.Multipole import MultipoleMoment
+from term_components.R import R
 
 
 class ProductTerm:
@@ -29,6 +28,15 @@ class ProductTerm:
         for factor in self.factors:
             strings.append( factor.to_string() )
         return " * ".join(strings)
+
+    def to_latex(self):
+        if self.prefactor >= 0:
+            strings = [f"+ {self.prefactor}"]
+        else:
+            strings = [f"- {abs(self.prefactor)}"]
+        for factor in self.factors:
+            strings.append( factor.to_latex() )
+        return " \cdot ".join(strings)
 
     def simplify(self, type):
         for x in self.factors:
@@ -70,7 +78,7 @@ class ProductTerm:
         distances = {}
         for factor in self.factors:
             if set_to_zero and factor.is_zero():
-                print("factor is 0:", factor.to_string(), flush=True)
+                # print("factor is 0:", factor.to_string(), flush=True)
                 self.prefactor = 0
                 self.factors = []
                 return

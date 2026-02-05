@@ -1,8 +1,9 @@
 import sympy as sp
 from sympy import pretty
 
-from Index import Index
+
 from settings import symbol_order
+from term_components.Index import Index
 
 
 class MultipoleMoment:
@@ -28,7 +29,10 @@ class MultipoleMoment:
 
 
     def to_string(self):
-        return pretty(self.symbol) + "_" + "".join([pretty(i.index) for i in self.indices])
+        return pretty(self.symbol) + "_" + "".join([i.to_string() for i in self.indices])
+
+    def to_latex(self):
+        return r"\\"+str(self.symbol) + "{}_{" + "".join([i.to_latex() for i in self.indices]) + "}"
 
     def has_index(self, test_index:Index):
         return test_index.index in [i.index for i in self.indices]
@@ -101,7 +105,7 @@ class MultipoleMoment:
                 to_be_replaced, replacement = index1, index2
             else:
                 existing = sorted([str(index1.index), str(index2.index)], key=lambda s: symbol_order[str(s)])
-                to_be_replaced, replacement = existing[1], existing[0]
+                to_be_replaced, replacement = Index(existing[1]), Index(existing[0])
             #
         elif len(self.indices) == 3:
             pass
@@ -112,4 +116,8 @@ class MultipoleMoment:
         else:
             raise Exception("not yet implemented")
 
+        if not isinstance(to_be_replaced, Index):
+            raise TypeError("test_index must be an Index")
+        if not isinstance(replacement, Index):
+            raise TypeError("test_index must be an Index")
         return to_be_replaced, replacement

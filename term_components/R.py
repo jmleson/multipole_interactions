@@ -1,5 +1,5 @@
-from Index import Index
-from sympy import pretty
+from term_components.Index import Index
+
 
 class R:
 
@@ -9,8 +9,13 @@ class R:
 
     def to_string(self):
         if self.exponent != 1:
-            return  "R_" + pretty(self.index.index) + f"^({self.exponent})"
-        return "R_" + pretty(self.index.index)
+            return  "R_" + self.index.to_string() + f"^({self.exponent})"
+        return "R_" + self.index.to_string()
+
+    def to_latex(self):
+        if self.exponent != 1:
+            return "R_{" + self.index.to_latex() + r"}" + r"^{" + str(self.exponent) + r"}"
+        return "R_{" + self.index.to_latex() + r"}"
 
     def has_index(self, test_index:Index):
         if not isinstance(test_index, Index):
