@@ -4,6 +4,7 @@ import sympy as sp
 from Delta import Delta
 from R import R
 from ProductTerm import ProductTerm
+from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta
 from settings import global_symbols
 
 
@@ -15,39 +16,48 @@ def prefactor_expansion(order:int):
 
 
 
-def r_zero_part(order:int):
-    terms = []
-    for i in range(order):
-        symbol = global_symbols[i]
-        r = R(index_sign = str(symbol))
-        terms.append(r)
+def r_zero_part(order:int) -> list[ProductTerm]:
+    # terms = []
+    # for i in range(order):
+    #     symbol = global_symbols[i]
+    #     r = R(index_sign = str(symbol))
+    #     terms.append(r)
+    #
+    # p = ProductTerm()
+    # p.set_elements(elements = terms, prefactor = )
+    p = variations_between_R_and_delta(amount_of_delta=0, amount_of_r=order)
+    if len(p) != 1:
+        raise Exception("something wrong with function variations_between_R_and_delta")
+    p = p[0]
+    p.prefactor = prefactor_expansion(order=order)
+    return [p]
 
-    p = ProductTerm()
-    p.set_elements(elements = terms, prefactor = prefactor_expansion(order=order))
 
-    return p
-
-
-def r_two_part(order:int):
+def r_two_part(order:int) -> list[ProductTerm]:
     if order <= 1:
-        return ProductTerm()
-    r = R("z")
-    r.exponent = 2
+        return []
 
-    terms = [r]
-    i = 0
-    while i < order -2 :
-        symbol = global_symbols[i]
-        r = R(index_sign = str(symbol))
-        terms.append(r)
-        i += 1
-    d = Delta(str(global_symbols[order - 1]), str(global_symbols[order - 2]))
-    terms.append(d)
+    results = []
+    # terms = [r]
+    # i = 0
+    # while i < order -2 :
+    #     symbol = global_symbols[i]
+    #     r = R(index_sign = str(symbol))
+    #     terms.append(r)
+    #     i += 1
+    # d = Delta(str(global_symbols[order - 1]), str(global_symbols[order - 2]))
+    # terms.append(d)
 
-    p = ProductTerm()
-    p.set_elements(elements=terms, prefactor=prefactor_expansion(order=order-1))
+    p_r = variations_between_R_and_delta(amount_of_r=order-2, amount_of_delta=1)
+    for part in p_r:
+        r = R("z")
+        r.exponent = 2
 
-    return p
+        p = ProductTerm()
+        p.set_elements(elements=[r]+part.factors, prefactor=prefactor_expansion(order=order-1))
+        results.append(p)
+
+    return results
 
 
 

@@ -64,29 +64,37 @@ class TestBuildUp(unittest.TestCase):
 
     def test_r_zero_part(self):
         part = r_zero_part(order=1)
-        assert "-1 * R_α" == part.to_string()
+        assert len(part) == 1
+        assert "-1 * R_α" == part[0].to_string()
 
         part = r_zero_part(order=2)
-        assert "3 * R_α * R_β" == part.to_string()
+        assert len(part) == 1
+        assert "3 * R_α * R_β" == part[0].to_string()
 
         part = r_zero_part(order=3)
-        assert "-15 * R_α * R_β * R_γ" == part.to_string()
+        assert len(part) == 1
+        assert "-15 * R_α * R_β * R_γ" == part[0].to_string()
 
         part = r_zero_part(order=4)
-        assert "105 * R_α * R_β * R_γ * R_δ" == part.to_string()
+        assert len(part) == 1
+        assert "105 * R_α * R_β * R_γ * R_δ" == part[0].to_string()
 
         part = r_zero_part(order=5)
-        assert "-945 * R_α * R_β * R_γ * R_δ * R_ε" == part.to_string()
+        assert len(part) == 1
+        assert "-945 * R_α * R_β * R_γ * R_δ * R_ε" == part[0].to_string()
 
     def test_r_two_part(self):
         part = r_two_part(order=2)
-        assert "-1 * R_z^(2) * delta(α, β)" == part.to_string()
+        assert len(part) == 1
+        assert "-1 * R_z^(2) * delta(α, β)" == part[0].to_string()
 
         part = r_two_part(order=3)
-        assert "3 * R_z^(2) * R_α * delta(β, γ)" == part.to_string()
+        assert len(part) == 3
+        assert "3 * R_z^(2) * R_α * delta(β, γ)" == part[0].to_string()
 
         part = r_two_part(order=4)
-        assert "-15 * R_z^(2) * R_α * R_β * delta(γ, δ)" == part.to_string()
+        assert len(part) == 6
+        assert "-15 * R_z^(2) * R_α * R_β * delta(γ, δ)" == part[0].to_string()
 
 
     def test_variations_between_R(self):
