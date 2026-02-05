@@ -6,7 +6,6 @@ from settings import global_symbols
 import itertools
 
 
-
 def pairings(lst):
     # alle Paarungen der liste lst
     if not lst:

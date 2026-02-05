@@ -2,7 +2,7 @@ import unittest
 import sympy as sp
 
 from Multipole import MultipoleMoment
-from build_up_tensor_equations.construct_full_tensor import r_zero_part, r_two_part, r_four_part, construct_full_tensor
+from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms, r_part
 from build_up_tensor_equations.tensor import TensorTerm, Tensor
 from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta
 
@@ -63,58 +63,58 @@ class TestBuildUp(unittest.TestCase):
 
 
     def test_r_zero_part(self):
-        part = r_zero_part(order = 0)
+        part = r_part(order=0, exponent_of_r=0)
         assert len(part) == 0
 
-        part = r_zero_part(order=1)
+        part = r_part(order=1, exponent_of_r=0)
         assert len(part) == 1
         assert "-1 * R_α" == part[0].to_string()
 
-        part = r_zero_part(order=2)
+        part = r_part(order=2, exponent_of_r=0)
         assert len(part) == 1
         assert "3 * R_α * R_β" == part[0].to_string()
 
-        part = r_zero_part(order=3)
+        part = r_part(order=3, exponent_of_r=0)
         assert len(part) == 1
         assert "-15 * R_α * R_β * R_γ" == part[0].to_string()
 
-        part = r_zero_part(order=4)
+        part = r_part(order=4, exponent_of_r=0)
         assert len(part) == 1
         assert "105 * R_α * R_β * R_γ * R_δ" == part[0].to_string()
 
-        part = r_zero_part(order=5)
+        part = r_part(order=5, exponent_of_r=0)
         assert len(part) == 1
         assert "-945 * R_α * R_β * R_γ * R_δ * R_ε" == part[0].to_string()
 
     def test_r_two_part(self):
-        part = r_two_part(order=1)
+        part = r_part(order=1, exponent_of_r=2)
         assert len(part) == 0
 
-        part = r_two_part(order=2)
+        part = r_part(order=2, exponent_of_r=2)
         assert len(part) == 1
         assert "-1 * R_z^(2) * delta(α, β)" == part[0].to_string()
 
-        part = r_two_part(order=3)
+        part = r_part(order=3, exponent_of_r=2)
         assert len(part) == 3
         assert "3 * R_z^(2) * R_α * delta(β, γ)" == part[0].to_string()
 
-        part = r_two_part(order=4)
+        part = r_part(order=4, exponent_of_r=2)
         assert len(part) == 6
         assert "-15 * R_z^(2) * R_α * R_β * delta(γ, δ)" == part[0].to_string()
 
     def test_r_four_part(self):
-        part = r_four_part(order=1)
+        part = r_part(order=1, exponent_of_r=4)
         assert len(part) == 0
-        part = r_four_part(order=2)
+        part = r_part(order=2, exponent_of_r=4)
         assert len(part) == 0
-        part = r_four_part(order=3)
+        part = r_part(order=3, exponent_of_r=4)
         assert len(part) == 0
 
-        part = r_four_part(order=4)
+        part = r_part(order=4, exponent_of_r=4)
         assert len(part) == 3
         assert "3 * R_z^(4) * delta(α, β) * delta(γ, δ)" == part[0].to_string()
 
-        part = r_four_part(order=5)
+        part = r_part(order=5, exponent_of_r=4)
         assert len(part) == 15
         assert "-15 * R_z^(4) * R_α * delta(β, γ) * delta(δ, ε)" == part[0].to_string()
 
@@ -199,20 +199,20 @@ class TestBuildUp(unittest.TestCase):
 
 
     def test_construct_full_tensor(self):
-        tensor = construct_full_tensor(order=0)
+        tensor = construct_all_tensor_terms(order=0)
         assert len(tensor) == 0
 
-        tensor = construct_full_tensor(order=1)
+        tensor = construct_all_tensor_terms(order=1)
         assert len(tensor) == 1
         assert tensor[0].to_string() == "-1 * R_α"
 
-        tensor = construct_full_tensor(order=2)
+        tensor = construct_all_tensor_terms(order=2)
         assert len(tensor) == 2
         strings = [p.to_string() for p in tensor]
         assert "3 * R_α * R_β" in strings
         assert "-1 * R_z^(2) * delta(α, β)" in strings
 
-        tensor = construct_full_tensor(order=3)
+        tensor = construct_all_tensor_terms(order=3)
         assert len(tensor) == 4
         strings = [p.to_string() for p in tensor]
         assert "-15 * R_α * R_β * R_γ" in strings
@@ -220,7 +220,7 @@ class TestBuildUp(unittest.TestCase):
         assert "3 * R_z^(2) * R_β * delta(α, γ)" in strings
         assert "3 * R_z^(2) * R_γ * delta(α, β)" in strings
 
-        tensor = construct_full_tensor(order=4)
+        tensor = construct_all_tensor_terms(order=4)
         assert len(tensor) == 10
         strings = [p.to_string() for p in tensor]
         assert "105 * R_α * R_β * R_γ * R_δ" in strings
@@ -234,10 +234,10 @@ class TestBuildUp(unittest.TestCase):
         assert "3 * R_z^(4) * delta(α, γ) * delta(β, δ)"
         assert "3 * R_z^(4) * delta(α, δ) * delta(β, γ)"
 
-        tensor = construct_full_tensor(order=5)
+        tensor = construct_all_tensor_terms(order=5)
         assert len(tensor) == 1+10+15
 
-        tensor = construct_full_tensor(order=6)
+        tensor = construct_all_tensor_terms(order=6)
         assert len(tensor) == 1+15+45+15
 
 
