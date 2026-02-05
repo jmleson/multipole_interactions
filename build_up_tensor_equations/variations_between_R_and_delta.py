@@ -5,6 +5,21 @@ from settings import global_symbols
 
 import itertools
 
+
+
+def pairings(lst):
+    # alle Paarungen der liste lst
+    if not lst:
+        yield []
+        return
+
+    first = lst[0]
+    for i in range(1, len(lst)):
+        pair = (first, lst[i])
+        for rest in pairings(lst[1:i] + lst[i+1:]):
+            yield [pair] + rest
+
+
 def variations_between_R_and_delta(amount_of_r: int, amount_of_delta: int):
     order = amount_of_r + 2 * amount_of_delta
     symbols = global_symbols[:order]
@@ -18,20 +33,19 @@ def variations_between_R_and_delta(amount_of_r: int, amount_of_delta: int):
 
         # 2️⃣ wähle Delta-Indizes
         for delta_flat in itertools.combinations(remaining, 2 * amount_of_delta):
+            for pairing in pairings(list(delta_flat)):
+                deltas = [
+                    Delta(str(a), str(b))
+                    for a, b in pairing
+                ]
 
-            deltas = []
-            # 3️⃣ in Paare aufteilen (sortiert)
-            for i in range(amount_of_delta):
-                ds = delta_flat[2*i : 2*i + 2]
-                deltas.append(
-                    Delta(str(ds[0]), str(ds[1]))
-                )
-
-            p = ProductTerm()
-            p.set_elements(elements=rs + deltas, prefactor=1)
-            results.append(p)
+                p = ProductTerm()
+                p.set_elements(elements=rs + deltas, prefactor=1)
+                results.append(p)
 
     return results
+
+
 
 
 

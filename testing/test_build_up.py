@@ -88,7 +88,68 @@ class TestBuildUp(unittest.TestCase):
         part = r_two_part(order=4)
         assert "-15 * R_z^(2) * R_α * R_β * delta(γ, δ)" == part.to_string()
 
+
+    def test_variations_between_R(self):
+        result = variations_between_R_and_delta(amount_of_r=1, amount_of_delta=0)
+        assert len(result) == 1
+        strings = [p.to_string() for p in result]
+        assert "1 * R_α" in strings
+
+        result = variations_between_R_and_delta(amount_of_r=2, amount_of_delta=0)
+        assert len(result) == 1
+        strings = [p.to_string() for p in result]
+        assert "1 * R_α * R_β" in strings
+
+        result = variations_between_R_and_delta(amount_of_r=3, amount_of_delta=0)
+        assert len(result) == 1
+        strings = [p.to_string() for p in result]
+        assert "1 * R_α * R_β * R_γ" in strings
+
+    def test_variations_between_delta(self):
+        result = variations_between_R_and_delta(amount_of_r=0, amount_of_delta=1)
+        assert len(result) == 1
+        strings = [p.to_string() for p in result]
+        assert "1 * delta(α, β)" in strings
+
+        result = variations_between_R_and_delta(amount_of_r=0, amount_of_delta=2)
+        assert len(result) == 3
+        strings = [p.to_string() for p in result]
+        assert "1 * delta(α, β) * delta(γ, δ)" in strings
+        assert "1 * delta(α, γ) * delta(β, δ)" in strings
+        assert "1 * delta(α, δ) * delta(β, γ)" in strings
+
+        result = variations_between_R_and_delta(amount_of_r=0, amount_of_delta=3)
+        assert len(result) == 15
+        strings = [p.to_string() for p in result]
+        assert "1 * delta(α, β) * delta(γ, δ) * delta(ε, ζ)" in strings
+        assert "1 * delta(α, β) * delta(γ, ζ) * delta(δ, ε)" in strings
+        assert "1 * delta(α, β) * delta(γ, ε) * delta(δ, ζ)" in strings
+
+        assert "1 * delta(α, γ) * delta(β, δ) * delta(ε, ζ)" in strings
+        assert "1 * delta(α, γ) * delta(β, ε) * delta(δ, ζ)" in strings
+        assert "1 * delta(α, γ) * delta(β, ζ) * delta(δ, ε)" in strings
+
+        assert "1 * delta(α, δ) * delta(β, γ) * delta(ε, ζ)" in strings
+        assert "1 * delta(α, δ) * delta(β, ε) * delta(γ, ζ)" in strings
+        assert "1 * delta(α, δ) * delta(β, ζ) * delta(γ, ε)" in strings
+
+        assert "1 * delta(α, ε) * delta(β, γ) * delta(δ, ζ)" in strings
+        assert "1 * delta(α, ε) * delta(β, δ) * delta(γ, ζ)" in strings
+        assert "1 * delta(α, ε) * delta(β, ζ) * delta(γ, δ)" in strings
+
+        assert "1 * delta(α, ζ) * delta(β, γ) * delta(δ, ε)" in strings
+        assert "1 * delta(α, ζ) * delta(β, δ) * delta(γ, ε)" in strings
+        assert "1 * delta(α, ζ) * delta(β, ε) * delta(γ, δ)" in strings
+
+
     def test_variations_between_R_and_delta(self):
+        ### ONLY R ###
+        self.test_variations_between_R()
+
+        ### ONLY Delta ###
+        self.test_variations_between_delta()
+
+        ### R and Delta ###
         result = variations_between_R_and_delta(1,1)
         assert len(result) == 3
         strings = [p.to_string() for p in result]
