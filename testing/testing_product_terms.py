@@ -34,7 +34,7 @@ class TestingProductTerms(unittest.TestCase):
         assert "- 1 * R_z * R_z * delta(α, β) * μ_α * μ_β" == p2.to_string()
 
         p2.clean_up(set_to_zero=True)
-        assert "- 1 * delta(α, β) * μ_α * μ_β * R_z^(2)" == p2.to_string()
+        assert "- 1 * R_z^(2) * μ_α * μ_β * delta(α, β)" == p2.to_string()
 
         p1.factors.append(R("y"))
         p1.clean_up(set_to_zero=True)
@@ -58,7 +58,7 @@ class TestingProductTerms(unittest.TestCase):
 
         d = Delta("alpha", "beta")
         d.replace_index(Index("alpha"), Index("gamma"))
-        assert d.to_string() == "delta(γ, β)"
+        assert d.to_string() == "delta(β, γ)"
 
         d = Delta("alpha", "beta")
         d.replace_index(Index("beta"), Index("gamma"))
@@ -91,7 +91,7 @@ class TestingProductTerms(unittest.TestCase):
         p2.simplify_delta()
         assert "- 1 * R_z * R_z * delta(α, α) * μ_α * μ_α" == p2.to_string()
         p2.clean_up(set_to_zero=True)
-        assert "- 1 * μ_α * μ_α * R_z^(2)" == p2.to_string()
+        assert "- 1 * R_z^(2) * μ_α * μ_α" == p2.to_string()
 
     def test_SimplifyR(self):
         p1, p2 = copy.deepcopy(self.p1), copy.deepcopy(self.p2)
@@ -99,7 +99,8 @@ class TestingProductTerms(unittest.TestCase):
         p2.simplify_R()
         assert "- 1 * R_z * R_z * delta(α, β) * μ_α * μ_β" == p2.to_string()
         p2.clean_up(set_to_zero=True)
-        assert "- 1 * delta(α, β) * μ_α * μ_β * R_z^(2)" == p2.to_string()
+        p2.sort_elements()
+        assert "- 1 * R_z^(2) * μ_α * μ_β * delta(α, β)" == p2.to_string()
 
         p3 = ProductTerm()
         elements = [R("alpha"), R("beta"),
@@ -112,7 +113,7 @@ class TestingProductTerms(unittest.TestCase):
 
         p4.simplify_R()
         p4.clean_up(set_to_zero=False)
-        assert "- 2 * μ_z * μ_z * R_z^(2)" == p4.to_string()
+        assert "- 2 * R_z^(2) * μ_z * μ_z" == p4.to_string()
         p4.clean_up(set_to_zero=True)
         assert p4.to_string() == "+ 0"
 
@@ -126,7 +127,7 @@ class TestingProductTerms(unittest.TestCase):
         p2.simplify_Multipole()
         assert "- 1 * R_z * R_z * delta(y, y) * μ_y * μ_y" == p2.to_string()
         p2.clean_up(set_to_zero=True)
-        assert "- 1 * μ_y * μ_y * R_z^(2)" == p2.to_string()
+        assert "- 1 * R_z^(2) * μ_y * μ_y" == p2.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["y"])], prefactor=2)

@@ -36,7 +36,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
     def test_total(self):
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         s.simplify()
-        assert "T_αβ μ_α μ_β =  [ + 1 * μ_y * μ_y * R_z^(-3) ]" == s.full_string_tensor()
+        assert "T_αβ μ_α μ_β =  [ + 1 * R_z^(-3) * μ_y * μ_y ]" == s.full_string_tensor()
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
         s.simplify()
