@@ -101,7 +101,9 @@ class MultipoleMoment:
             #Quadrupole
             index1 = self.indices[0]
             index2 = self.indices[1]
-            if index1.is_coordinate() and not index2.is_coordinate():
+            if index1.is_coordinate() and index2.is_coordinate():
+                return to_be_replaced, replacement
+            elif index1.is_coordinate() and not index2.is_coordinate():
                 to_be_replaced, replacement = index2, index1
             elif not index1.is_coordinate() and index2.is_coordinate():
                 to_be_replaced, replacement = index1, index2

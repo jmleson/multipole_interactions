@@ -1,6 +1,9 @@
 import unittest
+from itertools import permutations
+
 import sympy as sp
 
+from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms, r_part
 from build_up_tensor_equations.tensor import TensorTerm, Tensor
@@ -8,6 +11,18 @@ from build_up_tensor_equations.variations_between_R_and_delta import variations_
 
 
 class TestBuildUp(unittest.TestCase):
+
+    def test_sorting_Index(self):
+        i1 = Index("alpha")
+        i2 = Index("beta")
+        i3 = Index("gamma")
+        i4 = Index("delta")
+
+        should_be = [i1,i2,i3,i4]
+        for order in list(permutations(should_be)):
+            sorted_list = sorted(order)
+            assert [i.to_string() for i in sorted_list] == [i.to_string() for i in should_be]
+
 
     def test_Tensor(self):
         dipole = MultipoleMoment(indices=["alpha"])

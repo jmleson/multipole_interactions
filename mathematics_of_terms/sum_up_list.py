@@ -23,7 +23,7 @@ def combine_general(acc, x, adding_function:callable, addable_function:callable)
     acc.append(x)
     return acc
 
-def sum_up_list(to_be_summed_up_list: list, adding_function:callable=add_fictitious, addable_function:callable=addable_fictitious):
+def sum_up_list(to_be_summed_up_list: list, adding_function:callable, addable_function:callable):
     result = [to_be_summed_up_list[0]]
     for x in to_be_summed_up_list[1:]:
         result = combine_general(result, x, adding_function=adding_function, addable_function=addable_function)

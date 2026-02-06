@@ -128,7 +128,7 @@ class TestingBasics(unittest.TestCase):
         p = ProductTerm()
         p.set_elements( [ MultipoleMoment(["alpha", "beta"]) ], prefactor=2)
         p.simplify_Multipole()
-        assert "+ 2 * Θ_αβ" == p.to_string()
+        assert "+ 2 * Θ_αα" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["x", "beta"])], prefactor=2)

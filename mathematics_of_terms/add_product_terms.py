@@ -3,8 +3,6 @@ from term_components.ProductTerm import ProductTerm
 
 def add_product_terms(p1:ProductTerm, p2:ProductTerm):
     if p1.prefactor == 0:
-        if p2.prefactor == 0:
-            return []
         return [p2]
     if p2.prefactor == 0:
         return [p1]

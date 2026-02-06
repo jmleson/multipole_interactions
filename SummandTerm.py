@@ -73,6 +73,7 @@ class MultipoleInteraction:
             term.simplify_Multipole()
             term.clean_up()
 
+        self.add_up()
         self.clean_up()
 
 
