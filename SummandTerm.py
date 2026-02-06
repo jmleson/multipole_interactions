@@ -69,10 +69,13 @@ class MultipoleInteraction:
                 string += f"{self.r_prefactor.to_latex()}" + r" \cdot "
             if self.prefactor_expansion != 1:
                 string += f"{sp.latex(self.prefactor_expansion)}" + r" \cdot "
-            string += r" \left[ \begin{array}{c} "+ "\n \t\t"
-            s = " \n " + r"\\ " + "\t\t "
-            string += s.join([term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ])
-            string += "\n" + r" \end{array}\right] "
+            if len(self.tensor_terms) == 0:
+                string += r" \left[ \begin{array}{c} "+ "\n \t\t"
+                s = " \n " + r"\\ " + "\t\t "
+                string += s.join([term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ])
+                string += "\n" + r" \end{array}\right] "
+            else:
+                string += r"\left[ + 0 \right]"
         else:
             string += "+ 0"
         return string
