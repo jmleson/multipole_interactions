@@ -4,7 +4,7 @@ from sympy import pretty
 
 from settings import symbol_order
 from term_components.Index import Index
-
+from collections import Counter
 
 class MultipoleMoment:
 
@@ -92,6 +92,33 @@ class MultipoleMoment:
         else:
             raise Exception("not yet implemented")
         return False
+
+    def traceless_condition(self) -> list[Index]:
+        """
+        checks whether a traceless condition can be applied ( len(result) > 0 )
+        :return: list of affected indices (in case a traceless condition is fullfilled)
+        """
+        if len(self.indices) == 2:
+            if self.indices[0] == self.indices[1] and not self.indices[0].is_coordinate() and not self.indices[1].is_coordinate():
+                return [Index(str(self.indices[0].index))]
+        if len(self.indices) == 3:
+            # = 0, if xαα / yαα / zαα / or 2x other greek symbol :
+            counts = Counter(i.index for i in self.indices)
+            if len(counts) == 2:
+                values = list(counts.values())
+                if sorted(values) == [1, 2]:
+                    double_index = None
+                    for k, v in counts.items():
+                        if v == 2:
+                            double_index = k
+                            break
+                    if double_index is not None and not Index(str(double_index)).is_coordinate():
+                        return [Index(str(i)) for i in counts.keys()]
+        if len(self.indices) == 4:
+            pass # TODO
+        return []
+
+
 
 
     def simplify(self):

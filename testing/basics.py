@@ -10,7 +10,7 @@ from term_components.R import R
 
 
 
-class TestingBasics(unittest.TestCase):
+class TestingProductTerms(unittest.TestCase):
     m1 = MultipoleMoment(["alpha"])
     m2 = MultipoleMoment(["beta"])
 
@@ -243,6 +243,114 @@ class TestingBasics(unittest.TestCase):
         assert "+ 2 * Θ_zγ * delta(x, ε)" == p.to_string()
         p.reduce_indices()
         assert "+ 2 * Θ_zα * delta(x, β)" == p.to_string()
+
+    def test_traceless_conditions(self):
+        m = MultipoleMoment(["alpha"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 0
+
+
+        m = MultipoleMoment(["alpha", "beta"])
+        assert len(m.traceless_condition()) == 0
+
+        m = MultipoleMoment(["alpha", "alpha"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 1
+        assert traceless[0] == Index("alpha")
+
+        m = MultipoleMoment(["beta", "beta"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 1
+        assert traceless[0] == Index("beta")
+
+        m = MultipoleMoment(["alpha", "beta", "gamma"])
+        assert len(m.traceless_condition()) == 0
+
+        m = MultipoleMoment(["alpha", "beta", "beta"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 2
+        assert Index("beta") in traceless
+        assert Index("alpha") in traceless
+
+        m = MultipoleMoment(["alpha", "beta", "z"])
+        assert len(m.traceless_condition()) == 0
+
+        m = MultipoleMoment(["beta", "beta", "z"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 2
+        assert Index("beta") in traceless
+        assert Index("z") in traceless
+
+    def test_use_traceless_conditions(self):
+        m = MultipoleMoment(["alpha", "alpha"])
+        p = ProductTerm()
+        p.set_elements([m, R("alpha"), R("beta")], prefactor = 1)
+        p.clean_up()
+        assert p.to_string() == "+ 1 * R_α * R_β * Θ_αα"
+        p.use_traceless_conditions()# traceless condition applies, but cannot be applied due to other coupled terms
+        assert p.to_string() == "+ 1 * R_α * R_β * Θ_αα"
+
+        m = MultipoleMoment(["alpha", "alpha"])
+        p = ProductTerm()
+        p.set_elements([m, R("beta"), R("beta")], prefactor = 1)
+        p.clean_up()
+        assert p.to_string() == "+ 1 * R_β^(2) * Θ_αα"
+        p.use_traceless_conditions()
+        assert p.to_string() == "+ 0"
+
+        m = MultipoleMoment(["beta", "beta"])
+        p = ProductTerm()
+        p.set_elements([m, R("alpha"), R("gamma")], prefactor = 1)
+        p.clean_up()
+        assert p.to_string() == "+ 1 * R_α * R_γ * Θ_ββ"
+        p.use_traceless_conditions()
+        assert p.to_string() == "+ 0"
+
+        m = MultipoleMoment(["beta", "beta"])
+        p = ProductTerm()
+        p.set_elements([m, MultipoleMoment(["alpha", "gamma"])], prefactor = 1)
+        p.clean_up()
+        assert p.to_string() == "+ 1 * Θ_αγ * Θ_ββ"
+        p.use_traceless_conditions()
+        assert p.to_string() == "+ 0"
+
+        m = MultipoleMoment(["beta", "beta", "beta"])
+        p = ProductTerm()
+        p.set_elements([m, MultipoleMoment(["alpha", "gamma"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Ω_βββ * Θ_αγ"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 1 * Ω_βββ * Θ_αγ"
+
+
+        m = MultipoleMoment(["beta", "beta", "gamma"])
+        p = ProductTerm()
+        p.set_elements([m, MultipoleMoment(["alpha", "gamma"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Ω_ββγ * Θ_αγ"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 1 * Ω_ββγ * Θ_αγ"
+
+        m = MultipoleMoment(["beta", "beta", "gamma"])
+        p = ProductTerm()
+        p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Ω_ββγ * Θ_αδ"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 0"
+        for x in ["z", "x", "y"]:
+            m = MultipoleMoment(["beta", "beta", x])
+            p = ProductTerm()
+            p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
+            assert p.to_string() ==  f"+ 1 * Ω_{x}ββ * Θ_αδ"
+            p.use_traceless_conditions()
+            assert p.to_string() == "+ 0"
+
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y"]), MultipoleMoment(["y", "beta", "beta"]), R("z") ], prefactor=3)
+        assert p.to_string() == f"+ 3 * μ_y * Ω_yββ * R_z"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 0"# index y of traceless condition is used in other places, however, it is already a coordinate -> traceless condition still applicable
+
+
 
 
 

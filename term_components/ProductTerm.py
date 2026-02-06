@@ -106,6 +106,31 @@ class ProductTerm:
                     i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
         return
 
+    def use_traceless_conditions(self):
+        for term in self.factors:
+            if not isinstance(term, MultipoleMoment):
+                continue
+
+            traceless = term.traceless_condition()
+            if len(traceless) == 0:
+                continue
+
+            indices = []
+            for i in self.factors:
+                if i != term:
+                    indices.extend(i.get_indices())
+            found = False
+            for possible_zero_component in traceless:
+                if possible_zero_component.is_coordinate():
+                    continue
+                if possible_zero_component in indices:
+                    found = True
+            if not found:
+                self.prefactor = 0
+                self.factors = []
+                return
+
+
     def clean_up(self, set_to_zero:bool = True):
         new_factors = []
         distances = {}

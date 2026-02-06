@@ -46,3 +46,4 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s.simplify()
         assert "T_αβγ Θ_αβ μ_γ = + 0" == s.full_string_tensor()
 
+

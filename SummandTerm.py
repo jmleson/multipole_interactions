@@ -111,12 +111,15 @@ class MultipoleInteraction:
             term.simplify_R()
             term.simplify_Multipole()
 
+            term.use_traceless_conditions()
+
             term.clean_up()
             term.reduce_indices()
             term.clean_up()
 
         self.add_up()
         self.clean_up()
+
 
     def simplify_in_latex_steps(self):
         filename = f"tensor_simplification_{len(self.multipole1.indices)}-{len(self.multipole2.indices)}.tex"
@@ -160,6 +163,10 @@ class MultipoleInteraction:
         add_step("Simplify Multipoles")
 
         for term in self.tensor_terms:
+            term.use_traceless_conditions()
+        add_step("Exploit Traceless Conditions")
+
+        for term in self.tensor_terms:
             term.reduce_indices()
         add_step("Reduce Indices")
 
@@ -168,6 +175,7 @@ class MultipoleInteraction:
 
         self.clean_up()
         add_step("Combining everything", term_clean_up=False)
+
 
         latex_doc.append(r"\end{document}")
         with open(filename, "w") as f:
