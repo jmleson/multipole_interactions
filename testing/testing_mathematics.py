@@ -193,3 +193,16 @@ class TestMathematics(unittest.TestCase):
         result = add_product_terms(self.p1, self.p2)
         assert len(result) == 1
         assert result[0].to_string() == "+ 4 * μ_α"
+
+        self.p1.set_elements(elements=[MultipoleMoment(["alpha"]), R("beta")], prefactor=1)
+        self.p2.set_elements(elements=[R("beta"), MultipoleMoment(["alpha"])], prefactor=1)
+        result = add_product_terms(self.p1, self.p2)
+        assert len(result) == 1
+        assert result[0].to_string() == "+ 2 * R_β * μ_α"
+
+        self.p1.set_elements(elements=[MultipoleMoment(["alpha","beta"]), R("beta"), Delta("beta", "gamma")], prefactor=-1)
+        self.p2.set_elements(elements=[R("beta"), Delta("beta", "gamma"), MultipoleMoment(["alpha","beta"])], prefactor=-3)
+        result = add_product_terms(self.p1, self.p2)
+        assert len(result) == 1
+        assert result[0].to_string() == "- 4 * R_β * Θ_αβ * delta(β, γ)"
+
