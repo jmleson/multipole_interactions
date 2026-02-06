@@ -137,6 +137,7 @@ class ProductTerm:
 
 
 
+
 # def simplify_delta(p:ProductTerm, delta:Delta):
 #     identical_values = sorted([delta.index1, delta.index2])
 #     to_be_replaced, replacement = identical_values[0], identical_values[1]

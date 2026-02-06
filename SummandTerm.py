@@ -1,6 +1,8 @@
 from sympy import pretty
 
 from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms
+from mathematics_of_terms.add_product_terms import add_product_terms, addable_product_terms
+from mathematics_of_terms.sum_up_list import sum_up_list
 from settings import global_symbols, greek_names
 from term_components.Multipole import MultipoleMoment
 from term_components.R import R
@@ -20,6 +22,12 @@ class MultipoleInteraction:
             term.factors.append(  MultipoleMoment(greek_names[:multipole_order_1]) )
             term.factors.append( MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2]) )
             self.tensor_terms.append(term)
+
+    def set_for_testing(self, tensor_terms, order):
+        self.multipole1 = None
+        self.multipole2 = None
+        self.order = order
+        self.tensor_terms = tensor_terms
 
     def get_r_prefactor(self):
         r_prefactor = R("z")
@@ -41,6 +49,15 @@ class MultipoleInteraction:
             string += "+ 0"
 
         return string
+
+
+
+    def add_up(self):
+        result = sum_up_list(self.tensor_terms, addable_function=addable_product_terms, adding_function=add_product_terms )
+        if len(result) > len(self.tensor_terms):
+            raise Exception("should never happen")
+        self.tensor_terms = result
+
 
     def clean_up(self):
         tensor_terms = []

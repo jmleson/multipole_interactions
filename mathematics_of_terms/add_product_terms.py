@@ -17,3 +17,5 @@ def add_product_terms(p1:ProductTerm, p2:ProductTerm):
     return [new_p]
 
 
+def addable_product_terms(p1:ProductTerm, p2:ProductTerm):
+    return p1.addable(p2)
