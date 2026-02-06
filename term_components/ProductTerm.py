@@ -126,8 +126,8 @@ class ProductTerm:
                 return False
             if type(self.factors[i]) == MultipoleMoment:
                 if self.factors[i].indices != other.factors[i].indices:
-                    print([i.to_string() for i in self.factors],
-                          [i.to_string() for i in other.factors], flush=True )
+                    # print([i.to_string() for i in self.factors],
+                    #       [i.to_string() for i in other.factors], flush=True )
                     return False
             elif self.factors[i] != other.factors[i]:
                 return False

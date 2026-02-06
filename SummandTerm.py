@@ -1,6 +1,6 @@
 from sympy import pretty
 
-from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms
+from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms, prefactor_expansion
 from mathematics_of_terms.add_product_terms import add_product_terms, addable_product_terms
 from mathematics_of_terms.sum_up_list import sum_up_list
 from settings import global_symbols, greek_names
@@ -23,6 +23,8 @@ class MultipoleInteraction:
             term.factors.append( MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2]) )
             self.tensor_terms.append(term)
 
+        self.prefactor_expansion = 1/prefactor_expansion(order=self.order-1)
+
     def set_for_testing(self, tensor_terms, order):
         self.multipole1 = None
         self.multipole2 = None
@@ -41,8 +43,11 @@ class MultipoleInteraction:
 
     def full_string_tensor(self):
         string = self.get_name() + " = "
-        if len(self.tensor_terms) > 0:
-            string += f"{self.get_r_prefactor().to_string()} * [ "
+        if len(self.tensor_terms) > 0 and self.prefactor_expansion != 0:
+            if self.prefactor_expansion != 1:
+                string += f"{self.get_r_prefactor().to_string()} * {self.prefactor_expansion} * [ "
+            else:
+                string += f"{self.get_r_prefactor().to_string()} * [ "
             string += " ".join([term.to_string() for term in self.tensor_terms if not term.prefactor == 0 ])
             string += " ]"
         else:
@@ -65,6 +70,11 @@ class MultipoleInteraction:
             if term.prefactor != 0:
                 tensor_terms.append(term)
         self.tensor_terms = tensor_terms
+
+        if self.prefactor_expansion != 1:
+            for term in self.tensor_terms:
+                term.prefactor *= self.prefactor_expansion
+        self.prefactor_expansion = 1
 
     def simplify(self):
         for term in self.tensor_terms:
