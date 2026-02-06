@@ -7,6 +7,9 @@ class R:
         self.index = Index(index_sign)
         self.exponent = 1
 
+    def get_indices(self):
+        return [self.index]
+
     def to_string(self):
         if self.exponent != 1:
             return  "R_" + self.index.to_string() + f"^({self.exponent})"

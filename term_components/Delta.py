@@ -13,6 +13,9 @@ class Delta:
         self.index1 = Index(indices[0])
         self.index2 = Index(indices[1])
 
+    def get_indices(self):
+        return [self.index1, self.index2]
+
     def has_index(self, test_index:Index):
         chance_1 = test_index.index == self.index1.index
         chance_2 = test_index.index == self.index2.index
@@ -37,6 +40,12 @@ class Delta:
         chance_2 = to_be_replaced.index == self.index2.index
         if chance_2:
             self.index2 = Index(str(replacement.index))
+
+        # check if sorting still in order:
+        indices = sorted([self.index1, self.index2])
+        if indices != [self.index1, self.index2]:
+            #exchange indices
+            self.index1, self.index2 = self.index2, self.index1
 
     def evaluate(self):
         if self.index1.index == self.index2.index:

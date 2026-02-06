@@ -30,11 +30,14 @@ class MultipoleMoment:
         self.prefactor_in_potential = (-1) ** len(self.indices)
 
 
+    def get_indices(self):
+        return self.indices
+
     def to_string(self):
         return pretty(self.symbol) + "_" + "".join([i.to_string() for i in self.indices])
 
     def to_latex(self):
-        return r"\\"+str(self.symbol) + "{}_{" + "".join([i.to_latex() for i in self.indices]) + "}"
+        return r"\ "[0]+str(self.symbol) + "{}_{" + "".join([i.to_latex() for i in self.indices]) + "}"
 
     def has_index(self, test_index:Index):
         return test_index.index in [i.index for i in self.indices]
@@ -94,9 +97,11 @@ class MultipoleMoment:
     def simplify(self):
         to_be_replaced, replacement = None, None
         if len(self.indices) == 1:
+            if self.indices[0].is_coordinate():
+                return to_be_replaced, replacement
             #Dipole
             to_be_replaced, replacement = self.indices[0], Index("y")
-            #
+
         elif len(self.indices) == 2:
             #Quadrupole
             index1 = self.indices[0]
@@ -112,9 +117,20 @@ class MultipoleMoment:
                 to_be_replaced, replacement = Index(existing[1]), Index(existing[0])
             #
         elif len(self.indices) == 3:
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            index3 = self.indices[2]
+            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate():
+                return to_be_replaced, replacement
             pass
             #
         elif len(self.indices) == 4:
+            index1 = self.indices[0]
+            index2 = self.indices[1]
+            index3 = self.indices[2]
+            index4 = self.indices[3]
+            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
+                return to_be_replaced, replacement
             pass
             #
         else:

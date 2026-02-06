@@ -1,5 +1,7 @@
 import copy
 import unittest
+from itertools import permutations
+
 from term_components.Delta import Delta
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
@@ -115,6 +117,7 @@ class TestingBasics(unittest.TestCase):
         assert p4.to_string() == "+ 0"
 
     def test_SimplifyMultipole(self):
+        ### DIPOLES ###
         p1, p2 = copy.deepcopy(self.p1), copy.deepcopy(self.p2)
 
         p1.simplify_Multipole()
@@ -124,6 +127,23 @@ class TestingBasics(unittest.TestCase):
         assert "- 1 * R_z * R_z * delta(y, y) * μ_y * μ_y" == p2.to_string()
         p2.clean_up(set_to_zero=True)
         assert "- 1 * μ_y * μ_y * R_z^(2)" == p2.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y"])], prefactor=2)
+        p.simplify_Multipole()
+        assert "+ 2 * μ_y" == p.to_string()
+        p.clean_up(set_to_zero=True)
+        assert "+ 2 * μ_y" == p.to_string()
+
+        for symbol in ["x", "z"]:
+            p = ProductTerm()
+            p.set_elements([MultipoleMoment([symbol])], prefactor=2)
+            p.simplify_Multipole()
+            assert f"+ 2 * μ_{symbol}" == p.to_string()
+            p.clean_up(set_to_zero=True)
+            assert "+ 0" == p.to_string()
+
+        ### QUADRUPOLES ###
 
         p = ProductTerm()
         p.set_elements( [ MultipoleMoment(["alpha", "beta"]) ], prefactor=2)
@@ -146,4 +166,85 @@ class TestingBasics(unittest.TestCase):
         assert "+ 2 * Θ_xy" == p.to_string()
         p.clean_up(set_to_zero=True)
         assert "+ 0" == p.to_string()
+
+
+    def test_reduce_indices(self):
+        ### CASE 1: nothing changes
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha"])], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * μ_α" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([R("alpha")], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * R_α" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([Delta("alpha", "beta")], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * delta(α, β)" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta"]), Delta("alpha", "beta"), R("beta")], prefactor=2)
+        p.clean_up()# mainly sorting elements
+        assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
+        p.reduce_indices()
+        assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
+
+        ### CASE 2: one element changes:
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["beta"])], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * μ_α" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([R("gamma")], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * R_α" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([Delta("gamma", "beta")], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * delta(α, β)" == p.to_string()
+
+        factories = [
+            lambda: R("delta"),
+            lambda: MultipoleMoment(["zeta", "epsilon"]),
+            lambda: Delta("omega", "epsilon"),
+        ]
+        for order in permutations(factories):
+            p = ProductTerm()
+            p.set_elements([f() for f in order] , prefactor=2)
+            p.sort_elements()# ! no clean up <-> terms might cancel due to system conditions
+            assert "+ 2 * R_δ * Θ_εζ * delta(ε, ω)" == p.to_string()
+            p.reduce_indices()
+            assert "+ 2 * R_δ * Θ_αβ * delta(α, γ)" == p.to_string()
+
+
+        # CASE 3: coordinates included
+        p = ProductTerm()
+        p.set_elements([R("z"), MultipoleMoment(["y"]), MultipoleMoment(["y", "beta", "beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * R_z * μ_y * Ω_yββ" == p.to_string()
+        p.reduce_indices()
+        assert "+ 2 * R_z * μ_y * Ω_yαα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([R("x"), MultipoleMoment(["y"]), MultipoleMoment(["z", "beta", "gamma"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * R_x * μ_y * Ω_zβγ" == p.to_string()
+        p.reduce_indices()
+        assert "+ 2 * R_x * μ_y * Ω_zαβ" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([Delta("x", "epsilon"), MultipoleMoment(["z","gamma"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Θ_zγ * delta(x, ε)" == p.to_string()
+        p.reduce_indices()
+        assert "+ 2 * Θ_zα * delta(x, β)" == p.to_string()
+
+
+
+
 

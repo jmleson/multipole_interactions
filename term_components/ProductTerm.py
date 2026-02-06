@@ -1,4 +1,6 @@
+from settings import greek_names
 from term_components.Delta import Delta
+from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from term_components.R import R
 
@@ -39,7 +41,7 @@ class ProductTerm:
             strings = [f"- {abs(self.prefactor)}"]
         for factor in self.factors:
             strings.append( factor.to_latex() )
-        return " \cdot ".join(strings)
+        return r" \cdot ".join(strings)
 
     def simplify(self, type):
         for x in self.factors:
@@ -55,26 +57,54 @@ class ProductTerm:
 
     def simplify_delta(self):
         return self.simplify(type=Delta)
-        # for d in self.factors:
-        #     if isinstance(d, Delta):
-        #         to_be_replaced, replacement = d.simplify()
-        #
-        #         for i in self.factors:
-        #             if i.has_index(to_be_replaced):
-        #                 i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
 
     def simplify_R(self):
         return self.simplify(type=R)
-        # for r in self.factors:
-        #     if isinstance(r, R):
-        #         to_be_replaced, replacement = r.simplify()
-        #
-        #         for i in self.factors:
-        #             if i.has_index(to_be_replaced):
-        #                 i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
 
     def simplify_Multipole(self):
         return self.simplify(type=MultipoleMoment)
+
+    def reduce_indices(self):
+        """
+        moves terms of higher indices to lower ones, e.g. mu_beta -> mu_alpha
+        (! not the smartest function, it does only re-name indices when their position in the alphabet is higher than the number of used indices )
+        :return:
+        """
+        self.sort_elements()# needed to keep replacements independent of initial order of elements
+
+        used_indices = []
+        for i in self.factors:
+            used_indices.extend(i.get_indices())
+        used_indices = sorted(used_indices)
+        included_coordinates = [i for i in used_indices if i.is_coordinate()]
+        used_indices = [str(i.index) for i in used_indices]
+
+        used_indices = list(dict.fromkeys(used_indices))
+        index_map = {}
+        greek_iter = iter(greek_names)
+        for old_index in used_indices:
+            # Prüfen, ob der alte Index schon in den kleinsten verfügbaren ist
+            if old_index in greek_names[:len(used_indices)-len(included_coordinates)]:
+                # Index ist schon optimal, nichts tun
+                continue
+            if Index(old_index).is_coordinate():
+                continue
+            # Andernfalls auf den nächsten freien griechischen Namen abbilden
+            while True:
+                new_index = next(greek_iter)
+                if new_index not in used_indices and new_index not in index_map.values():
+                    index_map[old_index] = new_index
+                    break
+
+        for to_be_replaced, replacement in index_map.items():
+            to_be_replaced = Index(to_be_replaced)
+            replacement = Index(replacement)
+            for i in self.factors:
+                if i.has_index(replacement):
+                    raise Exception("index already exists, by replacement a change in meaning will be produced ")
+                if i.has_index(to_be_replaced):
+                    i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
+        return
 
     def clean_up(self, set_to_zero:bool = True):
         new_factors = []
@@ -104,6 +134,7 @@ class ProductTerm:
             new_factors.append(r)
 
         self.factors = new_factors
+        self.sort_elements()
         return
 
     def sort_elements(self):

@@ -32,3 +32,17 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
         assert s.get_name() == "T_αβγδ μ_α Ω_βγδ"
+
+    def test_total(self):
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
+        s.simplify()
+        assert "T_αβ μ_α μ_β =  [ + 1 * μ_y * μ_y * R_z^(-3) ]" == s.full_string_tensor()
+
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
+        s.simplify()
+        assert "T_αβγ μ_α Θ_βγ = + 0" == s.full_string_tensor()
+
+        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=1)
+        s.simplify()
+        assert "T_αβγ Θ_αβ μ_γ = + 0" == s.full_string_tensor()
+
