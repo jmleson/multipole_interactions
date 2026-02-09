@@ -91,9 +91,6 @@ class MultipoleMoment:
                 if index_string not in ["xxxx", "xxyy", "xxzz", "yyyy", "yyzz", "zzzz"]:
                     return True
             if len(coordinates) == 2:
-                if (coordinates[0] == coordinates[1]# other indices have to be identical to eachother
-                        and greek_symbols[0] != greek_symbols[1]):
-                    return True
                 if (coordinates[0] != coordinates[1]  # other indices have to be identical to these -> other indices cannot be identical to eachother
                             and greek_symbols[0] == greek_symbols[1]):
                     return True
@@ -129,34 +126,35 @@ class MultipoleMoment:
 
 
 
-    def simplify(self):
+    def simplify(self) -> list[dict]:
+        replacements = []
         to_be_replaced, replacement = None, None
         if len(self.indices) == 1:
             if self.indices[0].is_coordinate():
-                return to_be_replaced, replacement
+                return replacements
             #Dipole
-            to_be_replaced, replacement = self.indices[0], Index("y")
+            replacements.append( {"to_be_replaced": self.indices[0], "replacement": Index("y")} )
 
         elif len(self.indices) == 2:
             #Quadrupole
             index1 = self.indices[0]
             index2 = self.indices[1]
             if index1.is_coordinate() and index2.is_coordinate():
-                return to_be_replaced, replacement
+                return replacements
             elif index1.is_coordinate() and not index2.is_coordinate():
-                to_be_replaced, replacement = index2, index1
+                replacements.append({"to_be_replaced": index2, "replacement": index1})
             elif not index1.is_coordinate() and index2.is_coordinate():
-                to_be_replaced, replacement = index1, index2
+                replacements.append({"to_be_replaced": index1, "replacement": index2})
             else:
                 existing = sorted([str(index1.index), str(index2.index)], key=lambda s: symbol_order[str(s)])
-                to_be_replaced, replacement = Index(existing[1]), Index(existing[0])
+                replacements.append({"to_be_replaced": Index(existing[1]), "replacement": Index(existing[0])})
             #
         elif len(self.indices) == 3:
             index1 = self.indices[0]
             index2 = self.indices[1]
             index3 = self.indices[2]
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate():
-                return to_be_replaced, replacement
+                return replacements
             pass
             #
         elif len(self.indices) == 4:
@@ -165,17 +163,22 @@ class MultipoleMoment:
             index3 = self.indices[2]
             index4 = self.indices[3]
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
-                return to_be_replaced, replacement
-            pass
-            #
+                return replacements
+            coordinates = [i for i in [index1, index2, index3, index4] if i.is_coordinate()]
+            greek_symbols = [i for i in [index1, index2, index3, index4] if not i.is_coordinate()]
+            if len(coordinates) == 2 and coordinates[0] != coordinates[1]:
+                # greek symbols have to be identical to the coordinates
+                replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
+                replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
         else:
             raise Exception("not yet implemented")
 
-        if to_be_replaced is not None and not isinstance(to_be_replaced, Index):
-            raise TypeError("test_index must be an Index")
-        if replacement is not None and not isinstance(replacement, Index):
-            raise TypeError("test_index must be an Index")
-        return to_be_replaced, replacement
+        for replacement in replacements:
+            if replacement["to_be_replaced"] is not None and not isinstance(replacement["to_be_replaced"], Index):
+                raise TypeError("test_index must be an Index")
+            if replacement["replacement"] is not None and not isinstance(replacement["replacement"], Index):
+                raise TypeError("test_index must be an Index")
+        return replacements
 
 
     def __eq__(self, other):

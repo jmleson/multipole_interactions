@@ -54,16 +54,16 @@ class ProductTerm:
         """
         for x in self.factors:
             if isinstance(x, type):
-                to_be_replaced, replacement = x.simplify()
                 if type == MultipoleMoment and max_order is not None and len(x.indices) > max_order:
                     continue
 
-                if to_be_replaced is not None and replacement is not None:
-                    for i in self.factors:
-                        if i.has_index(to_be_replaced):
-                            i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
+                possible_replacements = x.simplify()
+                for replacement in possible_replacements:
+                    if replacement["to_be_replaced"] is not None and replacement["replacement"] is not None:
+                        for i in self.factors:
+                            if i.has_index(replacement["to_be_replaced"]):
+                                i.replace_index(to_be_replaced=replacement["to_be_replaced"], replacement=replacement["replacement"])
 
-                    # to_be_replaced, replacement = x.simplify()
 
     def simplify_delta(self):
         return self.simplify(type=Delta)

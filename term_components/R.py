@@ -30,9 +30,9 @@ class R:
             return
         self.index = Index(str(replacement.index))
 
-    def simplify(self):
+    def simplify(self) -> list[dict]:
         to_be_replaced, replacement = self.index, Index("z")
-        return to_be_replaced, replacement
+        return [{"to_be_replaced": to_be_replaced, "replacement": replacement}]
 
     def is_zero(self):
         if str(self.index.index) in ["x", "y"]:

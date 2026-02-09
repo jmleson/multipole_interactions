@@ -56,10 +56,10 @@ class Delta:
         return None # unknown yet
 
 
-    def simplify(self):
+    def simplify(self) -> list[dict]:
         identical_values = sorted([self.index1, self.index2])
         to_be_replaced, replacement = identical_values[1], identical_values[0]
-        return to_be_replaced, replacement
+        return [{"to_be_replaced": to_be_replaced, "replacement": replacement}]
 
     def is_zero(self):
         if self.evaluate() == 0:

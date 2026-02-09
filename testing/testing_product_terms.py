@@ -168,6 +168,29 @@ class TestingProductTerms(unittest.TestCase):
         p.clean_up(set_to_zero=True)
         assert "+ 0" == p.to_string()
 
+        # HEXADECAPOLES
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "z", "delta", "beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Φ_xzβδ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Φ_xxzz" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "x", "delta", "beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Φ_xxβδ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Φ_xxβδ" == p.to_string()# cannot be replaced
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "x", "delta", "delta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Φ_xxδδ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Φ_xxδδ" == p.to_string()  # cannot be replaced
+        assert not p.factors[0].is_zero()
+
 
         ### MIXED TERMS ###
         p = ProductTerm()
