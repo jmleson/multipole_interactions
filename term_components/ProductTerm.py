@@ -64,7 +64,6 @@ class ProductTerm:
                             if i.has_index(replacement["to_be_replaced"]):
                                 i.replace_index(to_be_replaced=replacement["to_be_replaced"], replacement=replacement["replacement"])
 
-
     def simplify_delta(self):
         return self.simplify(type=Delta)
 
@@ -117,6 +116,7 @@ class ProductTerm:
                     i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
         return
 
+
     def use_traceless_conditions(self):
         for x in range(len(self.factors)):
             term = self.factors[x]
@@ -141,6 +141,9 @@ class ProductTerm:
                 self.prefactor = 0
                 self.factors = []
                 return
+
+    # def use_zero_components(self):
+
 
     def includes_duplicates(self) -> tuple[bool,list[Index]]:
         duplicates_included = False
@@ -219,13 +222,3 @@ class ProductTerm:
 
 
 
-
-
-
-# def simplify_delta(p:ProductTerm, delta:Delta):
-#     identical_values = sorted([delta.index1, delta.index2])
-#     to_be_replaced, replacement = identical_values[0], identical_values[1]
-#
-#     for i in p.factors:
-#         if i.has_index(to_be_replaced):
-#             i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)

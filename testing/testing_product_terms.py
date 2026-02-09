@@ -181,14 +181,14 @@ class TestingProductTerms(unittest.TestCase):
         p.sort_elements()
         assert "+ 2 * Φ_xxβδ" == p.to_string()
         p.simplify_Multipole()
-        assert "+ 2 * Φ_xxβδ" == p.to_string()# cannot be replaced
+        assert "+ 2 * Φ_xxββ" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["x", "x", "delta", "delta"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * Φ_xxδδ" == p.to_string()
         p.simplify_Multipole()
-        assert "+ 2 * Φ_xxδδ" == p.to_string()  # cannot be replaced
+        assert "+ 2 * Φ_xxδδ" == p.to_string()  # cannot be replaced further
         assert not p.factors[0].is_zero()
 
 
@@ -283,6 +283,22 @@ class TestingProductTerms(unittest.TestCase):
         assert "- 4 * R_z * μ_y * Φ_yzδδ" == p.to_string()
         p.reduce_indices()
         assert "- 4 * R_z * μ_y * Φ_yzαα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y", "y", "delta", "delta"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
+        p.sort_elements()
+        assert "- 4 * R_z * μ_y * Φ_yyδδ" == p.to_string()
+        p.reduce_indices()
+        assert "- 4 * R_z * μ_y * Φ_yyαα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y", "y", "delta", "alpha"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
+        p.sort_elements()
+        assert "- 4 * R_z * μ_y * Φ_yyαδ" == p.to_string()
+        p.reduce_indices()
+        assert "- 4 * R_z * μ_y * Φ_yyαβ" == p.to_string()
+        p.simplify_Multipole()
+        assert "- 4 * R_z * μ_y * Φ_yyαα" == p.to_string()
 
         # CASE 3: coordinates included
         p = ProductTerm()

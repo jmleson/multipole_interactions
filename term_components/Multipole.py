@@ -165,11 +165,14 @@ class MultipoleMoment:
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
                 return replacements
             coordinates = [i for i in [index1, index2, index3, index4] if i.is_coordinate()]
-            greek_symbols = [i for i in [index1, index2, index3, index4] if not i.is_coordinate()]
-            if len(coordinates) == 2 and coordinates[0] != coordinates[1]:
-                # greek symbols have to be identical to the coordinates
-                replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
-                replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
+            greek_symbols = sorted([i for i in [index1, index2, index3, index4] if not i.is_coordinate()])
+            if len(coordinates) == 2:
+                if coordinates[0] != coordinates[1]:
+                    # greek symbols have to be identical to the coordinates
+                    replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
+                    replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
+                else:
+                    replacements.append({"to_be_replaced": greek_symbols[1], "replacement": greek_symbols[0]})
         else:
             raise Exception("not yet implemented")
 
