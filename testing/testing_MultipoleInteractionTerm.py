@@ -53,7 +53,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
     def test_total(self):
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         s.simplify()
-        assert "T_αβ μ_α μ_β =  [ - 1 * R_z^(-3) * μ_y * μ_y ]" == s.full_string_tensor()
+        assert "T_αβ μ_α μ_β = [ - 1 * R_z^(-3) * μ_y * μ_y ]" == s.full_string_tensor()
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
         s.simplify()
@@ -62,6 +62,10 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=1)
         s.simplify()
         assert "T_αβγ Θ_αβ μ_γ = + 0" == s.full_string_tensor()
+
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
+        s.simplify_in_latex_steps()
+        assert "T_αβγδ μ_α Ω_βγδ = [ - 3 * R_z^(-5) * μ_y * Ω_yzz ]" == s.full_string_tensor()
 
     def test_find_unresolved_multipoles(self):
         pass

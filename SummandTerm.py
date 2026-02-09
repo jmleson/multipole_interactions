@@ -61,7 +61,7 @@ class MultipoleInteraction:
                 string += f"{self.r_prefactor.to_string()} * "
             if self.prefactor_expansion != 1:
                 string += f"{self.prefactor_expansion} * "
-            string += f" [ "
+            string += f"[ "
             string += " ".join([term.to_string() for term in self.tensor_terms if not term.prefactor == 0 ])
             string += " ]"
         else:
@@ -141,6 +141,7 @@ class MultipoleInteraction:
             term.reduce_indices()
             term.clean_up()
 
+        self.find_unresolved_multipoles()
         self.add_up()
         self.clean_up()
 
@@ -229,7 +230,7 @@ class MultipoleInteraction:
             prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum", prior_equation=prior_equation)
 
         self.clean_up()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation)
+        self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation)
 
         latex_doc.append(r"\end{document}")
         with open(filename, "w") as f:
