@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}% for equation environment
 \usepackage{mathtools}% for xRightarrow
+\allowdisplaybreaks % allows breaks in subequations
 \begin{document}
 \section*{Interacting Multipoles of Rank 1 and 2:}
 \begin{equation}
@@ -44,40 +45,21 @@ T_{\alpha{}\beta{}\gamma{}} \mu{}_{\alpha{}} \Theta{}_{\beta{}\gamma{}} = R_{z}^
  		+ 3 \cdot R_{z}^{3} \cdot \mu{}_{\alpha{}} \cdot \Theta{}_{z\alpha{}} 
  \\[0.2em] 		 + 3 \cdot R_{z}^{3} \cdot \mu{}_{\alpha{}} \cdot \Theta{}_{z\alpha{}}
  \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		+ 6 \cdot R_{z}^{3} \cdot \mu{}_{\alpha{}} \cdot \Theta{}_{z\alpha{}}
+ \end{array}\right] 
 \end{gather}\end{subequations}
 
 
-\section*{Simplify Multipoles:}
+\section*{Simplify Dipoles:}
 \begin{subequations}\begin{gather}
 T_{\alpha{}\beta{}\gamma{}} \mu{}_{\alpha{}} \Theta{}_{\beta{}\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{z}^{3} \cdot \mu{}_{y} \cdot \Theta{}_{yz} 
- \\[0.2em] 		 + 3 \cdot R_{z}^{3} \cdot \mu{}_{y} \cdot \Theta{}_{yz}
+ 		+ 6 \cdot R_{z}^{3} \cdot \mu{}_{y} \cdot \Theta{}_{yz}
  \end{array}\right] 
 \\ \xRightarrow{\text{cleaned up}}
  R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
 \end{gather}\end{subequations}
-
-
-\section*{Exploit Traceless Conditions:}
-\begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}\gamma{}} \mu{}_{\alpha{}} \Theta{}_{\beta{}\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
-\\ \xRightarrow{\text{cleaned up}}
- R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
-\end{gather}\end{subequations}
-
-
-\section*{Reduce Indices:}
-\begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}\gamma{}} \mu{}_{\alpha{}} \Theta{}_{\beta{}\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
-\\ \xRightarrow{\text{cleaned up}}
- R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
-\end{gather}\end{subequations}
-
-
-\section*{Add up:}
-\begin{equation}
-T_{\alpha{}\beta{}\gamma{}} \mu{}_{\alpha{}} \Theta{}_{\beta{}\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
-\end{equation}
 
 
 \section*{Combining everything:}

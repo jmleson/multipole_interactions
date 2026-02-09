@@ -1,4 +1,3 @@
-from enum import Enum
 
 from sympy import pretty
 import sympy as sp
@@ -14,11 +13,6 @@ from term_components.get_product_terms_from_greek_sum import get_product_terms_f
 
 
 
-
-class _Clean_Kind(Enum):
-    clean_up = "cleaned up"
-    add_up = "added up"
-    none = None
 
 
 
@@ -94,6 +88,8 @@ class MultipoleInteraction:
 
 
     def add_up(self):
+        if len(self.tensor_terms) == 0:
+            return
         result = sum_up_list(self.tensor_terms, addable_function=addable_product_terms, adding_function=add_product_terms )
         if len(result) > len(self.tensor_terms):
             raise Exception("should never happen")
@@ -158,62 +154,81 @@ class MultipoleInteraction:
         latex_doc.append(r"\documentclass{article}")
         latex_doc.append(r"\usepackage{amsmath}% for equation environment")
         latex_doc.append(r"\usepackage{mathtools}% for xRightarrow")
+        latex_doc.append(r"\allowdisplaybreaks % allows breaks in subequations")
         latex_doc.append(r"\begin{document}")
 
         # Helper to add an equation with a description
-        def add_step(description, term_clean_up:_Clean_Kind = _Clean_Kind.clean_up):
+        def add_step(description, term_clean_up:bool = True, prior_equation:str=""):
+            basic_equation = self.full_latex_tensor()
+            if basic_equation == prior_equation:
+                return basic_equation
+
             latex_doc.append(r"\section*{" + description + ":}")
-            if term_clean_up.value is None :
+
+            cleaned_up_equation, added_up_equation = None, None
+            if term_clean_up:
+                for term in self.tensor_terms:
+                    term.clean_up()
+                cleaned_up_equation = self.full_latex_tensor()
+                self.add_up()
+                added_up_equation = self.full_latex_tensor()
+
+            last_equation = basic_equation
+            if not term_clean_up or (cleaned_up_equation == basic_equation and added_up_equation == basic_equation):
                 latex_doc.append(r"\begin{equation}")
-                latex_doc.append(self.full_latex_tensor())
+                latex_doc.append(basic_equation)
                 latex_doc.append(r"\end{equation}")
+
             else:
                 latex_doc.append(r"\begin{subequations}\begin{gather}")
-                latex_doc.append(self.full_latex_tensor())
-                for term in self.tensor_terms:
-                    if term_clean_up == _Clean_Kind.clean_up:
-                        term.clean_up()
-                if term_clean_up == _Clean_Kind.add_up:
-                    self.add_up()
-                latex_doc.append(r"\\ " + r"\xRightarrow{\text{" + str(term_clean_up.value) + r"}}")
-                full_equation = self.full_latex_tensor()
-                latex_doc.append(full_equation[full_equation.find("=")+1:])
+                latex_doc.append(basic_equation)
+
+                if cleaned_up_equation != basic_equation:
+                    latex_doc.append(r"\\ " + r"\xRightarrow{\text{cleaned up}}")
+                    latex_doc.append(cleaned_up_equation[cleaned_up_equation.find("=") + 1:])
+                    last_equation = cleaned_up_equation
+                if added_up_equation != basic_equation and added_up_equation != cleaned_up_equation:
+                    latex_doc.append(r"\\ " + r"\xRightarrow{\text{added up}}")
+                    latex_doc.append(added_up_equation[added_up_equation.find("=") + 1:])
+                    last_equation = added_up_equation
+
                 latex_doc.append(r"\end{gather}\end{subequations}")
             latex_doc.append("\n")
+            return last_equation
 
-        add_step(f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
-                 term_clean_up=_Clean_Kind.none)
+        prior_equation = add_step(f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
+                 term_clean_up=False)
 
         for term in self.tensor_terms:
             term.simplify_delta()
-        add_step("Simplify deltas")
+        prior_equation = add_step("Simplify deltas", prior_equation=prior_equation)
 
         for term in self.tensor_terms:
             term.simplify_R()
-        add_step("Simplify R")
+        prior_equation = add_step("Simplify R", prior_equation=prior_equation)
 
-        for term in self.tensor_terms:
-            term.simplify_Multipole()
-        add_step("Simplify Multipoles")
+        for max_order, name in [(1, "Dipoles"),
+                                (2, "Quadrupoles"),
+                                (3, "Oktopoles"),
+                                (4, "Hexadecapoles")]:
+            for term in self.tensor_terms:
+                term.simplify_Multipole(max_order=max_order)
+            prior_equation = add_step(f"Simplify {name}", prior_equation=prior_equation)
 
         for term in self.tensor_terms:
             term.use_traceless_conditions()
-        add_step("Exploit Traceless Conditions")
+        prior_equation = add_step("Exploit Traceless Conditions", prior_equation=prior_equation)
 
         for term in self.tensor_terms:
             term.reduce_indices()
-        add_step("Reduce Indices")
-
-        self.add_up()
-        add_step("Add up", term_clean_up=_Clean_Kind.none)
+        prior_equation = add_step("Reduce Indices", prior_equation=prior_equation)
 
         change = self.find_unresolved_multipoles()
         if change:
-            add_step("Multiply Out Sum", term_clean_up=_Clean_Kind.add_up)
+            prior_equation = add_step("Multiply Out Sum", prior_equation=prior_equation)
 
         self.clean_up()
-        add_step("Combining everything", term_clean_up=_Clean_Kind.none)
-
+        prior_equation = add_step("Combining everything", prior_equation=prior_equation)
 
         latex_doc.append(r"\end{document}")
         with open(filename, "w") as f:

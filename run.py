@@ -1,7 +1,7 @@
 from SummandTerm import MultipoleInteraction
 
 
-# s = MultipoleInteraction(multipole_order_1 = 2, multipole_order_2 = 2)
+# s = MultipoleInteraction(multipole_order_1 = 1, multipole_order_2 = 2)
 # s.simplify_in_latex_steps()
 
 

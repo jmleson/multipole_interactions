@@ -169,6 +169,31 @@ class TestingProductTerms(unittest.TestCase):
         assert "+ 0" == p.to_string()
 
 
+        ### MIXED TERMS ###
+        p = ProductTerm()
+        p.set_elements( [ MultipoleMoment(["alpha", "beta"]), MultipoleMoment(["delta"]) ], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * μ_δ * Θ_αβ" == p.to_string()
+        p.simplify_Multipole(max_order=1)
+        assert "+ 2 * μ_y * Θ_αβ" == p.to_string()
+        p.simplify_Multipole(max_order=2)
+        assert "+ 2 * μ_y * Θ_αα" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * μ_y * Θ_αα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements( [ R("delta"), MultipoleMoment(["alpha", "x"]), MultipoleMoment(["delta"]) ], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * R_δ * μ_δ * Θ_xα" == p.to_string()
+        p.simplify_Multipole(max_order=1)
+        assert "+ 2 * R_y * μ_y * Θ_xα" == p.to_string()
+        p.simplify_Multipole(max_order=2)
+        assert "+ 2 * R_y * μ_y * Θ_xx" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * R_y * μ_y * Θ_xx" == p.to_string()
+
+
+
     def test_reduce_indices(self):
         ### CASE 1: nothing changes
         p = ProductTerm()

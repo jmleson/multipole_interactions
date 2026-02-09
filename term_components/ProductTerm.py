@@ -1,5 +1,6 @@
 import sympy as sp
 
+
 from settings import greek_names
 from term_components.Delta import Delta
 from term_components.Index import Index
@@ -45,17 +46,24 @@ class ProductTerm:
             strings.append( factor.to_latex() )
         return r" \cdot ".join(strings)
 
-    def simplify(self, type):
+    def simplify(self, type: R|Delta|MultipoleMoment, max_order:int=None):
+        """
+        :param type: object class (of element in self.factors) that should be simplified
+        :param max_order: for multipoles only -> cut simplification if order of multipole higher than max_order
+        :return:
+        """
         for x in self.factors:
             if isinstance(x, type):
                 to_be_replaced, replacement = x.simplify()
+                if type == MultipoleMoment and max_order is not None and len(x.indices) > max_order:
+                    continue
 
                 if to_be_replaced is not None and replacement is not None:
                     for i in self.factors:
                         if i.has_index(to_be_replaced):
                             i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
 
-                    to_be_replaced, replacement = x.simplify()
+                    # to_be_replaced, replacement = x.simplify()
 
     def simplify_delta(self):
         return self.simplify(type=Delta)
@@ -63,8 +71,8 @@ class ProductTerm:
     def simplify_R(self):
         return self.simplify(type=R)
 
-    def simplify_Multipole(self):
-        return self.simplify(type=MultipoleMoment)
+    def simplify_Multipole(self, max_order:int=None):
+        return self.simplify(type=MultipoleMoment, max_order=max_order)
 
     def reduce_indices(self):
         """
