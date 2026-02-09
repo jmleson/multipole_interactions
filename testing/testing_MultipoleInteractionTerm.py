@@ -83,5 +83,9 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s.simplify_in_latex_steps()
         assert "T_αβγδε Θ_αβ Ω_γδε = + 0" == s.full_string_tensor()
 
+        s = MultipoleInteraction(multipole_order_1=3, multipole_order_2=4)
+        s.simplify_in_latex_steps()
+        assert "T_αβγδεζη Ω_αβγ Φ_δεζη = + 0" == s.full_string_tensor()
+
 
 

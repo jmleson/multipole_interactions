@@ -51,6 +51,13 @@ class TestBuildUp(unittest.TestCase):
         assert t.get_prefactor() == sp.sympify("-1/15")
         assert t.get_tensor_notation() == "T_αβγ"
 
+        hexadecapole = MultipoleMoment(indices=["alpha", "beta", "gamma", "delta"])
+        assert hexadecapole.prefactor_in_potential == 1
+        h = Tensor(hexadecapole)
+        assert h.order == 4
+        assert h.get_prefactor() == sp.sympify("+1/105")
+        assert h.get_tensor_notation() == "T_αβγδ"
+
 
     def test_tensor_to_equation(self):
         dipole1 = MultipoleMoment(indices=["alpha"])
@@ -81,6 +88,13 @@ class TestBuildUp(unittest.TestCase):
         assert t.get_prefactor() == sp.sympify("1/9")
         assert "+ 1/9 * T_αβγδ * Θ_αβ * Θ_γδ" == t.to_string()
 
+
+        dipole = MultipoleMoment(indices=["alpha"])
+        hexadecapole = MultipoleMoment(indices=["beta", "gamma", "delta", "epsilon"])
+        t = TensorTerm(m1=dipole, m2=hexadecapole)
+        assert t.order == 5
+        assert t.get_prefactor() == sp.sympify("1/105")
+        assert "+ 1/105 * T_αβγδε * μ_α * Φ_βγδε" == t.to_string()
 
     def test_r_zero_part(self):
         part = r_part(order=0, exponent_of_r=0)
@@ -155,6 +169,11 @@ class TestBuildUp(unittest.TestCase):
         strings = [p.to_string() for p in result]
         assert "+ 1 * R_α * R_β * R_γ" in strings
 
+        result = variations_between_R_and_delta(amount_of_r=4, amount_of_delta=0)
+        assert len(result) == 1
+        strings = [p.to_string() for p in result]
+        assert "+ 1 * R_α * R_β * R_γ * R_δ" in strings
+
     def test_variations_between_delta(self):
         result = variations_between_R_and_delta(amount_of_r=0, amount_of_delta=1)
         assert len(result) == 1
@@ -216,6 +235,9 @@ class TestBuildUp(unittest.TestCase):
         assert "+ 1 * R_β * R_δ * delta(α, γ)" in strings
         assert "+ 1 * R_α * R_γ * delta(β, δ)" in strings
         assert "+ 1 * R_α * R_δ * delta(β, γ)" in strings
+
+        result = variations_between_R_and_delta(1, 2)
+        assert len(result) == 3 * 5
 
 
     def test_construct_full_tensor(self):
@@ -331,6 +353,7 @@ class TestBuildUp(unittest.TestCase):
         assert "+ 1 * Θ_yy * Θ_yy" in strings
         assert "+ 1 * Θ_zz * Θ_zz" in strings
 
+
     def test_get_product_terms_from_greek_sum_all(self):
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "alpha"])], prefactor=1)
@@ -357,4 +380,21 @@ class TestBuildUp(unittest.TestCase):
         assert '+ 1 * Θ_zz * Θ_zz' in strings
 
 
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "beta", "alpha"])], prefactor=1)
+        assert p.to_string() == "+ 1 * Φ_ααββ"
+        result = get_product_terms_from_greek_sum_all(p)
+        assert len(result) == 3*3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 3+3
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha", "alpha", "alpha"])], prefactor=1)
+        result = get_product_terms_from_greek_sum_all(p)
+        assert len(result) == 3
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "gamma", "delta"])], prefactor=1)
+        result = get_product_terms_from_greek_sum_all(p)
+        assert len(result) == 3*3*3*3
 

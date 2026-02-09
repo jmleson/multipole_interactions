@@ -143,16 +143,15 @@ class MultipoleMoment:
                 if values == [2, 2]:
                     indices = [str(i) for i in counts.keys()]
                     index1 = Index(indices[0])
-                    index1.separate_traceless = True
                     index2 = Index(indices[1])
-                    index1.separate_traceless = True
                     if not index1.is_coordinate() and index2.is_coordinate():
                         return [index1]
                     if index1.is_coordinate() and not index2.is_coordinate():
                         return [index2]
                     if not index1.is_coordinate() and not index2.is_coordinate():
+                        index1.separate_traceless = True
+                        index1.separate_traceless = True
                         return [index1, index2]
-
         return []
 
 
@@ -196,15 +195,48 @@ class MultipoleMoment:
             index4 = self.indices[3]
             if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
                 return replacements
-            coordinates = [i for i in [index1, index2, index3, index4] if i.is_coordinate()]
-            greek_symbols = sorted([i for i in [index1, index2, index3, index4] if not i.is_coordinate()])
-            if len(coordinates) == 2:
-                if coordinates[0] != coordinates[1]:
-                    # greek symbols have to be identical to the coordinates
-                    replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
-                    replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
-                else:
-                    replacements.append({"to_be_replaced": greek_symbols[1], "replacement": greek_symbols[0]})
+
+            coordinates = [i for i in self.indices if i.is_coordinate()]
+            greek_symbols = sorted([i for i in self.indices if not i.is_coordinate()])
+            counts = Counter(i.index for i in self.indices)
+            values = list(counts.values())
+
+            if len(coordinates) == 3:
+                counts = Counter(i.index for i in coordinates)
+                values = list(counts.values())
+                if sorted(values) == [1, 2]:
+                    single_index = None
+                    for k, v in counts.items():
+                        if v == 1:
+                            single_index = k
+                            break
+                    if single_index is not None:
+                        replacements.append({"to_be_replaced": greek_symbols[0], "replacement": Index(str(single_index)) } )
+            # if len(coordinates) == 2:
+            #     if coordinates[0] != coordinates[1]:
+            #         # greek symbols have to be identical to the coordinates
+            #         replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
+            #         replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
+            #         # OR:
+            #         replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[1]})
+            #         replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[0]})
+            #     else:
+            #         replacements.append({"to_be_replaced": greek_symbols[1], "replacement": greek_symbols[0]})
+            #         # OR:
+            #         replacements.append({"to_be_replaced": greek_symbols[0], "replacement": greek_symbols[1]})
+
+
+            if sorted(values) == [1, 1, 2]:
+                single_indices = []
+                for k, v in counts.items():
+                    if v == 1:
+                        single_indices.append(k)
+                single_indices = sorted([Index(str(i)) for i in single_indices])
+                if not single_indices[1].is_coordinate() and single_indices[0].is_coordinate():
+                    replacements.append({"to_be_replaced": single_indices[1], "replacement": single_indices[0]})
+                elif not single_indices[0].is_coordinate() and single_indices[1].is_coordinate():
+                    replacements.append({"to_be_replaced": single_indices[0], "replacement": single_indices[1]})
+                # else: order not clear -> if index occurs in other terms too, it may be wrongly substituted
         else:
             raise Exception("not yet implemented")
 
