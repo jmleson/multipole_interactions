@@ -77,6 +77,13 @@ class MultipoleMoment:
                 index_string = "".join(string_list)
                 if index_string not in ["xxy", "yyy", "yzz"]:
                     return True
+            coordinates = [i for i in [index1, index2, index3] if i.is_coordinate()]
+            greek_symbols = [i for i in [index1, index2, index3] if not i.is_coordinate()]
+            if len(coordinates) == 1 and Index("y") not in coordinates:
+                # can only become xxy / yzz -> at least one y has to be added
+                if greek_symbols[0] == greek_symbols[1]:
+                    return True
+
         elif len(self.indices) == 4:
             # hexadecapole:
             index1 = self.indices[0]

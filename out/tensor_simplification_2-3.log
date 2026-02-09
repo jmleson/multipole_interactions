@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  9 FEB 2026 12:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  9 FEB 2026 13:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -261,8 +261,6 @@ e
 [4]
 
 [5]
-
-[6]
 (/home/judith/Schreibtisch/Promotion/multipole_interactions/out/tensor_simplifi
 cation_2-3.aux)
  ***********
@@ -287,10 +285,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy7.pfb>
 Output written on /home/judith/Schreibtisch/Promotion/multipole_interactions/ou
-t/tensor_simplification_2-3.pdf (6 pages, 90912 bytes).
+t/tensor_simplification_2-3.pdf (5 pages, 88422 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 38 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 36 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
