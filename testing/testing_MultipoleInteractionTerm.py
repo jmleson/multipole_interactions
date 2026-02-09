@@ -1,4 +1,5 @@
 import unittest
+import sympy as sp
 
 from SummandTerm import MultipoleInteraction
 
@@ -7,16 +8,32 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
 
 
     def test_set_r_prefactor(self):
+        n = sp.symbols('n')
+
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         assert s.order == 2
+        assert s.prefactor_expansion == 1/n.subs(n, 1)
         assert s.r_prefactor.exponent == -5
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
         assert s.order == 3
+        assert s.prefactor_expansion == -1 / n.subs(n, 3)
         assert s.r_prefactor.exponent == -7
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
         assert s.order == 4
+        assert s.prefactor_expansion == 1/n.subs(n, 15)
+        assert s.r_prefactor.exponent == -9
+
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
+        assert s.order == 5
+        assert s.prefactor_expansion == -1/n.subs(n, 105)
+        assert s.r_prefactor.exponent == -11
+
+
+        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        assert s.order == 4
+        assert s.prefactor_expansion == 1/n.subs(n, 9)
         assert s.r_prefactor.exponent == -9
 
 
@@ -45,5 +62,8 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=1)
         s.simplify()
         assert "T_αβγ Θ_αβ μ_γ = + 0" == s.full_string_tensor()
+
+    def test_find_unresolved_multipoles(self):
+        pass
 
 

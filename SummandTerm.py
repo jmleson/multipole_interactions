@@ -1,3 +1,5 @@
+from enum import Enum
+
 from sympy import pretty
 import sympy as sp
 
@@ -8,6 +10,16 @@ from settings import global_symbols, greek_names
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from term_components.R import R
+from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum
+
+
+
+
+class _Clean_Kind(Enum):
+    clean_up = "cleaned up"
+    add_up = "added up"
+    none = None
+
 
 
 class MultipoleInteraction:
@@ -26,7 +38,7 @@ class MultipoleInteraction:
             self.tensor_terms.append(term)
 
         # initial values (! get changed by clean up):
-        self.prefactor_expansion = 1/prefactor_expansion(order=self.order-1)
+        self.prefactor_expansion = 1/( prefactor_expansion(order=multipole_order_1) * prefactor_expansion(order=multipole_order_2) )
         self.set_r_prefactor()
 
     def set_for_testing(self, tensor_terms, order):
@@ -71,7 +83,7 @@ class MultipoleInteraction:
                 string += f"{sp.latex(self.prefactor_expansion)}" + r" \cdot "
             if len(self.tensor_terms) > 0 and len([t for t in self.tensor_terms if t.prefactor != 0]) > 0:
                 string += r" \left[ \begin{array}{c} "+ "\n \t\t"
-                s = " \n " + r"\\ " + "\t\t "
+                s = " \n " + r"\\[0.2em] " + "\t\t "
                 string += s.join([term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ])
                 string += "\n" + r" \end{array}\right] "
             else:
@@ -86,6 +98,21 @@ class MultipoleInteraction:
         if len(result) > len(self.tensor_terms):
             raise Exception("should never happen")
         self.tensor_terms = result
+
+
+    def find_unresolved_multipoles(self):
+        new_terms = []
+        changed_anything = False
+        for p in self.tensor_terms:
+            result = get_product_terms_from_greek_sum(p)
+            changed_anything = changed_anything or len(result) > 1
+            for term in result:
+                new_terms.append(term)
+        if changed_anything:
+            self.tensor_terms = new_terms
+        return changed_anything
+
+
 
 
     def clean_up(self):
@@ -134,9 +161,9 @@ class MultipoleInteraction:
         latex_doc.append(r"\begin{document}")
 
         # Helper to add an equation with a description
-        def add_step(description, term_clean_up:bool=True):
-            latex_doc.append(r"\section*{" + description + "}")
-            if not term_clean_up:
+        def add_step(description, term_clean_up:_Clean_Kind = _Clean_Kind.clean_up):
+            latex_doc.append(r"\section*{" + description + ":}")
+            if term_clean_up.value is None :
                 latex_doc.append(r"\begin{equation}")
                 latex_doc.append(self.full_latex_tensor())
                 latex_doc.append(r"\end{equation}")
@@ -144,14 +171,18 @@ class MultipoleInteraction:
                 latex_doc.append(r"\begin{subequations}\begin{gather}")
                 latex_doc.append(self.full_latex_tensor())
                 for term in self.tensor_terms:
-                    term.clean_up()
-                latex_doc.append(r"\\ " + r"\xRightarrow{\text{cleaned up:}}")
+                    if term_clean_up == _Clean_Kind.clean_up:
+                        term.clean_up()
+                if term_clean_up == _Clean_Kind.add_up:
+                    self.add_up()
+                latex_doc.append(r"\\ " + r"\xRightarrow{\text{" + str(term_clean_up.value) + r"}}")
                 full_equation = self.full_latex_tensor()
                 latex_doc.append(full_equation[full_equation.find("=")+1:])
                 latex_doc.append(r"\end{gather}\end{subequations}")
             latex_doc.append("\n")
 
-        add_step(f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}:", term_clean_up=False)
+        add_step(f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
+                 term_clean_up=_Clean_Kind.none)
 
         for term in self.tensor_terms:
             term.simplify_delta()
@@ -174,10 +205,14 @@ class MultipoleInteraction:
         add_step("Reduce Indices")
 
         self.add_up()
-        add_step("Add up", term_clean_up=False)
+        add_step("Add up", term_clean_up=_Clean_Kind.none)
+
+        change = self.find_unresolved_multipoles()
+        if change:
+            add_step("Multiply Out Sum", term_clean_up=_Clean_Kind.add_up)
 
         self.clean_up()
-        add_step("Combining everything", term_clean_up=False)
+        add_step("Combining everything", term_clean_up=_Clean_Kind.none)
 
 
         latex_doc.append(r"\end{document}")

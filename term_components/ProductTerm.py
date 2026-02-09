@@ -1,3 +1,5 @@
+import sympy as sp
+
 from settings import greek_names
 from term_components.Delta import Delta
 from term_components.Index import Index
@@ -36,9 +38,9 @@ class ProductTerm:
 
     def to_latex(self):
         if self.prefactor >= 0:
-            strings = [f"+ {self.prefactor}"]
+            strings = [f"+ {sp.latex(self.prefactor)}"]
         else:
-            strings = [f"- {abs(self.prefactor)}"]
+            strings = [f"- {sp.latex(abs(self.prefactor))}"]
         for factor in self.factors:
             strings.append( factor.to_latex() )
         return r" \cdot ".join(strings)
@@ -107,7 +109,8 @@ class ProductTerm:
         return
 
     def use_traceless_conditions(self):
-        for term in self.factors:
+        for x in range(len(self.factors)):
+            term = self.factors[x]
             if not isinstance(term, MultipoleMoment):
                 continue
 
@@ -116,9 +119,9 @@ class ProductTerm:
                 continue
 
             indices = []
-            for i in self.factors:
-                if i != term:
-                    indices.extend(i.get_indices())
+            for y in range(len(self.factors)):
+                if y != x: #! important to compare indices, because the same multipole may occur twice/...
+                    indices.extend(self.factors[y].get_indices())
             found = False
             for possible_zero_component in traceless:
                 if possible_zero_component.is_coordinate():
@@ -130,6 +133,22 @@ class ProductTerm:
                 self.factors = []
                 return
 
+    def includes_duplicates(self) -> tuple[bool,list[Index]]:
+        duplicates_included = False
+        greek_indices = []
+        for i in range(len(self.factors)):
+            if not isinstance(self.factors[i], MultipoleMoment):
+                continue
+            for j in range(i+1,len(self.factors)):
+                if self.factors[i] == self.factors[j]:
+                    duplicates_included = True
+
+                    greek_indices = [str(i.index) for i in self.factors[i].get_indices()]
+                    greek_indices = [i for i in greek_indices if i not in {"x", "y", "z"}]
+                    greek_indices = set(greek_indices)
+                    greek_indices = list([Index(i) for i in greek_indices])
+
+        return duplicates_included, greek_indices
 
     def clean_up(self, set_to_zero:bool = True):
         new_factors = []

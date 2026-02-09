@@ -352,6 +352,49 @@ class TestingProductTerms(unittest.TestCase):
         assert p.to_string() == f"+ 0"# index y of traceless condition is used in other places, however, it is already a coordinate -> traceless condition still applicable
 
 
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha"]), MultipoleMoment(["alpha"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * μ_α * μ_α"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 1 * μ_α * μ_α"
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha","alpha"]), MultipoleMoment(["alpha","alpha"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
+        p.use_traceless_conditions()# traceless condition would apply for separate terms, but cannot be used since sum is coupled
+        assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
+
+
+    def test_find_unresolved_multipoles(self):
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "alpha"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
+        result = p.includes_duplicates()
+        assert result[0] is True
+        assert len(result[1]) == 1
+        assert result[1][0] == Index("alpha")
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha"]), MultipoleMoment(["alpha"])], prefactor=1)
+        result = p.includes_duplicates()
+        assert result[0] is True
+        assert len(result[1]) == 1
+        assert result[1][0] == Index("alpha")
+
+
+
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "beta"])], prefactor=1)
+        result = p.includes_duplicates()
+        assert result[0] is False
+        assert len(result[1]) == 0
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "alpha", "alpha"])], prefactor=1)
+        result = p.includes_duplicates()
+        assert result[0] is False
+        assert len(result[1]) == 0
 
 
 

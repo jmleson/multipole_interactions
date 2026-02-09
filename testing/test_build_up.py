@@ -3,11 +3,15 @@ from itertools import permutations
 
 import sympy as sp
 
+from term_components.Delta import Delta
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms, r_part
 from build_up_tensor_equations.tensor import TensorTerm, Tensor
 from build_up_tensor_equations.variations_between_R_and_delta import variations_between_R_and_delta
+from term_components.ProductTerm import ProductTerm
+from term_components.R import R
+from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum
 
 
 class TestBuildUp(unittest.TestCase):
@@ -254,6 +258,79 @@ class TestBuildUp(unittest.TestCase):
 
         tensor = construct_all_tensor_terms(order=6)
         assert len(tensor) == 1+15+45+15
+
+
+    def test_get_product_terms_from_greek_sum(self):
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"])], prefactor=1)
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 1
+        assert result[0] == p
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "beta"])], prefactor=1)
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 1
+        assert result[0] == p
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "alpha"])], prefactor=1)
+        assert p.to_string() == "+ 1 * Θ_αα * Θ_αα"
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 3
+        strings = [i.to_string() for i in result]
+        assert "+ 1 * Θ_xx * Θ_xx" in strings
+        assert "+ 1 * Θ_yy * Θ_yy" in strings
+        assert "+ 1 * Θ_zz * Θ_zz" in strings
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), R("alpha"), MultipoleMoment(["alpha", "alpha"])], prefactor=2)
+        p.sort_elements()
+        assert p.to_string() == "+ 2 * R_α * Θ_αα * Θ_αα"
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 3
+        strings = [i.to_string() for i in result]
+        assert "+ 2 * R_x * Θ_xx * Θ_xx" in strings
+        assert "+ 2 * R_y * Θ_yy * Θ_yy" in strings
+        assert "+ 2 * R_z * Θ_zz * Θ_zz" in strings
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), R("beta"), MultipoleMoment(["alpha", "alpha"])], prefactor=1)
+        p.sort_elements()
+        assert p.to_string() == "+ 1 * R_β * Θ_αα * Θ_αα"
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 3
+        strings = [i.to_string() for i in result]
+        assert "+ 1 * R_β * Θ_xx * Θ_xx" in strings
+        assert "+ 1 * R_β * Θ_yy * Θ_yy" in strings
+        assert "+ 1 * R_β * Θ_zz * Θ_zz" in strings
+
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "alpha"]), Delta("alpha", "beta")], prefactor=1)
+        assert p.to_string() == "+ 1 * Θ_αα * Θ_αα * delta(α, β)"
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 3
+        strings = [i.to_string() for i in result]
+        assert "+ 1 * Θ_xx * Θ_xx * delta(x, β)" in strings
+        assert "+ 1 * Θ_yy * Θ_yy * delta(y, β)" in strings
+        assert "+ 1 * Θ_zz * Θ_zz * delta(z, β)" in strings
+
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta"]), MultipoleMoment(["beta", "alpha"])], prefactor=1)
+        assert p.to_string() == "+ 1 * Θ_αβ * Θ_αβ"
+        result = get_product_terms_from_greek_sum(p)
+        assert len(result) == 9
+        strings = [i.to_string() for i in result]
+        assert "+ 1 * Θ_xy * Θ_xy" in strings
+        assert "+ 1 * Θ_xz * Θ_xz" in strings
+        assert "+ 1 * Θ_yz * Θ_yz" in strings
+        assert "+ 1 * Θ_xx * Θ_xx" in strings
+        assert "+ 1 * Θ_yy * Θ_yy" in strings
+        assert "+ 1 * Θ_zz * Θ_zz" in strings
+
+
 
 
 

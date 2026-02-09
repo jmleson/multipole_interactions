@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  6 FEB 2026 15:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  9 FEB 2026 11:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -192,9 +192,9 @@ e
 \Gin@req@height=\dimen163
 \Gin@req@width=\dimen164
 )
-Overfull \hbox (77.56519pt too wide) detected at line 241
+Overfull \hbox (80.34297pt too wide) detected at line 241
 []\OML/cmm/m/it/10 T[]\OT1/cmr/m/n/10 
-[][]^^H[][] = \OML/cmm/m/it/10 R[] \OMS/cmsy/m/n/10 ^^A [] ^^A []
+[][]^^H[][] = \OML/cmm/m/it/10 R[] \OMS/cmsy/m/n/10 ^^A ^^@[] ^^A []
  []
 
 
@@ -202,42 +202,42 @@ Overfull \hbox (77.56519pt too wide) detected at line 241
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \vbox (2266.23103pt too high) has occurred while \output is active []
+Overfull \vbox (2728.23573pt too high) has occurred while \output is active []
 
 
 
 [2]
-Overfull \hbox (90.13078pt too wide) detected at line 715
+Overfull \hbox (92.90857pt too wide) detected at line 715
 []
  []
 
 
-Overfull \vbox (5047.15929pt too high) has occurred while \output is active []
+Overfull \vbox (5971.16869pt too high) has occurred while \output is active []
 
 
 
 [3]
-Overfull \hbox (70.89026pt too wide) detected at line 1176
+Overfull \hbox (73.66805pt too wide) detected at line 1176
 []
  []
 
 
-Overfull \vbox (4891.1577pt too high) has occurred while \output is active []
+Overfull \vbox (5789.12904pt too high) has occurred while \output is active []
 
 
 
 [4]
-Overfull \vbox (4738.75615pt too high) has occurred while \output is active []
+Overfull \vbox (5610.68944pt too high) has occurred while \output is active []
 
 
 
 [5]
-Overfull \vbox (4090.74956pt too high) has occurred while \output is active []
+Overfull \vbox (4854.69109pt too high) has occurred while \output is active []
 
 
 
 [6]
-Overfull \vbox (4087.94957pt too high) has occurred while \output is active []
+Overfull \vbox (4851.8911pt too high) has occurred while \output is active []
 
 
 
@@ -256,11 +256,11 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  2623 strings out of 473197
  42157 string characters out of 5718604
- 1045504 words of memory out of 5000000
+ 1066364 words of memory out of 5000000
  25891 multiletter control sequences out of 15000+600000
  559896 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,16n,70p,316b,217s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 63i,16n,70p,323b,217s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
@@ -270,7 +270,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy7.pfb>
 Output written on /home/judith/Schreibtisch/Promotion/multipole_interactions/ou
-t/tensor_simplification_3-4.pdf (9 pages, 126931 bytes).
+t/tensor_simplification_3-4.pdf (9 pages, 125512 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  46 compressed objects within 1 object stream

@@ -1,6 +1,9 @@
 from SummandTerm import MultipoleInteraction
 
 
+# s = MultipoleInteraction(multipole_order_1 = 2, multipole_order_2 = 2)
+# s.simplify_in_latex_steps()
+
 
 for m1 in range(1,5):
     for m2 in range(m1,5):
