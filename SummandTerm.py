@@ -9,11 +9,8 @@ from settings import global_symbols, greek_names
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from term_components.R import R
-from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum
-
-
-
-
+from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum_duplicateMultipoles, \
+    get_product_terms_from_greek_sum_all
 
 
 class MultipoleInteraction:
@@ -34,6 +31,9 @@ class MultipoleInteraction:
         # initial values (! get changed by clean up):
         self.prefactor_expansion = 1/( prefactor_expansion(order=multipole_order_1) * prefactor_expansion(order=multipole_order_2) )
         self.set_r_prefactor()
+
+    def get_orders(self):
+        return (len(self.multipole1.indices), len(self.multipole2.indices))
 
     def set_for_testing(self, tensor_terms, order):
         self.multipole1 = None
@@ -68,6 +68,24 @@ class MultipoleInteraction:
             string += "+ 0"
         return string
 
+    def latex_width(self):
+        width = 100
+        if len(self.tensor_terms) <= 5:
+            width = 1
+        if (self.get_orders() == (1, 1)
+                or self.get_orders() == (1, 3) or self.get_orders() == (3, 1)
+                or self.get_orders() == (2, 1) or self.get_orders() == (1, 2)
+        ):
+            width = 1 # always break since derivation isn't too long
+        if self.get_orders() == (1,4) or self.get_orders() == (4,1):
+            width = 100# 105 is still too big
+        if self.get_orders() == (2,3) or self.get_orders() == (3,2):
+            width = 105# 110 is still too big
+        if self.get_orders() == (2,4) or self.get_orders() == (4,2):
+            width = 110
+        return width
+
+
     def full_latex_tensor(self) -> str:
         string = self.get_name(latex=True) + " = "
         if len(self.tensor_terms) > 0 and self.prefactor_expansion != 0:
@@ -78,7 +96,19 @@ class MultipoleInteraction:
             if len(self.tensor_terms) > 0 and len([t for t in self.tensor_terms if t.prefactor != 0]) > 0:
                 string += r" \left[ \begin{array}{c} "+ "\n \t\t"
                 s = " \n " + r"\\[0.2em] " + "\t\t "
-                string += s.join([term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ])
+                terms = [term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ]
+
+
+
+                # else:
+                line = ""
+                for i in range(len(terms)):
+                    if len(line) < self.latex_width():
+                        line += terms[i]
+                    else:
+                        string += line + s
+                        line = terms[i]
+                string += line
                 string += "\n" + r" \end{array}\right] "
             else:
                 string += r"\left[ + 0 \right]"
@@ -96,11 +126,13 @@ class MultipoleInteraction:
         self.tensor_terms = result
 
 
-    def find_unresolved_multipoles(self):
+    def find_unresolved_multipoles(self, function):
+        if function != get_product_terms_from_greek_sum_duplicateMultipoles and function != get_product_terms_from_greek_sum_all:
+            raise Exception("undefined behavior")
         new_terms = []
         changed_anything = False
         for p in self.tensor_terms:
-            result = get_product_terms_from_greek_sum(p)
+            result = function(p)
             changed_anything = changed_anything or len(result) > 1
             for term in result:
                 new_terms.append(term)
@@ -141,7 +173,8 @@ class MultipoleInteraction:
             term.reduce_indices()
             term.clean_up()
 
-        self.find_unresolved_multipoles()
+        self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_duplicateMultipoles)
+        self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
         self.add_up()
         self.clean_up()
 
@@ -225,7 +258,10 @@ class MultipoleInteraction:
             term.reduce_indices()
         prior_equation = self.add_step(latex_doc=latex_doc, description="Reduce Indices", prior_equation=prior_equation)
 
-        change = self.find_unresolved_multipoles()
+        change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_duplicateMultipoles)
+        if change:
+            prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum (Duplikate Multipoles)", prior_equation=prior_equation)
+        change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
         if change:
             prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum", prior_equation=prior_equation)
 

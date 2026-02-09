@@ -1,15 +1,40 @@
 import copy
 
 from term_components.Delta import Delta
+from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
 from term_components.ProductTerm import ProductTerm
 from term_components.R import R
 
 
-def get_product_terms_from_greek_sum(p:ProductTerm) -> list[ProductTerm]:
+
+def get_product_terms_from_greek_sum_all(p:ProductTerm) -> list[ProductTerm]:
+    for m in p.factors:
+        if isinstance(m, MultipoleMoment):
+            greek_indices = m.get_greek_indices()
+            if len(greek_indices) > 0:
+                # Expand ONE level
+                expanded_terms = multiply_out_greek_indices(p, greek_indices)
+
+                # Recurse on each expanded term
+                results = []
+                for term in expanded_terms:
+                    results.extend(get_product_terms_from_greek_sum_all(term))
+
+                return results
+    return [p]
+
+
+
+def get_product_terms_from_greek_sum_duplicateMultipoles(p:ProductTerm) -> list[ProductTerm]:
     duplicates_included, greek_indices = p.includes_duplicates()
     if not duplicates_included:
         return [p]
+    return multiply_out_greek_indices(p, greek_indices=greek_indices)
+
+
+
+def multiply_out_greek_indices(p:ProductTerm, greek_indices:list[Index]) -> list[ProductTerm]:
     if len(greek_indices) == 0:
         return [p]
 
@@ -48,6 +73,6 @@ def get_product_terms_from_greek_sum(p:ProductTerm) -> list[ProductTerm]:
     if len(greek_indices) > 1:
         result = []
         for term in new_terms:
-            result.extend(get_product_terms_from_greek_sum(term))
+            result.extend(get_product_terms_from_greek_sum_duplicateMultipoles(term))
         return result
     return new_terms

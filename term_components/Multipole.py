@@ -33,6 +33,13 @@ class MultipoleMoment:
     def get_indices(self):
         return self.indices
 
+    def get_greek_indices(self):
+        greek_indices = [str(i.index) for i in self.get_indices()]
+        greek_indices = [i for i in greek_indices if i not in {"x", "y", "z"}]
+        greek_indices = set(greek_indices)
+        greek_indices = list([Index(i) for i in greek_indices])
+        return greek_indices
+
     def to_string(self):
         return pretty(self.symbol) + "_" + "".join([i.to_string() for i in self.indices])
 

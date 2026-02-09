@@ -142,7 +142,6 @@ class ProductTerm:
                 self.factors = []
                 return
 
-    # def use_zero_components(self):
 
 
     def includes_duplicates(self) -> tuple[bool,list[Index]]:
@@ -154,11 +153,7 @@ class ProductTerm:
             for j in range(i+1,len(self.factors)):
                 if self.factors[i] == self.factors[j]:
                     duplicates_included = True
-
-                    greek_indices = [str(i.index) for i in self.factors[i].get_indices()]
-                    greek_indices = [i for i in greek_indices if i not in {"x", "y", "z"}]
-                    greek_indices = set(greek_indices)
-                    greek_indices = list([Index(i) for i in greek_indices])
+                    greek_indices = self.factors[i].get_greek_indices()
 
         return duplicates_included, greek_indices
 
