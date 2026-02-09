@@ -67,6 +67,20 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s.simplify_in_latex_steps()
         assert "T_αβγδ μ_α Ω_βγδ = [ - 3 * R_z^(-5) * μ_y * Ω_yzz ]" == s.full_string_tensor()
 
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
+        s.simplify_in_latex_steps()
+        assert "T_αβγδε μ_α Φ_βγδε = + 0" == s.full_string_tensor()
+
+
+        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        s.simplify_in_latex_steps()
+        assert ("T_αβγδ Θ_αβ Θ_γδ = [ "
+                "+ 17/3 * R_z^(-5) * Θ_zz * Θ_zz "
+                "+ 2/3 * R_z^(-5) * Θ_xx * Θ_xx "
+                "+ 2/3 * R_z^(-5) * Θ_yy * Θ_yy ]") == s.full_string_tensor()
+
+
+
     def test_find_unresolved_multipoles(self):
         pass
 
