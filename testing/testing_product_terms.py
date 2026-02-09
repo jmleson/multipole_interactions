@@ -175,12 +175,16 @@ class TestingProductTerms(unittest.TestCase):
         assert "+ 2 * Φ_xzβδ" == p.to_string()
         p.simplify_Multipole()
         assert "+ 2 * Φ_xxzz" == p.to_string()
+        p.clean_up(set_to_zero=True)
+        assert "+ 2 * Φ_xxzz" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["x", "x", "delta", "beta"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * Φ_xxβδ" == p.to_string()
         p.simplify_Multipole()
+        assert "+ 2 * Φ_xxββ" == p.to_string()
+        p.clean_up(set_to_zero=True)
         assert "+ 2 * Φ_xxββ" == p.to_string()
 
         p = ProductTerm()
@@ -189,8 +193,8 @@ class TestingProductTerms(unittest.TestCase):
         assert "+ 2 * Φ_xxδδ" == p.to_string()
         p.simplify_Multipole()
         assert "+ 2 * Φ_xxδδ" == p.to_string()  # cannot be replaced further
-        assert not p.factors[0].is_zero()
-
+        p.clean_up(set_to_zero=True)# assert not p.factors[0].is_zero()
+        assert "+ 2 * Φ_xxδδ" == p.to_string()
 
         ### MIXED TERMS ###
         p = ProductTerm()
@@ -215,6 +219,12 @@ class TestingProductTerms(unittest.TestCase):
         p.simplify_Multipole()
         assert "+ 2 * R_y * μ_y * Θ_xx" == p.to_string()
 
+        p = ProductTerm()
+        p.set_elements([R("delta"), MultipoleMoment(["x", "x"]), MultipoleMoment(["x", "x", "z","z"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * R_δ * Θ_xx * Φ_xxzz" == p.to_string()
+        p.clean_up(set_to_zero=True)
+        assert "+ 2 * R_δ * Θ_xx * Φ_xxzz" == p.to_string()
 
 
     def test_reduce_indices(self):
@@ -359,6 +369,28 @@ class TestingProductTerms(unittest.TestCase):
         assert Index("beta") in traceless
         assert Index("z") in traceless
 
+
+        m = MultipoleMoment(["alpha", "beta", "gamma", "delta"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 0
+
+        m = MultipoleMoment(["alpha", "beta", "gamma", "delta"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 0
+
+
+        m = MultipoleMoment(["alpha", "alpha", "delta", "delta"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 2
+        assert Index("alpha") in traceless
+        assert Index("delta") in traceless
+
+        m = MultipoleMoment(["x", "alpha", "x", "alpha"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 1
+        assert Index("alpha") in traceless
+
+
     def test_use_traceless_conditions(self):
         m = MultipoleMoment(["alpha", "alpha"])
         p = ProductTerm()
@@ -436,10 +468,22 @@ class TestingProductTerms(unittest.TestCase):
         assert p.to_string() == f"+ 1 * μ_α * μ_α"
 
         p = ProductTerm()
-        p.set_elements([MultipoleMoment(["alpha","alpha"]), MultipoleMoment(["alpha","alpha"])], prefactor=1)
+        p.set_elements([MultipoleMoment(["alpha","alpha"]), MultipoleMoment(["alpha", "alpha"])], prefactor=1)
         assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
         p.use_traceless_conditions()# traceless condition would apply for separate terms, but cannot be used since sum is coupled
         assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
+
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha","alpha"]), MultipoleMoment(["alpha","alpha", "x", "x"])], prefactor=1)
+        p.use_traceless_conditions()
+        assert p.to_string() == "+ 1 * Θ_αα * Φ_xxαα"
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "alpha", "beta", "beta"])], prefactor=1)
+        p.use_traceless_conditions()
+        assert p.to_string() == "+ 0"  # because beta itself is sufficient, even though the alpha sum does not necessarily vanish
+
 
 
     def test_find_unresolved_multipoles(self):

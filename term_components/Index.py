@@ -9,6 +9,8 @@ class Index:
     def __init__(self, index_sign:str):
         self.index = sp.Symbol(index_sign)
 
+        self.separate_traceless= False
+
     def __lt__(self, other):
         if not isinstance(other, Index):
             return NotImplemented
@@ -18,6 +20,7 @@ class Index:
     def is_coordinate(self):
         if str(self.index) in ["x", "y", "z"]:
             return True
+        return False
 
     def to_string(self):
         return pretty(self.index)

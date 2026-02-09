@@ -100,7 +100,7 @@ class MultipoleMoment:
             coordinates = [i for i in [index1, index2, index3, index4] if i.is_coordinate()]
             greek_symbols = [i for i in [index1, index2, index3, index4] if not i.is_coordinate()]
             if len(coordinates) == 4: #index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
-                string_list = sorted([str(i.index) for i in [index1, index2, index3]], key=lambda s: symbol_order[str(s)])
+                string_list = sorted([str(i.index) for i in [index1, index2, index3, index4]], key=lambda s: symbol_order[str(s)])
                 index_string = "".join(string_list)
                 if index_string not in ["xxxx", "xxyy", "xxzz", "yyyy", "yyzz", "zzzz"]:
                     return True
@@ -132,9 +132,27 @@ class MultipoleMoment:
                             double_index = k
                             break
                     if double_index is not None and not Index(str(double_index)).is_coordinate():
-                        return [Index(str(i)) for i in counts.keys()]
+                        return [Index(str(double_index))]# single_index can be used somewhere else -> still 0 if double_index double
         if len(self.indices) == 4:
-            pass # TODO
+            counts = Counter(i.index for i in self.indices)
+            if len(counts) == 4: # 4 different
+                return []
+
+            if len(counts) == 2:
+                values = list(counts.values())
+                if values == [2, 2]:
+                    indices = [str(i) for i in counts.keys()]
+                    index1 = Index(indices[0])
+                    index1.separate_traceless = True
+                    index2 = Index(indices[1])
+                    index1.separate_traceless = True
+                    if not index1.is_coordinate() and index2.is_coordinate():
+                        return [index1]
+                    if index1.is_coordinate() and not index2.is_coordinate():
+                        return [index2]
+                    if not index1.is_coordinate() and not index2.is_coordinate():
+                        return [index1, index2]
+
         return []
 
 

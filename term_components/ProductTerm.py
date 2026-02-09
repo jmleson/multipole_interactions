@@ -131,17 +131,22 @@ class ProductTerm:
             for y in range(len(self.factors)):
                 if y != x: #! important to compare indices, because the same multipole may occur twice/...
                     indices.extend(self.factors[y].get_indices())
-            found = False
+
+            index_does_occur = []
             for possible_zero_component in traceless:
                 if possible_zero_component.is_coordinate():
                     continue
-                if possible_zero_component in indices:
-                    found = True
-            if not found:
+
+                if possible_zero_component.separate_traceless:
+                    if not possible_zero_component in indices:
+                        index_does_occur.append(True)
+                else:
+                    if possible_zero_component in indices:
+                        index_does_occur.append(False)
+            if not False in index_does_occur or True in index_does_occur:
                 self.prefactor = 0
                 self.factors = []
                 return
-
 
 
     def includes_duplicates(self) -> tuple[bool,list[Index]]:
