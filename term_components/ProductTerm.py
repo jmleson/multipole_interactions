@@ -86,7 +86,8 @@ class ProductTerm:
         for i in self.factors:
             used_indices.extend(i.get_indices())
         used_indices = sorted(used_indices)
-        included_coordinates = [i for i in used_indices if i.is_coordinate()]
+        included_coordinates = [str(i.index) for i in used_indices if i.is_coordinate()]
+        included_coordinates = [Index(i) for i in set(included_coordinates)]
         used_indices = [str(i.index) for i in used_indices]
 
         used_indices = list(dict.fromkeys(used_indices))

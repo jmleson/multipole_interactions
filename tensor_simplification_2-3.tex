@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}
 \usepackage{amsmath}% for equation environment
 \usepackage{mathtools}% for xRightarrow
 \allowdisplaybreaks % allows breaks in subequations
@@ -232,18 +233,10 @@ T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}_{\alpha{}\beta{}} \Omega{
 \end{equation}
 
 
-\section*{Reduce Indices:}
-\begin{equation}
-T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}_{\alpha{}\beta{}} \Omega{}_{\gamma{}\delta{}\epsilon{}} = R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
- 		- 90 \cdot R_{z}^{5} \cdot \Theta{}_{\beta{}\beta{}} \cdot \Omega{}_{z\beta{}\beta{}}
- \end{array}\right] 
-\end{equation}
-
-
 \section*{Combining everything:}
 \begin{equation}
 T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}_{\alpha{}\beta{}} \Omega{}_{\gamma{}\delta{}\epsilon{}} =  \left[ \begin{array}{c} 
- 		+ 2 \cdot R_{z}^{-6} \cdot \Theta{}_{\beta{}\beta{}} \cdot \Omega{}_{z\beta{}\beta{}}
+ 		+ 2 \cdot R_{z}^{-6} \cdot \Theta{}_{\alpha{}\alpha{}} \cdot \Omega{}_{z\alpha{}\alpha{}}
  \end{array}\right] 
 \end{equation}
 

@@ -247,6 +247,19 @@ class TestingProductTerms(unittest.TestCase):
             p.reduce_indices()
             assert "+ 2 * R_δ * Θ_αβ * delta(α, γ)" == p.to_string()
 
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y", "z", "delta", "delta"])], prefactor=-4)
+        p.sort_elements()
+        assert "- 4 * Φ_yzδδ" == p.to_string()
+        p.reduce_indices()
+        assert "- 4 * Φ_yzαα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y", "z", "delta", "delta"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
+        p.sort_elements()
+        assert "- 4 * R_z * μ_y * Φ_yzδδ" == p.to_string()
+        p.reduce_indices()
+        assert "- 4 * R_z * μ_y * Φ_yzαα" == p.to_string()
 
         # CASE 3: coordinates included
         p = ProductTerm()

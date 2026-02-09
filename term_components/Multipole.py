@@ -83,12 +83,20 @@ class MultipoleMoment:
             index2 = self.indices[1]
             index3 = self.indices[2]
             index4 = self.indices[3]
-            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
+            coordinates = [i for i in [index1, index2, index3, index4] if i.is_coordinate()]
+            greek_symbols = [i for i in [index1, index2, index3, index4] if not i.is_coordinate()]
+            if len(coordinates) == 4: #index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate() and index4.is_coordinate():
                 string_list = sorted([str(i.index) for i in [index1, index2, index3]], key=lambda s: symbol_order[str(s)])
                 index_string = "".join(string_list)
                 if index_string not in ["xxxx", "xxyy", "xxzz", "yyyy", "yyzz", "zzzz"]:
                     return True
-            pass
+            if len(coordinates) == 2:
+                if (coordinates[0] == coordinates[1]# other indices have to be identical to eachother
+                        and greek_symbols[0] != greek_symbols[1]):
+                    return True
+                if (coordinates[0] != coordinates[1]  # other indices have to be identical to these -> other indices cannot be identical to eachother
+                            and greek_symbols[0] == greek_symbols[1]):
+                    return True
         else:
             raise Exception("not yet implemented")
         return False
