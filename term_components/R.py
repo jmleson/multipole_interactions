@@ -32,7 +32,7 @@ class R:
 
     def simplify(self) -> list[dict]:
         to_be_replaced, replacement = self.index, Index("z")
-        return [{"to_be_replaced": to_be_replaced, "replacement": replacement}]
+        return [{"to_be_replaced": to_be_replaced, "replacement": replacement, "dummy": False}]
 
     def is_zero(self):
         if str(self.index.index) in ["x", "y"]:

@@ -69,7 +69,8 @@ class ProductTerm:
                 to_be_replaced_dummies = []
                 for replacement in possible_replacements:
                     if replacement["dummy"]:
-                        to_be_replaced_dummies.append(replacement["replacement"])
+                        if replacement["replacement"] not in to_be_replaced_dummies:
+                            to_be_replaced_dummies.append(replacement["replacement"])
                         for i in self.factors:
                             if i.has_index(replacement["replacement"]):
                                 raise Exception("dummy should be index that does not occur otherwise (that's the whole point!)")
