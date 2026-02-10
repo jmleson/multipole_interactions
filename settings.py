@@ -7,6 +7,7 @@ greek_names = [
     "zeta", "eta", "theta", "iota", "kappa",
     "lambda", "mu", "nu", "xi", "omicron",
     "pi", "rho", "sigma", "tau", "upsilon",
+    # dummy symbols:
     "phi", "chi", "psi", "omega"
 ]
 
@@ -18,4 +19,5 @@ for key, value in {pretty(name): i for i, name in enumerate(global_symbols)}.ite
     symbol_order[key] = value
 for key, value in {"x": -3, "y": -2, "z": -1}.items():
     symbol_order[key] = value
-# print(symbol_order)
+
+print(symbol_order)

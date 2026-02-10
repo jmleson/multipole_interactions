@@ -57,9 +57,19 @@ class Delta:
 
 
     def simplify(self) -> list[dict]:
-        identical_values = sorted([self.index1, self.index2])
-        to_be_replaced, replacement = identical_values[1], identical_values[0]
-        return [{"to_be_replaced": to_be_replaced, "replacement": replacement}]
+        coordinates = [i for i in [self.index1, self.index2] if str(i.index) in ["x", "y", "z"]]
+        greek_indices = [i for i in [self.index1, self.index2] if str(i.index) not in ["x", "y", "z"]]
+        if len(coordinates) >= 2:
+            return []
+        if len(coordinates) == 1:
+            return [{"to_be_replaced": greek_indices[0], "replacement": coordinates[0], "dummy": False}]
+
+        dummy_symbol = Index(str("omega"))
+        return [
+            {"to_be_replaced": greek_indices[1], "replacement": dummy_symbol, "dummy": True},
+            {"to_be_replaced": greek_indices[0], "replacement": dummy_symbol, "dummy": True}
+        ]
+
 
     def is_zero(self):
         if self.evaluate() == 0:

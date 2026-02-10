@@ -27,6 +27,12 @@ class ProductTerm:
         if len(elements) == 0:
             self.prefactor = 0
 
+    def get_indices(self):
+        indices = []
+        for i in self.factors:
+            indices.extend(i.get_indices())
+        return indices
+
 
     def to_string(self):
         if self.prefactor >= 0:
@@ -58,11 +64,32 @@ class ProductTerm:
                     continue
 
                 possible_replacements = x.simplify()
+
+                # checking dummy set-up:
+                to_be_replaced_dummies = []
+                for replacement in possible_replacements:
+                    if replacement["dummy"]:
+                        to_be_replaced_dummies.append(replacement["replacement"])
+                        for i in self.factors:
+                            if i.has_index(replacement["replacement"]):
+                                raise Exception("dummy should be index that does not occur otherwise (that's the whole point!)")
+
+                # actual replacement
                 for replacement in possible_replacements:
                     if replacement["to_be_replaced"] is not None and replacement["replacement"] is not None:
                         for i in self.factors:
                             if i.has_index(replacement["to_be_replaced"]):
                                 i.replace_index(to_be_replaced=replacement["to_be_replaced"], replacement=replacement["replacement"])
+
+                # cleaning up dummies:
+                if len(to_be_replaced_dummies) > 0:
+                    indices = [str(i.index) for i in self.get_indices()]
+                    first_not_used_greek_index = [i for i in greek_names if i not in indices]
+                    if len(first_not_used_greek_index):
+                        for dummy in to_be_replaced_dummies:
+                            for i in self.factors:
+                                i.replace_index(to_be_replaced=dummy, replacement=Index(first_not_used_greek_index[0]))
+
 
     def simplify_delta(self):
         return self.simplify(type=Delta)
