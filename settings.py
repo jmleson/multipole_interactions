@@ -5,7 +5,8 @@ from sympy import pretty
 greek_names = [
     "alpha", "beta", "gamma", "delta", "epsilon",
     "zeta", "eta", "theta", "iota", "kappa",
-    "lambda", "mu", "nu", "xi", "omicron",
+    "lambda", #"mu",
+    "nu", "xi", "omicron",
     "pi", "rho", "sigma", "tau", "upsilon",
     # dummy symbols:
     "phi", "chi", "psi", "omega"

@@ -188,6 +188,7 @@ class TestMathematics(unittest.TestCase):
         assert result == False
 
 
+
     def test_add_product_terms(self):
         self.p1.set_elements(elements=[], prefactor=1)
         self.p2.set_elements(elements=[], prefactor=1)

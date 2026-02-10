@@ -17,8 +17,8 @@ class Delta:
         return [self.index1, self.index2]
 
     def has_index(self, test_index:Index):
-        chance_1 = test_index.index == self.index1.index
-        chance_2 = test_index.index == self.index2.index
+        chance_1 = test_index == self.index1
+        chance_2 = test_index == self.index2
         return chance_1 or chance_2
 
     def to_string(self):

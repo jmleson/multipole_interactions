@@ -33,4 +33,4 @@ class Index:
     def __eq__(self, other):
         if not isinstance(other, Index):
             return NotImplemented
-        return self.index == other.index and str(self.index) == str(other.index)
+        return symbol_order[str(self.index)] == symbol_order[str(other.index)]

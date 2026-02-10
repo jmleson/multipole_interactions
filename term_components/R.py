@@ -23,7 +23,7 @@ class R:
     def has_index(self, test_index:Index):
         if not isinstance(test_index, Index):
             raise TypeError("test_index must be an Index")
-        return test_index.index == self.index.index
+        return test_index == self.index
 
     def replace_index(self, to_be_replaced: Index, replacement: Index):
         if not self.has_index(test_index=to_be_replaced):

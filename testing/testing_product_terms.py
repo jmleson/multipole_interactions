@@ -363,50 +363,50 @@ class TestingProductTerms(unittest.TestCase):
         ### CASE 1: nothing changes
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha"])], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * μ_α" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([R("alpha")], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_α" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([Delta("alpha", "beta")], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * delta(α, β)" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "beta", "gamma"])], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * Ω_αβγ" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "beta"]), Delta("alpha", "beta"), R("beta")], prefactor=2)
         p.clean_up()# mainly sorting elements
         assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
 
         ### CASE 2: one element changes:
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["beta"])], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * μ_α" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "gamma", "gamma"])], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * Ω_αββ" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([R("gamma")], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_α" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([Delta("gamma", "beta")], prefactor=2)
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * delta(α, β)" == p.to_string()
 
         factories = [
@@ -419,35 +419,35 @@ class TestingProductTerms(unittest.TestCase):
             p.set_elements([f() for f in order] , prefactor=2)
             p.sort_elements()# ! no clean up <-> terms might cancel due to system conditions
             assert "+ 2 * R_δ * Θ_εζ * delta(ε, ω)" == p.to_string()
-            p.reduce_indices()
+            p.reduce_indices(consider_index_sorting=False)
             assert "+ 2 * R_δ * Θ_αβ * delta(α, γ)" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["y", "z", "delta", "delta"])], prefactor=-4)
         p.sort_elements()
         assert "- 4 * Φ_yzδδ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "- 4 * Φ_yzαα" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["y", "z", "delta", "delta"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
         p.sort_elements()
         assert "- 4 * R_z * μ_y * Φ_yzδδ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "- 4 * R_z * μ_y * Φ_yzαα" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["y", "y", "delta", "delta"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
         p.sort_elements()
         assert "- 4 * R_z * μ_y * Φ_yyδδ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "- 4 * R_z * μ_y * Φ_yyαα" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["y", "y", "delta", "alpha"]), R("z"), MultipoleMoment(["y"])], prefactor=-4)
         p.sort_elements()
         assert "- 4 * R_z * μ_y * Φ_yyαδ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "- 4 * R_z * μ_y * Φ_yyαβ" == p.to_string()
         p.simplify_Multipole()
         assert "- 4 * R_z * μ_y * Φ_yyαα" == p.to_string()
@@ -457,29 +457,96 @@ class TestingProductTerms(unittest.TestCase):
         p.set_elements([R("z"), MultipoleMoment(["y"]), MultipoleMoment(["y", "beta", "beta"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * R_z * μ_y * Ω_yββ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_z * μ_y * Ω_yαα" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([R("x"), MultipoleMoment(["y"]), MultipoleMoment(["z", "beta", "gamma"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * R_x * μ_y * Ω_zβγ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_x * μ_y * Ω_zαβ" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([Delta("x", "epsilon"), MultipoleMoment(["z","gamma"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * Θ_zγ * delta(x, ε)" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * Θ_zα * delta(x, β)" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([R("z"), MultipoleMoment(["z", "z", "gamma"]), MultipoleMoment(["z", "delta", "delta"])], prefactor=2)
         p.sort_elements()
         assert "+ 2 * R_z * Ω_zzγ * Ω_zδδ" == p.to_string()
-        p.reduce_indices()
+        p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_z * Ω_zzα * Ω_zββ" == p.to_string()
+
+
+    def test_has_index(self):
+        m = MultipoleMoment(["alpha"])
+        assert m.has_index(Index("alpha"))
+        assert m.has_index(Index("α"))
+
+        r = R("alpha")
+        assert r.has_index(Index("alpha"))
+        assert r.has_index(Index("α"))
+
+        d = Delta("alpha", "beta")
+        assert d.has_index(Index("alpha"))
+        assert d.has_index(Index("beta"))
+        assert d.has_index(Index("α"))
+        assert d.has_index(Index("β"))
+
+    def test_replace_index(self):
+        m = MultipoleMoment(["alpha"])
+        assert m.to_string() == "μ_α"
+        m.replace_index(to_be_replaced = Index("alpha"), replacement = Index("x"))
+        assert m.to_string() == "μ_x"
+
+        m = MultipoleMoment(["alpha"])
+        assert m.to_string() == "μ_α"
+        m.replace_index(to_be_replaced=Index("alpha"), replacement=Index("β"))
+        assert m.to_string() == "μ_β"
+
+
+    def test_reduce_indices_sorting(self):
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta"]), MultipoleMoment(["alpha"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * μ_α * Θ_αβ" == p.to_string()
+        p.reduce_indices_sorting()
+        assert "+ 2 * μ_α * Θ_αβ" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["beta", "alpha"]), MultipoleMoment(["beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * μ_β * Θ_αβ" == p.to_string()
+        p.reduce_indices_sorting()
+        assert "+ 2 * μ_α * Θ_αβ" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["z", "z", "beta"]), MultipoleMoment(["alpha", "alpha", "beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Ω_zzβ * Ω_ααβ" == p.to_string()
+        p.reduce_indices_sorting()
+        assert "+ 2 * Ω_zzα * Ω_αββ" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["z", "z", "alpha"]), MultipoleMoment(["alpha", "beta", "beta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * Ω_zzα * Ω_αββ" == p.to_string()
+        p.reduce_indices_sorting()
+        assert "+ 2 * Ω_zzα * Ω_αββ" == p.to_string()
+
+        p = ProductTerm()
+        m1 = MultipoleMoment(["y", "beta", "beta"])
+        m1.molecule = "A"
+        m2 = MultipoleMoment(["y", "alpha", "alpha"])
+        m2.molecule = "B"
+        p.set_elements([R("z"), m1, m2 ], prefactor=45)
+        assert p.to_string() == "+ 45 * R_z * Ω^A_yββ * Ω^B_yαα"
+        p.reduce_indices_sorting()
+        assert p.to_string() ==  "+ 45 * R_z * Ω^A_yαα * Ω^B_yββ"
 
 
     def test_traceless_conditions(self):
@@ -506,8 +573,7 @@ class TestingProductTerms(unittest.TestCase):
 
         m = MultipoleMoment(["alpha", "beta", "beta"])
         traceless = m.traceless_condition()
-        assert len(traceless) == 1
-        assert Index("beta") in traceless
+        assert len(traceless) == 0
 
         m = MultipoleMoment(["alpha", "beta", "z"])
         assert len(m.traceless_condition()) == 0
@@ -536,6 +602,18 @@ class TestingProductTerms(unittest.TestCase):
         assert len(traceless) == 1
         assert Index("alpha") in traceless
 
+        m = MultipoleMoment(["y", "z", "z"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 0
+
+        m = MultipoleMoment(["y", "alpha", "alpha"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 0
+
+        m = MultipoleMoment(["beta", "beta", "x"])
+        traceless = m.traceless_condition()
+        assert len(traceless) == 1
+        assert Index("beta") in traceless
 
     def test_use_traceless_conditions(self):
         m = MultipoleMoment(["alpha", "alpha"])
@@ -578,12 +656,12 @@ class TestingProductTerms(unittest.TestCase):
         assert p.to_string() == f"+ 1 * Ω_βββ * Θ_αγ"
 
 
-        m = MultipoleMoment(["beta", "beta", "gamma"])
+        m = MultipoleMoment(["beta", "beta", "delta"])
         p = ProductTerm()
-        p.set_elements([m, MultipoleMoment(["alpha", "gamma"])], prefactor=1)
-        assert p.to_string() == f"+ 1 * Ω_ββγ * Θ_αγ"
+        p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Ω_ββδ * Θ_αδ"
         p.use_traceless_conditions()
-        assert p.to_string() == f"+ 0"
+        assert p.to_string() == f"+ 1 * Ω_ββδ * Θ_αδ"
 
         m = MultipoleMoment(["beta", "gamma", "gamma"])
         p = ProductTerm()
@@ -592,13 +670,13 @@ class TestingProductTerms(unittest.TestCase):
         p.use_traceless_conditions()
         assert p.to_string() == f"+ 1 * Ω_βγγ * Θ_αγ"
 
-        m = MultipoleMoment(["beta", "beta", "gamma"])
+        m = MultipoleMoment(["beta", "beta", "x"])
         p = ProductTerm()
         p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
-        assert p.to_string() == f"+ 1 * Ω_ββγ * Θ_αδ"
+        assert p.to_string() == f"+ 1 * Ω_xββ * Θ_αδ"
         p.use_traceless_conditions()
         assert p.to_string() == f"+ 0"
-        for x in ["z", "x", "y"]:
+        for x in ["z", "x"]:
             m = MultipoleMoment(["beta", "beta", x])
             p = ProductTerm()
             p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
@@ -606,10 +684,16 @@ class TestingProductTerms(unittest.TestCase):
             p.use_traceless_conditions()
             assert p.to_string() == "+ 0"
 
+        m = MultipoleMoment(["y", "z", "z"])
+        p = ProductTerm()
+        p.set_elements([m, MultipoleMoment(["y", "alpha", "alpha"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * Ω_yzz * Ω_yαα"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 1 * Ω_yzz * Ω_yαα"
 
         p = ProductTerm()
-        p.set_elements([MultipoleMoment(["y"]), MultipoleMoment(["y", "beta", "beta"]), R("z") ], prefactor=3)
-        assert p.to_string() == f"+ 3 * μ_y * Ω_yββ * R_z"
+        p.set_elements([MultipoleMoment(["x"]), MultipoleMoment(["x", "beta", "beta"]), R("z") ], prefactor=3)
+        assert p.to_string() == f"+ 3 * μ_x * Ω_xββ * R_z"
         p.use_traceless_conditions()
         assert p.to_string() == f"+ 0"# index y of traceless condition is used in other places, however, it is already a coordinate -> traceless condition still applicable
 
@@ -654,8 +738,6 @@ class TestingProductTerms(unittest.TestCase):
         assert result[0] is True
         assert len(result[1]) == 1
         assert result[1][0] == Index("alpha")
-
-
 
 
         p = ProductTerm()

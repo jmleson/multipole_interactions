@@ -89,38 +89,48 @@ T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\g
 \end{gather}\end{subequations}
 
 
-\section*{Combining everything:}
-\begin{equation}
-T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\gamma{}\delta{}} =  \left[ \begin{array}{c} 
- 		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{A}_{\alpha{}} \cdot \Omega{}^{B}_{zz\alpha{}} 
- \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{\alpha{}} \cdot \Omega{}^{B}_{\alpha{}\beta{}\beta{}}
- \end{array}\right] 
-\end{equation}
-
-
 \section*{Simplify Dipoles:}
 \begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\gamma{}\delta{}} =  \left[ \begin{array}{c} 
- 		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
- \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\beta{}\beta{}}
+T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\gamma{}\delta{}} = R_{z}^{-9} \cdot \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\beta{}\beta{}}
  \end{array}\right] 
 \\ \xRightarrow{\text{reduced indices}}
-  \left[ \begin{array}{c} 
- 		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
- \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\alpha{}\alpha{}}
+ R_{z}^{-9} \cdot \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\alpha{}\alpha{}}
  \end{array}\right] 
 \\ \xRightarrow{\text{added up}}
-  \left[ \begin{array}{c} 
- 		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
- \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\alpha{}\alpha{}}
+ R_{z}^{-9} \cdot \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{y\alpha{}\alpha{}}
  \end{array}\right] 
 \end{gather}\end{subequations}
 
 
-\section*{Exploit Traceless Conditions:}
+\section*{Multiply Out Sum:}
+\begin{subequations}\begin{gather}
+T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\gamma{}\delta{}} = R_{z}^{-9} \cdot \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{xxy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yyy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-9} \cdot \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 36 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{xxy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yyy}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\section*{Combining everything:}
 \begin{equation}
 T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{A}_{\alpha{}} \Omega{}^{B}_{\beta{}\gamma{}\delta{}} =  \left[ \begin{array}{c} 
- 		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz}
+ 		- \frac{12}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yzz} 
+ \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{xxy} 
+ \\[0.2em] 		 + \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{A}_{y} \cdot \Omega{}^{B}_{yyy}
  \end{array}\right] 
 \end{equation}
 

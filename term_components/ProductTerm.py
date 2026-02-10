@@ -1,7 +1,7 @@
 import sympy as sp
 
 
-from settings import greek_names
+from settings import greek_names, symbol_order
 from term_components.Delta import Delta
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
@@ -64,33 +64,39 @@ class ProductTerm:
                     continue
 
                 possible_replacements = x.simplify()
+                self._replace_given_replacement(possible_replacements=possible_replacements)
 
-                # checking dummy set-up:
-                to_be_replaced_dummies = []
-                for replacement in possible_replacements:
-                    if replacement["dummy"]:
-                        if replacement["replacement"] not in to_be_replaced_dummies:
-                            to_be_replaced_dummies.append(replacement["replacement"])
-                        for i in self.factors:
-                            if i.has_index(replacement["replacement"]):
-                                raise Exception("dummy should be index that does not occur otherwise (that's the whole point!)")
 
-                # actual replacement
-                for replacement in possible_replacements:
-                    if replacement["to_be_replaced"] is not None and replacement["replacement"] is not None:
-                        for i in self.factors:
-                            if i.has_index(replacement["to_be_replaced"]):
-                                i.replace_index(to_be_replaced=replacement["to_be_replaced"], replacement=replacement["replacement"])
+    def _replace_given_replacement(self, possible_replacements:list[dict]):
+        # checking dummy set-up:
+        to_be_replaced_dummies = []
+        for replacement in possible_replacements:
+            if replacement["dummy"]:
+                if replacement["replacement"] not in to_be_replaced_dummies:
+                    to_be_replaced_dummies.append(replacement["replacement"])
+                for i in self.factors:
+                    if i.has_index(replacement["replacement"]):
+                        raise Exception("dummy should be index that does not occur otherwise (that's the whole point!)")
 
-                # cleaning up dummies:
-                if len(to_be_replaced_dummies) > 0:
-                    indices = [str(i.index) for i in self.get_indices()]
-                    first_not_used_greek_index = [i for i in greek_names if i not in indices]
-                    if len(first_not_used_greek_index):
-                        for dummy in to_be_replaced_dummies:
-                            for i in self.factors:
-                                i.replace_index(to_be_replaced=dummy, replacement=Index(first_not_used_greek_index[0]))
+        # actual replacement
+        for replacement in possible_replacements:
+            if replacement["to_be_replaced"] is not None and replacement["replacement"] is not None:
+                for i in self.factors:
+                    if i.has_index(replacement["to_be_replaced"]):
+                        i.replace_index(to_be_replaced=replacement["to_be_replaced"],
+                                        replacement=replacement["replacement"])
 
+        # print("\tafter dummy:", self.to_string(), flush=True)#TODO remove
+
+        # cleaning up dummies:
+        if len(to_be_replaced_dummies) > 0:
+            indices = [str(i.index) for i in self.get_indices()]
+            first_not_used_greek_index = [i for i in greek_names if i not in indices]
+            if len(first_not_used_greek_index):
+                for d in range(len(to_be_replaced_dummies)):
+                    dummy = to_be_replaced_dummies[d]
+                    for i in self.factors:
+                        i.replace_index(to_be_replaced=dummy, replacement=Index(first_not_used_greek_index[d]))
 
     def simplify_delta(self):
         return self.simplify(type=Delta)
@@ -101,7 +107,7 @@ class ProductTerm:
     def simplify_Multipole(self, max_order:int=None):
         return self.simplify(type=MultipoleMoment, max_order=max_order)
 
-    def reduce_indices(self):
+    def reduce_indices(self, consider_index_sorting:bool):
         """
         moves terms of higher indices to lower ones, e.g. mu_beta -> mu_alpha
         (! not the smartest function, it does only re-name indices when their position in the alphabet is higher than the number of used indices )
@@ -142,7 +148,34 @@ class ProductTerm:
                     raise Exception("index already exists, by replacement a change in meaning will be produced ")
                 if i.has_index(to_be_replaced):
                     i.replace_index(to_be_replaced=to_be_replaced, replacement=replacement)
+
+        if consider_index_sorting:
+            self.reduce_indices_sorting()
         return
+
+    def reduce_indices_sorting(self):
+        total = self.to_string()
+        index_order_ist = []
+        for i in total:
+            if i in symbol_order.keys() and i not in index_order_ist and i not in ["x", "y", "z"]:
+                index_order_ist.append(i)
+
+        index_order_shall = []
+        for i in sorted(self.get_indices()):
+            if i.to_string() not in index_order_shall and i.to_string() not in ["x", "y", "z"]:
+                index_order_shall.append(i.to_string())
+
+        if index_order_shall != index_order_ist:
+            possible_replacements = []
+            for i in range(len(index_order_shall)):
+                replacement = {"to_be_replaced": Index(index_order_shall[-i-1]), "replacement": Index(greek_names[-1-i]), "dummy": True}
+                possible_replacements.append(replacement)
+
+            self._replace_given_replacement(possible_replacements)
+        if total != self.to_string():
+            print("\t\t! function 'reduce_indices_sorting' changed", total , "into", self.to_string(), flush=True)
+        return
+
 
 
     def use_traceless_conditions(self):
@@ -247,6 +280,4 @@ class ProductTerm:
             elif self.factors[i] != other.factors[i]:
                 return False
         return True
-
-
 

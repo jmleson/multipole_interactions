@@ -53,14 +53,16 @@ class MultipoleMoment:
         return r"\ "[0]+str(self.symbol) + "{}_{" + "".join([i.to_latex() for i in self.indices]) + "}"
 
     def has_index(self, test_index:Index):
-        return test_index.index in [i.index for i in self.indices]
+        #return len( [i for i in self.indices if i == test_index] ) > 0
+        return test_index in [i for i in self.indices]
 
     def replace_index(self, to_be_replaced: Index, replacement: Index):
         if not self.has_index(test_index=to_be_replaced):
             return
+        # print("\treplace index M:", to_be_replaced.index, "->", replacement.index, flush=True)
         new_indices = []
         for i in self.indices:
-            if to_be_replaced.index == i.index:
+            if to_be_replaced == i:
                 new_indices.append(replacement)
             else:
                 new_indices.append(i)
@@ -129,16 +131,21 @@ class MultipoleMoment:
         if len(self.indices) == 3:
             # = 0, if xαα / yαα / zαα / or 2x other greek symbol :
             counts = Counter(i.index for i in self.indices)
-            if len(counts) == 2:
-                values = list(counts.values())
-                if sorted(values) == [1, 2]:
-                    double_index = None
-                    for k, v in counts.items():
-                        if v == 2:
-                            double_index = k
-                            break
-                    if double_index is not None and not Index(str(double_index)).is_coordinate():
-                        return [Index(str(double_index))]# single_index can be used somewhere else -> still 0 if double_index double
+            if sorted(counts.values()) == [1, 2]:
+                double_index = next((k for k, v in counts.items() if v == 2), None)
+                single_index = next((k for k, v in counts.items() if v == 1), None)
+                if single_index is not None and double_index is not None:
+                    single_index = Index(str(single_index))
+                    double_index = Index(str(double_index))
+                    if single_index.is_coordinate() and not double_index.is_coordinate():
+                        if single_index in [Index("x"), Index("z")]:
+                            return [double_index]# single_index can be used somewhere else -> still 0 if double_index double
+                        else:
+                            pass # y alpha alpha   is okay!
+                    elif not single_index.is_coordinate() and double_index.is_coordinate():
+                        if double_index == Index("y"):
+                            # alpha y y = 0
+                            return [double_index]
         if len(self.indices) == 4:
             counts = Counter(i.index for i in self.indices)
             if len(counts) == 4: # 4 different

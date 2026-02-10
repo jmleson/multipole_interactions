@@ -184,7 +184,7 @@ class MultipoleInteraction:
 
 
 
-    def add_step(self, latex_doc, description, term_clean_up:bool = True, prior_equation:str="") -> str:
+    def add_step(self, latex_doc, description, term_clean_up:bool = True, prior_equation:str="", consider_index_sorting:bool=False) -> str:
             basic_equation = self.full_latex_tensor()
             if basic_equation == prior_equation:
                 return basic_equation
@@ -198,7 +198,7 @@ class MultipoleInteraction:
                 cleaned_up_equation = self.full_latex_tensor()
 
                 for term in self.tensor_terms:
-                    term.reduce_indices()
+                    term.reduce_indices(consider_index_sorting=consider_index_sorting)
                 reduced_indices_equation = self.full_latex_tensor()
 
                 self.add_up()
@@ -243,7 +243,6 @@ class MultipoleInteraction:
         latex_doc.append(r"\begin{document}")
 
 
-
         prior_equation = self.add_step(latex_doc=latex_doc, description=f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
                  term_clean_up=False)
 
@@ -255,9 +254,6 @@ class MultipoleInteraction:
             term.simplify_R()
         prior_equation = self.add_step(latex_doc=latex_doc, description="Simplify R", prior_equation=prior_equation)
 
-        # self.clean_up()# TODO remove
-        # prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation)# TODO remove
-
 
         for max_order, name in [(1, "Dipoles"),
                                 (2, "Quadrupoles"),
@@ -265,23 +261,23 @@ class MultipoleInteraction:
                                 (4, "Hexadecapoles")]:
             for term in self.tensor_terms:
                 term.simplify_Multipole(max_order=max_order)
-            prior_equation = self.add_step(latex_doc=latex_doc, description=f"Simplify {name}", prior_equation=prior_equation)
+            prior_equation = self.add_step(latex_doc=latex_doc, description=f"Simplify {name}", prior_equation=prior_equation, consider_index_sorting=True)
 
         for term in self.tensor_terms:
             term.use_traceless_conditions()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Conditions", prior_equation=prior_equation)
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Conditions", prior_equation=prior_equation, consider_index_sorting=True)
 
         # change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_duplicateMultipoles)
         # if change:
         #     prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum (Duplikate Multipoles)", prior_equation=prior_equation)
         change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
         if change:
-            prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum", prior_equation=prior_equation)
+            prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum", prior_equation=prior_equation, consider_index_sorting=True)
 
         self.clean_up()
-        self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation)
+        self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation, consider_index_sorting=True)
 
         latex_doc.append(r"\end{document}")
         with open(filename, "w") as f:
             f.write("\n".join(latex_doc))
-        print(f"LaTeX document written to {filename}")
+        print(f"LaTeX document written to {filename}", flush=True)
