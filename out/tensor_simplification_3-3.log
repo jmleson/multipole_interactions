@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  9 FEB 2026 14:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  10 FEB 2026 11:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -253,44 +253,32 @@ e
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \vbox (399.55453pt too high) has occurred while \output is active []
+Overfull \vbox (401.06932pt too high) has occurred while \output is active []
 
 
 
 [2]
-Overfull \vbox (404.55453pt too high) has occurred while \output is active []
+Overfull \vbox (406.06932pt too high) has occurred while \output is active []
 
 
 
 [3]
-Overfull \vbox (375.85179pt too high) has occurred while \output is active []
+Overfull \vbox (377.36658pt too high) has occurred while \output is active []
 
 
 
 [4]
-Overfull \vbox (95.83934pt too high) has occurred while \output is active []
+Overfull \vbox (377.36658pt too high) has occurred while \output is active []
 
 
 
 [5]
-Overfull \vbox (124.54208pt too high) has occurred while \output is active []
-
-
 
 [6]
 
 [7]
 
 [8]
-
-[9]
-Overfull \vbox (54.54224pt too high) has occurred while \output is active []
-
-
-
-[10]
-
-[11]
 (/home/judith/Schreibtisch/Promotion/multipole_interactions/out/tensor_simplifi
 cation_3-3.aux)
  ***********
@@ -301,7 +289,7 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  3186 strings out of 473197
  50667 string characters out of 5718604
- 640106 words of memory out of 5000000
+ 689461 words of memory out of 5000000
  26443 multiletter control sequences out of 15000+600000
  559896 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -315,10 +303,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy7.pfb>
 Output written on /home/judith/Schreibtisch/Promotion/multipole_interactions/ou
-t/tensor_simplification_3-3.pdf (11 pages, 103451 bytes).
+t/tensor_simplification_3-3.pdf (8 pages, 102101 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 71 PDF objects out of 1000 (max. 8388607)
+ 44 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -20,4 +20,4 @@ for key, value in {pretty(name): i for i, name in enumerate(global_symbols)}.ite
 for key, value in {"x": -3, "y": -2, "z": -1}.items():
     symbol_order[key] = value
 
-print(symbol_order)
+# print(symbol_order)

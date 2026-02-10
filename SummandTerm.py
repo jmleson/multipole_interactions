@@ -18,14 +18,20 @@ class MultipoleInteraction:
     def __init__(self, multipole_order_1:int, multipole_order_2:int):
 
         self.multipole1 = MultipoleMoment(greek_names[:multipole_order_1])
+        self.multipole1.molecule = "A"
         self.multipole2 = MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2])
+        self.multipole2.molecule = "B"
 
         self.order = len(self.multipole1.indices) + len(self.multipole2.indices)
 
         self.tensor_terms = []
         for term in construct_all_tensor_terms(order=self.order):
-            term.factors.append(  MultipoleMoment(greek_names[:multipole_order_1]) )
-            term.factors.append( MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2]) )
+            m1 = MultipoleMoment(greek_names[:multipole_order_1])
+            m1.molecule = "A"
+            term.factors.append( m1 )
+            m2 = MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2])
+            m2.molecule = "B"
+            term.factors.append( m2 )
             self.tensor_terms.append(term)
 
         # initial values (! get changed by clean up):
@@ -97,8 +103,6 @@ class MultipoleInteraction:
                 string += r" \left[ \begin{array}{c} "+ "\n \t\t"
                 s = " \n " + r"\\[0.2em] " + "\t\t "
                 terms = [term.to_latex() for term in self.tensor_terms if not term.prefactor == 0 ]
-
-
 
                 # else:
                 line = ""
@@ -187,16 +191,21 @@ class MultipoleInteraction:
 
             latex_doc.append(r"\section*{" + description + ":}")
 
-            cleaned_up_equation, added_up_equation = None, None
+            cleaned_up_equation, added_up_equation, reduced_indices_equation = None, None, None
             if term_clean_up:
                 for term in self.tensor_terms:
                     term.clean_up()
                 cleaned_up_equation = self.full_latex_tensor()
+
+                for term in self.tensor_terms:
+                    term.reduce_indices()
+                reduced_indices_equation = self.full_latex_tensor()
+
                 self.add_up()
                 added_up_equation = self.full_latex_tensor()
 
             last_equation = basic_equation
-            if not term_clean_up or (cleaned_up_equation == basic_equation and added_up_equation == basic_equation):
+            if not term_clean_up or (cleaned_up_equation == basic_equation and added_up_equation == basic_equation and reduced_indices_equation == basic_equation):
                 latex_doc.append(r"\begin{equation}")
                 latex_doc.append(basic_equation)
                 latex_doc.append(r"\end{equation}")
@@ -209,6 +218,10 @@ class MultipoleInteraction:
                     latex_doc.append(r"\\ " + r"\xRightarrow{\text{cleaned up}}")
                     latex_doc.append(cleaned_up_equation[cleaned_up_equation.find("=") + 1:])
                     last_equation = cleaned_up_equation
+                if reduced_indices_equation != basic_equation and reduced_indices_equation != cleaned_up_equation:
+                    latex_doc.append(r"\\ " + r"\xRightarrow{\text{reduced indices}}")
+                    latex_doc.append(reduced_indices_equation[reduced_indices_equation.find("=") + 1:])
+                    last_equation = reduced_indices_equation
                 if added_up_equation != basic_equation and added_up_equation != cleaned_up_equation:
                     latex_doc.append(r"\\ " + r"\xRightarrow{\text{added up}}")
                     latex_doc.append(added_up_equation[added_up_equation.find("=") + 1:])
@@ -242,6 +255,10 @@ class MultipoleInteraction:
             term.simplify_R()
         prior_equation = self.add_step(latex_doc=latex_doc, description="Simplify R", prior_equation=prior_equation)
 
+        # self.clean_up()# TODO remove
+        # prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation)# TODO remove
+
+
         for max_order, name in [(1, "Dipoles"),
                                 (2, "Quadrupoles"),
                                 (3, "Oktopoles"),
@@ -254,13 +271,9 @@ class MultipoleInteraction:
             term.use_traceless_conditions()
         prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Conditions", prior_equation=prior_equation)
 
-        for term in self.tensor_terms:
-            term.reduce_indices()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Reduce Indices", prior_equation=prior_equation)
-
-        change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_duplicateMultipoles)
-        if change:
-            prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum (Duplikate Multipoles)", prior_equation=prior_equation)
+        # change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_duplicateMultipoles)
+        # if change:
+        #     prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum (Duplikate Multipoles)", prior_equation=prior_equation)
         change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
         if change:
             prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum", prior_equation=prior_equation)

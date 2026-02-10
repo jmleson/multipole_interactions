@@ -29,6 +29,8 @@ class MultipoleMoment:
 
         self.prefactor_in_potential = (-1) ** len(self.indices)
 
+        self.molecule = None
+
 
     def get_indices(self):
         return self.indices
@@ -41,9 +43,13 @@ class MultipoleMoment:
         return greek_indices
 
     def to_string(self):
+        if self.molecule:
+            return pretty(self.symbol) + r"^" + self.molecule + "_" + "".join([i.to_string() for i in self.indices])
         return pretty(self.symbol) + "_" + "".join([i.to_string() for i in self.indices])
 
     def to_latex(self):
+        if self.molecule:
+             return r"\ "[0]+str(self.symbol) + "{}"+ r"^{" + self.molecule + r"}"+ r"_{" + "".join([i.to_latex() for i in self.indices]) + "}"
         return r"\ "[0]+str(self.symbol) + "{}_{" + "".join([i.to_latex() for i in self.indices]) + "}"
 
     def has_index(self, test_index:Index):
@@ -159,7 +165,7 @@ class MultipoleMoment:
 
     def simplify(self) -> list[dict]:
         replacements = []
-        to_be_replaced, replacement = None, None
+
         if len(self.indices) == 1:
             if self.indices[0].is_coordinate():
                 return replacements
@@ -192,14 +198,26 @@ class MultipoleMoment:
                     coordinates.remove(Index("y"))# removes 1st y from list
                     replacements.append({"to_be_replaced": greek_symbols[0],
                                          "replacement": coordinates[0], "dummy": False })
-
+                else:
+                    replacements.append({"to_be_replaced": greek_symbols[0], "replacement": Index("y"), "dummy": False})
+            if len(coordinates) == 1 and len(greek_symbols) == 2:
+                if coordinates[0] == Index("y") and len(set([str(i.index) for i in greek_symbols])) == 2:
+                    dummy = Index("omega")
+                    replacements.append({"to_be_replaced": greek_symbols[1], "replacement": dummy, "dummy": True})
+                    replacements.append({"to_be_replaced": greek_symbols[0], "replacement": dummy, "dummy": True})
+            if len(coordinates) == 0 and len(greek_symbols) == 3:
+                counts = Counter(i.index for i in greek_symbols)
+                if sorted(counts.values()) == [1, 2]:
+                    single_index = next((k for k, v in counts.items() if v == 1), None)
+                    if single_index is not None:
+                        replacements.append({"to_be_replaced": Index(str(single_index)), "replacement": Index("y"), "dummy": False})
             #
         elif len(self.indices) == 4:
             coordinates = [i for i in self.indices if i.is_coordinate()]
             greek_symbols = sorted([i for i in self.indices if not i.is_coordinate()])
-            counts = Counter(i.index for i in self.indices)
+
             if len(coordinates) == 4:
-                return
+                return replacements
             if len(coordinates) == 3:
                 counts = Counter(i.index for i in coordinates)
                 if sorted(counts.values()) == [1, 2]:
@@ -211,12 +229,13 @@ class MultipoleMoment:
             if len(coordinates) == 2 and len(greek_symbols) == 2:
                 if coordinates[0] != coordinates[1]:
                     pass
-            #         # greek symbols have to be identical to the coordinates
-            #         replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
-            #         replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
-            #         # OR:
-            #         replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[1]})
-            #         replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[0]})
+                    # # greek symbols have to be identical to the coordinates
+                    # replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[0]})
+                    # replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[1]})
+                    # # OR:
+                    # replacements.append({"to_be_replaced": greek_symbols[0], "replacement": coordinates[1]})
+                    # replacements.append({"to_be_replaced": greek_symbols[1], "replacement": coordinates[0]})
+                    # # -> leads to factor 2 (2 summand terms remain)
                 else:
                     if len(set([str(i.index) for i in greek_symbols])) == 2:
                         # otherwise the indices are already indicating the same value
@@ -253,12 +272,15 @@ class MultipoleMoment:
     def __eq__(self, other):
         if not isinstance(other, MultipoleMoment):
             return NotImplemented
-        return self.indices == other.indices and self.prefactor_in_potential == other.prefactor_in_potential
-
+        if self.molecule and not other.molecule or not self.molecule and other.molecule:
+            raise Exception("not possible")
+        return self.indices == other.indices and self.prefactor_in_potential == other.prefactor_in_potential and self.molecule == other.molecule
 
 
     def __lt__(self, other):
         # sorting
         if not isinstance(other, MultipoleMoment):
             return NotImplemented
-        return (len(self.indices), self.indices) < (len(other.indices), other.indices)
+        if self.molecule and not other.molecule or not self.molecule and other.molecule:
+            raise Exception("unable to compare")
+        return (self.molecule, len(self.indices), self.indices) < (other.molecule, len(other.indices), other.indices)

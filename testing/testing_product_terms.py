@@ -210,6 +210,28 @@ class TestingProductTerms(unittest.TestCase):
         p.simplify_Multipole()
         assert "+ 2 * Ω_yyy" == p.to_string()
 
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "x", "beta"])], prefactor=2)
+        p.simplify_Multipole()
+        assert "+ 2 * Ω_xxy" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "y"])], prefactor=2)
+        assert "+ 2 * Ω_yαβ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Ω_yαα" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "z"])], prefactor=2)
+        assert "+ 2 * Ω_zαβ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Ω_zαβ" == p.to_string()# two choices remain: alpha = z and beta = y OR alpha = y and beta = z -> factor 2
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "beta"])], prefactor=2)
+        assert "+ 2 * Ω_αββ" == p.to_string()
+        p.simplify_Multipole()
+        assert "+ 2 * Ω_yββ" == p.to_string()
 
     def test_SimplifyHexadecapoles(self):
         p = ProductTerm()
@@ -355,6 +377,11 @@ class TestingProductTerms(unittest.TestCase):
         assert "+ 2 * delta(α, β)" == p.to_string()
 
         p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "gamma"])], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * Ω_αβγ" == p.to_string()
+
+        p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "beta"]), Delta("alpha", "beta"), R("beta")], prefactor=2)
         p.clean_up()# mainly sorting elements
         assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
@@ -366,6 +393,11 @@ class TestingProductTerms(unittest.TestCase):
         p.set_elements([MultipoleMoment(["beta"])], prefactor=2)
         p.reduce_indices()
         assert "+ 2 * μ_α" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "gamma", "gamma"])], prefactor=2)
+        p.reduce_indices()
+        assert "+ 2 * Ω_αββ" == p.to_string()
 
         p = ProductTerm()
         p.set_elements([R("gamma")], prefactor=2)
@@ -441,6 +473,14 @@ class TestingProductTerms(unittest.TestCase):
         assert "+ 2 * Θ_zγ * delta(x, ε)" == p.to_string()
         p.reduce_indices()
         assert "+ 2 * Θ_zα * delta(x, β)" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([R("z"), MultipoleMoment(["z", "z", "gamma"]), MultipoleMoment(["z", "delta", "delta"])], prefactor=2)
+        p.sort_elements()
+        assert "+ 2 * R_z * Ω_zzγ * Ω_zδδ" == p.to_string()
+        p.reduce_indices()
+        assert "+ 2 * R_z * Ω_zzα * Ω_zββ" == p.to_string()
+
 
     def test_traceless_conditions(self):
         m = MultipoleMoment(["alpha"])

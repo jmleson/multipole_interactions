@@ -6,52 +6,52 @@
 \begin{document}
 \section*{Interacting Multipoles of Rank 1 and 1:}
 \begin{equation}
-T_{\alpha{}\beta{}} \mu{}_{\alpha{}} \mu{}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\beta{}} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\beta{}}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}}
  \end{array}\right] 
 \end{equation}
 
 
 \section*{Simplify deltas:}
 \begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}} \mu{}_{\alpha{}} \mu{}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\beta{}} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\alpha{}}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
 \\ \xRightarrow{\text{cleaned up}}
  R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\beta{}} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\alpha{}}
+ 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
 \end{gather}\end{subequations}
 
 
 \section*{Simplify R:}
 \begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}} \mu{}_{\alpha{}} \mu{}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{z} \cdot R_{z} \cdot \mu{}_{z} \cdot \mu{}_{z} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\alpha{}}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{z} \cdot R_{z} \cdot \mu{}^{A}_{z} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
 \\ \xRightarrow{\text{cleaned up}}
  R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		- 1 \cdot R_{z}^{2} \cdot \mu{}_{\alpha{}} \cdot \mu{}_{\alpha{}}
+ 		- 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
 \end{gather}\end{subequations}
 
 
-\section*{Simplify Dipoles:}
+\section*{Combining everything:}
 \begin{equation}
-T_{\alpha{}\beta{}} \mu{}_{\alpha{}} \mu{}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		- 1 \cdot R_{z}^{2} \cdot \mu{}_{y} \cdot \mu{}_{y}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} =  \left[ \begin{array}{c} 
+ 		- 1 \cdot R_{z}^{-3} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
 \end{equation}
 
 
-\section*{Combining everything:}
+\section*{Simplify Dipoles:}
 \begin{equation}
-T_{\alpha{}\beta{}} \mu{}_{\alpha{}} \mu{}_{\beta{}} =  \left[ \begin{array}{c} 
- 		- 1 \cdot R_{z}^{-3} \cdot \mu{}_{y} \cdot \mu{}_{y}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} =  \left[ \begin{array}{c} 
+ 		- 1 \cdot R_{z}^{-3} \cdot \mu{}^{A}_{y} \cdot \mu{}^{B}_{y}
  \end{array}\right] 
 \end{equation}
 

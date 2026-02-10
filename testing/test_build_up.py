@@ -82,11 +82,13 @@ class TestBuildUp(unittest.TestCase):
         assert "- 1/15 * T_αβγδ * μ_α * Ω_βγδ" == t.to_string()
 
         dipole = MultipoleMoment(indices=["alpha", "beta"])
+        dipole.molecule = "A"
         quadrupole = MultipoleMoment(indices=["gamma", "delta"])
+        quadrupole.molecule = "B"
         t = TensorTerm(m1=dipole, m2=quadrupole)
         assert t.order == 4
         assert t.get_prefactor() == sp.sympify("1/9")
-        assert "+ 1/9 * T_αβγδ * Θ_αβ * Θ_γδ" == t.to_string()
+        assert "+ 1/9 * T_αβγδ * Θ^A_αβ * Θ^B_γδ" == t.to_string()
 
 
         dipole = MultipoleMoment(indices=["alpha"])

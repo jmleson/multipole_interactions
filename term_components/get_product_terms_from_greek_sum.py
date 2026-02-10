@@ -59,6 +59,7 @@ def multiply_out_greek_indices(p:ProductTerm, greek_indices:list[Index]) -> list
                     indices = [str(idx.index) if str(idx.index) != to_be_replaced else xyz for idx in i.indices]
                     # print("set by indices", indices)
                     new_term = MultipoleMoment(indices=indices)
+                    new_term.molecule = i.molecule
                     # print("->", new_term.to_string())
                 else:
                     raise Exception("unknown type of term in ProductTerm")
