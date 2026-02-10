@@ -84,20 +84,41 @@ class MultipoleMoment:
                 return True
         elif len(self.indices) == 3:
             # octopole:
-            index1 = self.indices[0]
-            index2 = self.indices[1]
-            index3 = self.indices[2]
-            if index1.is_coordinate() and index2.is_coordinate() and index3.is_coordinate():
-                string_list = sorted([str(i.index) for i in [index1,index2,index3]], key=lambda s: symbol_order[str(s)])
+            coordinates = [i for i in self.indices if i.is_coordinate()]
+            greek_symbols = [i for i in self.indices if not i.is_coordinate()]
+            if Index("x") in coordinates and Index("z") in coordinates:
+                return True#
+            if len(coordinates) == 3:
+                string_list = sorted([str(i.index) for i in self.indices],
+                                     key=lambda s: symbol_order[str(s)])
                 index_string = "".join(string_list)
                 if index_string not in ["xxy", "yyy", "yzz"]:
-                    return True
-            coordinates = [i for i in [index1, index2, index3] if i.is_coordinate()]
-            greek_symbols = [i for i in [index1, index2, index3] if not i.is_coordinate()]
-            if len(coordinates) == 1 and Index("y") not in coordinates:
-                # can only become xxy / yzz -> at least one y has to be added
-                if greek_symbols[0] == greek_symbols[1]:
-                    return True
+                    return True#
+            elif len(coordinates) == 1 and len(greek_symbols) == 2:
+                if Index("y") not in coordinates:
+                    # can only become xxy / yzz -> at least one y has to be added
+                    if greek_symbols[0] == greek_symbols[1]:
+                        return True#
+                else:
+                    # greek symbols have to be identical (alpha-beta, however, can form alpha-alpha (1 non-zero case possible))
+                    pass#
+            # else:
+            #     counts = Counter(i.index for i in self.indices)
+            #     if sorted(counts.values()) == [1, 2]:
+            #         double_index = next((k for k, v in counts.items() if v == 2), None)
+            #         single_index = next((k for k, v in counts.items() if v == 1), None)
+            #         if single_index is not None and double_index is not None:
+            #             single_index = Index(str(single_index))
+            #             double_index = Index(str(double_index))
+            #             if single_index.is_coordinate() and not double_index.is_coordinate():
+            #                 if single_index in [Index("x"), Index("z")]:
+            #                     return [double_index]# single_index can be used somewhere else -> still 0 if double_index double
+            #                 else:
+            #                     pass # y alpha alpha   is okay!
+            #             elif not single_index.is_coordinate() and double_index.is_coordinate():
+            #                 if double_index == Index("y"):
+            #                     # alpha y y -> alpha has to be y
+            #                     pass#
 
         elif len(self.indices) == 4:
             # hexadecapole:
@@ -135,17 +156,9 @@ class MultipoleMoment:
                 double_index = next((k for k, v in counts.items() if v == 2), None)
                 single_index = next((k for k, v in counts.items() if v == 1), None)
                 if single_index is not None and double_index is not None:
-                    single_index = Index(str(single_index))
                     double_index = Index(str(double_index))
-                    if single_index.is_coordinate() and not double_index.is_coordinate():
-                        if single_index in [Index("x"), Index("z")]:
-                            return [double_index]# single_index can be used somewhere else -> still 0 if double_index double
-                        else:
-                            pass # y alpha alpha   is okay!
-                    elif not single_index.is_coordinate() and double_index.is_coordinate():
-                        if double_index == Index("y"):
-                            # alpha y y = 0
-                            return [double_index]
+                    if not double_index.is_coordinate():
+                        return [double_index]
         if len(self.indices) == 4:
             counts = Counter(i.index for i in self.indices)
             if len(counts) == 4: # 4 different

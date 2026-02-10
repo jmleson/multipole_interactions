@@ -14,36 +14,30 @@ T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot 
 
 
 \section*{Simplify deltas:}
-\begin{subequations}\begin{gather}
+\begin{equation}
 T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
  		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}} 
  \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
  \end{array}\right] 
-\\ \xRightarrow{\text{cleaned up}}
- R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\beta{}} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
- \end{array}\right] 
-\end{gather}\end{subequations}
+\end{equation}
 
 
 \section*{Simplify R:}
-\begin{subequations}\begin{gather}
-T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{z} \cdot R_{z} \cdot \mu{}^{A}_{z} \cdot \mu{}^{B}_{z} 
- \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
- \end{array}\right] 
-\\ \xRightarrow{\text{cleaned up}}
- R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		- 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
- \end{array}\right] 
-\end{gather}\end{subequations}
-
-
-\section*{Simplify Dipoles:}
 \begin{equation}
 T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
- 		- 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{y} \cdot \mu{}^{B}_{y}
+ 		+ 3 \cdot R_{z} \cdot R_{z} \cdot \mu{}^{A}_{z} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \mu{}^{A}_{\alpha{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\end{equation}
+
+
+\section*{Multiply Out Sum:}
+\begin{equation}
+T_{\alpha{}\beta{}} \mu{}^{A}_{\alpha{}} \mu{}^{B}_{\beta{}} = R_{z}^{-5} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{z} \cdot R_{z} \cdot \mu{}^{A}_{z} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{x} \cdot \mu{}^{B}_{x} \cdot \delta{}\left(x, x\right) 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{y} \cdot \mu{}^{B}_{y} \cdot \delta{}\left(y, y\right) 
+ \\[0.2em] 		 - 1 \cdot R_{z}^{2} \cdot \mu{}^{A}_{z} \cdot \mu{}^{B}_{z} \cdot \delta{}\left(z, z\right)
  \end{array}\right] 
 \end{equation}
 

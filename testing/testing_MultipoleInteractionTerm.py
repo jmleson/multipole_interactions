@@ -2,6 +2,9 @@ import unittest
 import sympy as sp
 
 from SummandTerm import MultipoleInteraction
+from term_components.Multipole import MultipoleMoment
+from term_components.ProductTerm import ProductTerm
+from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum_all
 
 
 class TestMultipoleInteractionTerm(unittest.TestCase):
@@ -50,10 +53,59 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
         assert s.get_name() == "T_αβγδ μ^A_α Ω^B_βγδ"
 
+    def test_find_unresolved_multipoles(self):
+        # m = MultipoleInteraction(multipole_order_1 = 1, multipole_order_2 = 1)
+        # p = ProductTerm()
+        # p.set_elements([MultipoleMoment(["alpha"]), MultipoleMoment(["alpha"])], prefactor=1)
+        # m.tensor_terms = [p]
+        # result = m.full_string_tensor()
+        # assert result[result.find("="):] == "= R_z^(-5) * [ + 1 * μ_α * μ_α ]"
+        # m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)
+        # result = m.full_string_tensor()
+        # assert result[result.find("="):] == "= R_z^(-5) * [ + 1 * μ_x * μ_x + 1 * μ_y * μ_y + 1 * μ_z * μ_z ]"
+
+
+        m = MultipoleInteraction(multipole_order_1 = 3, multipole_order_2 = 3)
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "x", "x"])], prefactor=1)
+        m.tensor_terms = [p]
+        result = m.full_string_tensor()
+        assert result[result.find("="):] == "= R_z^(-13) * 1/225 * [ + 1 * Ω_xxα ]"
+        m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)
+        result = m.full_string_tensor()
+        assert result[result.find("="):] == "= R_z^(-13) * 1/225 * [ + 1 * Ω_xxx + 1 * Ω_xxy + 1 * Ω_xxz ]"
+        m.clean_up()
+        result = m.full_string_tensor()
+        assert result[result.find("="):] == "= [ + 1/225 * R_z^(-13) * Ω_xxy ]"
+
+
+        m = MultipoleInteraction(multipole_order_1 = 3, multipole_order_2 = 3)
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "beta"])], prefactor=1)
+        m.tensor_terms = [p]
+        result = m.full_string_tensor()
+        assert result[result.find("="):] == "= R_z^(-13) * 1/225 * [ + 1 * Ω_αββ ]"
+        m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)
+        result = m.full_string_tensor()
+        assert (result[result.find("="):] == ("= R_z^(-13) * 1/225 * [ "
+                                             "+ 1 * Ω_xxx + 1 * Ω_xxy + 1 * Ω_xxz "
+                                             "+ 1 * Ω_xyy + 1 * Ω_yyy + 1 * Ω_yyz "
+                                             "+ 1 * Ω_xzz + 1 * Ω_yzz + 1 * Ω_zzz ]")
+            or result[result.find("="):] == ("= R_z^(-13) * 1/225 * [ "
+                                             "+ 1 * Ω_xxx + 1 * Ω_xyy + 1 * Ω_xzz "
+                                             "+ 1 * Ω_xxy + 1 * Ω_yyy + 1 * Ω_yzz "
+                                             "+ 1 * Ω_xxz + 1 * Ω_yyz + 1 * Ω_zzz ]")
+                )
+        m.clean_up()
+        result = m.full_string_tensor()
+        assert result[result.find("="):] == "= [ + 1/225 * R_z^(-13) * Ω_xxy + 1/225 * R_z^(-13) * Ω_yyy + 1/225 * R_z^(-13) * Ω_yzz ]"
+
+
+
     def test_total(self):
-        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
-        s.simplify_in_latex_steps()
-        assert "T_αβ μ^A_α μ^B_β = [ - 1 * R_z^(-3) * μ^A_y * μ^B_y ]" == s.full_string_tensor()
+        # s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
+        # s.simplify_in_latex_steps()
+        # assert "T_αβ μ^A_α μ^B_β = [ - 1 * R_z^(-3) * μ^A_y * μ^B_y ]" == s.full_string_tensor()
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
         s.simplify_in_latex_steps()

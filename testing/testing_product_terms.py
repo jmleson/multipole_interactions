@@ -40,6 +40,16 @@ class TestingProductTerms(unittest.TestCase):
         p1.clean_up(set_to_zero=True)
         assert "+ 0" == p1.to_string()
 
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "x", "x"])], prefactor=3)
+        p.clean_up()
+        assert "+ 0" == p.to_string()
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["x", "z", "x"])], prefactor=3)
+        p.clean_up()
+        assert "+ 0" == p.to_string()
+
 
     def test_replace_index_R(self):
         r = R("alpha")
@@ -84,6 +94,45 @@ class TestingProductTerms(unittest.TestCase):
         m = MultipoleMoment(["alpha", "beta", "gamma", "delta"])
         m.replace_index(Index("alpha"), Index("gamma"))
         assert m.to_string() == "Φ_βγγδ"
+
+    def test_is_zero_Oktopole(self):
+        m = MultipoleMoment(["x", "y", "z"])
+        assert m.is_zero() is True
+
+        m = MultipoleMoment(["alpha", "beta", "gamma"])
+        assert m.is_zero() is False
+
+        m = MultipoleMoment(["alpha", "beta", "beta"])
+        assert m.is_zero() is False # only 0 because of traceless condition
+
+        m = MultipoleMoment(["x", "beta", "beta"])
+        assert m.is_zero() is True
+        m = MultipoleMoment(["z", "beta", "beta"])
+        assert m.is_zero() is True
+        m = MultipoleMoment(["y", "beta", "beta"])
+        assert m.is_zero() is False
+
+        m = MultipoleMoment(["y", "alpha", "beta"])
+        assert m.is_zero() is False# alpha has to be equal to beta, but that's possible
+        m = MultipoleMoment(["x", "alpha", "beta"])
+        assert m.is_zero() is False
+        m = MultipoleMoment(["z", "alpha", "beta"])
+        assert m.is_zero() is False
+
+        m = MultipoleMoment(["y", "y", "beta"])
+        assert m.is_zero() is False# beta = y
+        m = MultipoleMoment(["x", "x", "beta"])
+        assert m.is_zero() is False# beta = y
+        m = MultipoleMoment(["z", "z", "beta"])
+        assert m.is_zero() is False# beta = y
+
+        m = MultipoleMoment(["y", "x", "beta"])
+        assert m.is_zero() is False  # beta = x
+        m = MultipoleMoment(["x", "z", "beta"])
+        assert m.is_zero() is True
+        m = MultipoleMoment(["y", "z", "beta"])
+        assert m.is_zero() is False  # beta = z
+
 
 
     def test_SimplifyDelta(self):
@@ -573,7 +622,8 @@ class TestingProductTerms(unittest.TestCase):
 
         m = MultipoleMoment(["alpha", "beta", "beta"])
         traceless = m.traceless_condition()
-        assert len(traceless) == 0
+        assert len(traceless) == 1
+        assert Index("beta") in traceless
 
         m = MultipoleMoment(["alpha", "beta", "z"])
         assert len(m.traceless_condition()) == 0
@@ -582,6 +632,12 @@ class TestingProductTerms(unittest.TestCase):
         traceless = m.traceless_condition()
         assert len(traceless) == 1
         assert Index("beta") in traceless
+
+        m = MultipoleMoment(["y", "alpha", "alpha"])
+        assert m.to_string() == f"Ω_yαα"
+        traceless = m.traceless_condition()
+        assert len(traceless) == 1
+        assert Index("alpha") in traceless
 
         m = MultipoleMoment(["alpha", "beta", "gamma", "delta"])
         traceless = m.traceless_condition()
@@ -608,7 +664,8 @@ class TestingProductTerms(unittest.TestCase):
 
         m = MultipoleMoment(["y", "alpha", "alpha"])
         traceless = m.traceless_condition()
-        assert len(traceless) == 0
+        assert len(traceless) == 1
+        assert Index("alpha") in traceless
 
         m = MultipoleMoment(["beta", "beta", "x"])
         traceless = m.traceless_condition()
@@ -661,7 +718,7 @@ class TestingProductTerms(unittest.TestCase):
         p.set_elements([m, MultipoleMoment(["alpha", "delta"])], prefactor=1)
         assert p.to_string() == f"+ 1 * Ω_ββδ * Θ_αδ"
         p.use_traceless_conditions()
-        assert p.to_string() == f"+ 1 * Ω_ββδ * Θ_αδ"
+        assert p.to_string() == f"+ 0"
 
         m = MultipoleMoment(["beta", "gamma", "gamma"])
         p = ProductTerm()
@@ -689,7 +746,7 @@ class TestingProductTerms(unittest.TestCase):
         p.set_elements([m, MultipoleMoment(["y", "alpha", "alpha"])], prefactor=1)
         assert p.to_string() == f"+ 1 * Ω_yzz * Ω_yαα"
         p.use_traceless_conditions()
-        assert p.to_string() == f"+ 1 * Ω_yzz * Ω_yαα"
+        assert p.to_string() == f"+ 0"
 
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["x"]), MultipoleMoment(["x", "beta", "beta"]), R("z") ], prefactor=3)
@@ -709,6 +766,12 @@ class TestingProductTerms(unittest.TestCase):
         assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
         p.use_traceless_conditions()# traceless condition would apply for separate terms, but cannot be used since sum is coupled
         assert p.to_string() == f"+ 1 * Θ_αα * Θ_αα"
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["y"]), MultipoleMoment(["y", "alpha", "alpha"])], prefactor=1)
+        assert p.to_string() == f"+ 1 * μ_y * Ω_yαα"
+        p.use_traceless_conditions()
+        assert p.to_string() == f"+ 0"
 
 
         p = ProductTerm()
@@ -751,6 +814,9 @@ class TestingProductTerms(unittest.TestCase):
         result = p.includes_duplicates()
         assert result[0] is False
         assert len(result[1]) == 0
+
+
+
 
 
 
