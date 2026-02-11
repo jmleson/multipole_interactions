@@ -409,7 +409,7 @@ class TestingProductTerms(unittest.TestCase):
 
 
     def test_reduce_indices(self):
-        ### CASE 1: nothing changes
+        ### BBSE 1: nothing changes
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha"])], prefactor=2)
         p.reduce_indices(consider_index_sorting=False)
@@ -437,7 +437,7 @@ class TestingProductTerms(unittest.TestCase):
         p.reduce_indices(consider_index_sorting=False)
         assert "+ 2 * R_β * Θ_αβ * delta(α, β)" == p.to_string()
 
-        ### CASE 2: one element changes:
+        ### BBSE 2: one element changes:
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["beta"])], prefactor=2)
         p.reduce_indices(consider_index_sorting=False)
@@ -501,7 +501,7 @@ class TestingProductTerms(unittest.TestCase):
         p.simplify_Multipole()
         assert "- 4 * R_z * μ_y * Φ_yyαα" == p.to_string()
 
-        # CASE 3: coordinates included
+        # BBSE 3: coordinates included
         p = ProductTerm()
         p.set_elements([R("z"), MultipoleMoment(["y"]), MultipoleMoment(["y", "beta", "beta"])], prefactor=2)
         p.sort_elements()
@@ -589,13 +589,13 @@ class TestingProductTerms(unittest.TestCase):
 
         p = ProductTerm()
         m1 = MultipoleMoment(["y", "beta", "beta"])
-        m1.molecule = "A"
+        m1.molecule = "B"
         m2 = MultipoleMoment(["y", "alpha", "alpha"])
-        m2.molecule = "B"
+        m2.molecule = "A"
         p.set_elements([R("z"), m1, m2 ], prefactor=45)
-        assert p.to_string() == "+ 45 * R_z * Ω^A_yββ * Ω^B_yαα"
+        assert p.to_string() == "+ 45 * R_z * Ω^B_yββ * Ω^A_yαα"
         p.reduce_indices_sorting()
-        assert p.to_string() ==  "+ 45 * R_z * Ω^A_yαα * Ω^B_yββ"
+        assert p.to_string() ==  "+ 45 * R_z * Ω^B_yαα * Ω^A_yββ"
 
 
     def test_traceless_conditions(self):

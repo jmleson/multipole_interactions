@@ -4,7 +4,7 @@ from term_components.ProductTerm import ProductTerm
 from term_components.R import R
 
 
-#### CASE 1 = Dipole-Dipole-Interaction ####
+#### BBSE 1 = Dipole-Dipole-Interaction ####
 p1 = ProductTerm()
 elements = [
     R("alpha"),

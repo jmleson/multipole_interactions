@@ -133,7 +133,7 @@ class ProductTerm:
                 continue
             if Index(old_index).is_coordinate():
                 continue
-            # Andernfalls auf den nächsten freien griechischen Namen abbilden
+            # Bndernfalls auf den nächsten freien griechischen Namen abbilden
             while True:
                 new_index = next(greek_iter)
                 if new_index not in used_indices and new_index not in index_map.values():

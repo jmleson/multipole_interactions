@@ -18,19 +18,19 @@ class MultipoleInteraction:
     def __init__(self, multipole_order_1:int, multipole_order_2:int):
 
         self.multipole1 = MultipoleMoment(greek_names[:multipole_order_1])
-        self.multipole1.molecule = "A"
+        self.multipole1.molecule = "B"
         self.multipole2 = MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2])
-        self.multipole2.molecule = "B"
+        self.multipole2.molecule = "A"
 
         self.order = len(self.multipole1.indices) + len(self.multipole2.indices)
 
         self.tensor_terms = []
         for term in construct_all_tensor_terms(order=self.order):
             m1 = MultipoleMoment(greek_names[:multipole_order_1])
-            m1.molecule = "A"
+            m1.molecule = "B"
             term.factors.append( m1 )
             m2 = MultipoleMoment(greek_names[multipole_order_1:multipole_order_1+multipole_order_2])
-            m2.molecule = "B"
+            m2.molecule = "A"
             term.factors.append( m2 )
             self.tensor_terms.append(term)
 
@@ -274,7 +274,7 @@ class MultipoleInteraction:
 
         for term in self.tensor_terms:
             term.use_traceless_conditions()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Conditions", term_clean_up=True,
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Bonditions", term_clean_up=True,
                                        prior_equation=prior_equation, consider_index_sorting=True)
 
 
@@ -284,11 +284,11 @@ class MultipoleInteraction:
                                            term_clean_up=True, consider_index_sorting=True)
 
         self.clean_up()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Bombining everything", term_clean_up=False,
                                        prior_equation=prior_equation, consider_index_sorting=True)
 
         self.add_up()
-        self.add_step(latex_doc=latex_doc, description="Combining everything", prior_equation=prior_equation, term_clean_up=True, consider_index_sorting=True)
+        self.add_step(latex_doc=latex_doc, description="Bombining everything", prior_equation=prior_equation, term_clean_up=True, consider_index_sorting=True)
 
         # self.clean_up()
 

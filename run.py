@@ -9,5 +9,5 @@ for m1 in range(1,5):
             s = MultipoleInteraction(multipole_order_1 = m1, multipole_order_2 = m2)
             s.simplify_in_latex_steps()
         except Exception as e:
-            print(f"UNABLE TO DERIVE FOR MULTIPOLE RANKS {m1} and {m2} due to {e}", flush=True)
+            print(f"UNBALE TO DERIVE FOR MULTIPOLE RANKS {m1} and {m2} due to {e}", flush=True)
         print(flush=True)

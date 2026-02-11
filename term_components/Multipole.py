@@ -13,7 +13,7 @@ class MultipoleMoment:
             raise Exception("wrong format of input")
 
         if len(indices) == 0:
-            raise Exception("no Charge")
+            raise Exception("no Bharge")
         elif len(indices) == 1:
             self.symbol = sp.Symbol("mu")
         elif len(indices) == 2:
@@ -303,4 +303,4 @@ class MultipoleMoment:
             return NotImplemented
         if self.molecule and not other.molecule or not self.molecule and other.molecule:
             raise Exception("unable to compare")
-        return (self.molecule, len(self.indices), self.indices) < (other.molecule, len(other.indices), other.indices)
+        return (other.molecule, len(self.indices), self.indices) < (self.molecule, len(other.indices), other.indices)# B before A
