@@ -35,7 +35,11 @@ class MultipoleInteraction:
             self.tensor_terms.append(term)
 
         # initial values (! get changed by clean up):
-        self.prefactor_expansion = 1/( prefactor_expansion(order=multipole_order_1) * prefactor_expansion(order=multipole_order_2) )
+
+        self.prefactor_of_expansion = abs(1 / prefactor_expansion(order=multipole_order_1)) * (1/prefactor_expansion(multipole_order_2))
+        # if multipole_order_1 > multipole_order_2:
+        #     self.prefactor_of_expansion -= self.prefactor_of_expansion
+        self.initial_prefactor = self.prefactor_of_expansion
         self.set_r_prefactor()
 
     def get_orders(self):
@@ -53,20 +57,24 @@ class MultipoleInteraction:
 
     def get_name(self, latex:bool=False):
         if latex:
-            string = r"T_{" + "".join([Index(str(i)).to_latex() for i in global_symbols[:self.order]])
+            string = "+ " if self.initial_prefactor >= 0 else "- "
+            string += sp.latex(abs(self.initial_prefactor)) + r" \cdot "
+            string += r"T_{" + "".join([Index(str(i)).to_latex() for i in global_symbols[:self.order]])
             string += r"} " + self.multipole1.to_latex() + " " + self.multipole2.to_latex()
         else:
-            string = "T_" + "".join([pretty(i) for i in global_symbols[:self.order]])
+            string = "+ " if self.initial_prefactor >= 0 else "- "
+            string += str(abs(self.initial_prefactor)) + r" * "
+            string += "T_" + "".join([pretty(i) for i in global_symbols[:self.order]])
             string += " " + self.multipole1.to_string() + " " + self.multipole2.to_string()
         return string
 
     def full_string_tensor(self):
         string = self.get_name() + " = "
-        if len(self.tensor_terms) > 0 and self.prefactor_expansion != 0:
+        if len(self.tensor_terms) > 0 and self.prefactor_of_expansion != 0:
             if self.r_prefactor.exponent != 0:
                 string += f"{self.r_prefactor.to_string()} * "
-            if self.prefactor_expansion != 1:
-                string += f"{self.prefactor_expansion} * "
+            if self.prefactor_of_expansion != 1:
+                string += f"{self.prefactor_of_expansion} * "
             string += f"[ "
             string += " ".join([term.to_string() for term in self.tensor_terms if not term.prefactor == 0 ])
             string += " ]"
@@ -94,11 +102,11 @@ class MultipoleInteraction:
 
     def full_latex_tensor(self) -> str:
         string = self.get_name(latex=True) + " = "
-        if len(self.tensor_terms) > 0 and self.prefactor_expansion != 0:
+        if len(self.tensor_terms) > 0 and self.prefactor_of_expansion != 0:
             if self.r_prefactor.exponent != 0:
                 string += f"{self.r_prefactor.to_latex()}" + r" \cdot "
-            if self.prefactor_expansion != 1:
-                string += f"{sp.latex(self.prefactor_expansion)}" + r" \cdot "
+            if self.prefactor_of_expansion != 1:
+                string += f"{sp.latex(self.prefactor_of_expansion)}" + r" \cdot "
             if len(self.tensor_terms) > 0 and len([t for t in self.tensor_terms if t.prefactor != 0]) > 0:
                 string += r" \left[ \begin{array}{c} "+ "\n \t\t"
                 s = " \n " + r"\\[0.2em] " + "\t\t "
@@ -152,10 +160,10 @@ class MultipoleInteraction:
                 tensor_terms.append(term)
         self.tensor_terms = tensor_terms
 
-        if self.prefactor_expansion != 1:
+        if self.prefactor_of_expansion != 1:
             for term in self.tensor_terms:
-                term.prefactor *= self.prefactor_expansion
-        self.prefactor_expansion = 1
+                term.prefactor *= self.prefactor_of_expansion
+        self.prefactor_of_expansion = 1
 
         if self.r_prefactor.exponent != 0:
             for term in self.tensor_terms:

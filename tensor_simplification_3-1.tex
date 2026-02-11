@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+\usepackage{amsmath}% for equation environment
+\usepackage{mathtools}% for xRightarrow
+\allowdisplaybreaks % allows breaks in subequations
+\begin{document}
+\section*{Interacting Multipoles of Rank 3 and 1:}
+\begin{equation}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}}
+ \end{array}\right] 
+\end{equation}
+
+
+\section*{Simplify deltas:}
+\begin{subequations}\begin{gather}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Omega{}^{A}_{\alpha{}\alpha{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\beta{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\gamma{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\section*{Simplify R:}
+\begin{subequations}\begin{gather}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		+ 105 \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{zzz} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{zz\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{zz\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{z\beta{}\beta{}} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{z\alpha{}\alpha{}} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot \Omega{}^{A}_{z\alpha{}\alpha{}} \cdot \mu{}^{B}_{z} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\gamma{}} \cdot \mu{}^{B}_{\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{zz\alpha{}} \cdot \mu{}^{B}_{\alpha{}} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} \cdot \mu{}^{B}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} \cdot \mu{}^{B}_{\alpha{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\section*{Simplify Dipoles:}
+\begin{subequations}\begin{gather}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{yzz} \cdot \mu{}^{B}_{y} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{y\alpha{}\alpha{}} \cdot \mu{}^{B}_{y} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{y\beta{}\beta{}} \cdot \mu{}^{B}_{y}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{yzz} \cdot \mu{}^{B}_{y} 
+ \\[0.2em] 		 + 6 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{y\alpha{}\alpha{}} \cdot \mu{}^{B}_{y} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{y\alpha{}\alpha{}} \cdot \mu{}^{B}_{y}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{yzz} \cdot \mu{}^{B}_{y} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{y\alpha{}\alpha{}} \cdot \mu{}^{B}_{y}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\section*{Exploit Traceless Conditions:}
+\begin{equation}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 45 \cdot R_{z}^{4} \cdot \Omega{}^{A}_{yzz} \cdot \mu{}^{B}_{y}
+ \end{array}\right] 
+\end{equation}
+
+
+\section*{Combining everything:}
+\begin{equation}
+- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} \mu{}^{B}_{\delta{}} =  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{z}^{-5} \cdot \Omega{}^{A}_{yzz} \cdot \mu{}^{B}_{y}
+ \end{array}\right] 
+\end{equation}
+
+
+\end{document}
