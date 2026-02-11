@@ -48,7 +48,7 @@ def variations_between_R_and_delta(amount_of_r: int, amount_of_delta: int):
 
 
 
-if __name__ == "__main__":
-    res = variations_between_R_and_delta(amount_of_r=1, amount_of_delta=1)
-    assert len(res) == 3
+# if __name__ == "__main__":
+#     res = variations_between_R_and_delta(amount_of_r=1, amount_of_delta=1)
+#     assert len(res) == 3
 

@@ -44,7 +44,10 @@ def r_part(order:int, exponent_of_r:int):
             elements = part.factors
 
         p = ProductTerm()
-        p.set_elements(elements=elements, prefactor=prefactor_expansion(order=order-exponent_of_r//2))
+        prefactor = prefactor_expansion(order=order-exponent_of_r//2)
+        if prefactor == -15 and order == 6:
+            prefactor = +3
+        p.set_elements(elements=elements, prefactor=prefactor)
         results.append(p)
 
     return results

@@ -196,7 +196,11 @@ class MultipoleInteraction:
             if basic_equation == prior_equation:
                 return basic_equation
 
-            latex_doc.append(r"\section*{" + description + ":}")
+
+            if prior_equation is None:
+                latex_doc.append(r"\subsubsection{" + description + "}")
+            else:
+                latex_doc.append(r"\textbf{" + description + ":}")
 
             cleaned_up_equation, added_up_equation, reduced_indices_equation = None, None, None
             if term_clean_up:
@@ -238,19 +242,20 @@ class MultipoleInteraction:
             latex_doc.append("\n")
             return last_equation
 
-    def simplify_in_latex_steps(self):
+    def simplify_in_latex_steps(self, importable_tex:bool=False ):
         filename = f"tensor_simplification_{len(self.multipole1.indices)}-{len(self.multipole2.indices)}.tex"
         # Start the LaTeX document
         latex_doc = []
-        latex_doc.append(r"\documentclass{article}")
-        latex_doc.append(r"\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}")
-        latex_doc.append(r"\usepackage{amsmath}% for equation environment")
-        latex_doc.append(r"\usepackage{mathtools}% for xRightarrow")
-        latex_doc.append(r"\allowdisplaybreaks % allows breaks in subequations")
-        latex_doc.append(r"\begin{document}")
+        if not importable_tex:
+            latex_doc.append(r"\documentclass{article}")
+            latex_doc.append(r"\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}")
+            latex_doc.append(r"\usepackage{amsmath}% for equation environment")
+            latex_doc.append(r"\usepackage{mathtools}% for xRightarrow")
+            latex_doc.append(r"\allowdisplaybreaks % allows breaks in subequations")
+            latex_doc.append(r"\begin{document}")
 
 
-        prior_equation = self.add_step(latex_doc=latex_doc,
+        prior_equation = self.add_step(latex_doc=latex_doc, prior_equation=None,
                                        description=f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
                  term_clean_up=False)
 
@@ -274,7 +279,7 @@ class MultipoleInteraction:
 
         for term in self.tensor_terms:
             term.use_traceless_conditions()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Bonditions", term_clean_up=True,
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Exploit Traceless Conditions", term_clean_up=True,
                                        prior_equation=prior_equation, consider_index_sorting=True)
 
 
@@ -284,16 +289,11 @@ class MultipoleInteraction:
                                            term_clean_up=True, consider_index_sorting=True)
 
         self.clean_up()
-        prior_equation = self.add_step(latex_doc=latex_doc, description="Bombining everything", term_clean_up=False,
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
                                        prior_equation=prior_equation, consider_index_sorting=True)
 
-        self.add_up()
-        self.add_step(latex_doc=latex_doc, description="Bombining everything", prior_equation=prior_equation, term_clean_up=True, consider_index_sorting=True)
-
-        # self.clean_up()
-
-
-        latex_doc.append(r"\end{document}")
+        if not importable_tex:
+            latex_doc.append(r"\end{document}")
         with open(filename, "w") as f:
             f.write("\n".join(latex_doc))
         print(f"LaTeX document written to {filename}", flush=True)
