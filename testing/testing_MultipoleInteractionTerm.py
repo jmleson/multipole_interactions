@@ -218,7 +218,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         t.simplify_long_way()
         assert s == t
 
-        # # INFO TODO
+        # INFO TODO
         # s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=4)
         # s.simplify_in_latex_steps(debug=True)
         # t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=4)

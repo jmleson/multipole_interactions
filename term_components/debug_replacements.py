@@ -51,5 +51,4 @@ def get_replacements_according_to_traceless_conditions(molecule:str):
     mz.molecule = molecule
     replacements.append({"to_be_replaced": mz, "replacements": [mx, my] })
 
-
     return replacements
