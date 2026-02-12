@@ -228,7 +228,7 @@ class ProductTerm:
         distances = {}
         for factor in self.factors:
             if set_to_zero and factor.is_zero():
-                # print("factor is 0:", factor.to_string(), flush=True)
+                print("factor is 0:", factor.to_string(), flush=True)
                 self.prefactor = 0
                 self.factors = []
                 return

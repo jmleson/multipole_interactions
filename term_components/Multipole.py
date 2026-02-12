@@ -159,11 +159,13 @@ class MultipoleMoment:
                     double_index = Index(str(double_index))
                     if not double_index.is_coordinate():
                         return [double_index]
+            if len(counts) == 3 and not any([Index(str(i)).is_coordinate() for i in counts.keys()]):
+                # Ω_αβγ -> 2 identical -> traceless
+                return self.indices
         if len(self.indices) == 4:
             counts = Counter(i.index for i in self.indices)
             if len(counts) == 4: # 4 different
                 return []
-
             if len(counts) == 2:
                 values = list(counts.values())
                 if values == [2, 2]:
@@ -218,6 +220,8 @@ class MultipoleMoment:
                     coordinates.remove(Index("y"))# removes 1st y from list
                     replacements.append({"to_be_replaced": greek_symbols[0],
                                          "replacement": coordinates[0], "dummy": False })
+                elif Index("x") in coordinates and Index("z") in coordinates:
+                    pass
                 else:
                     replacements.append({"to_be_replaced": greek_symbols[0], "replacement": Index("y"), "dummy": False})
             if len(coordinates) == 1 and len(greek_symbols) == 2:
@@ -231,6 +235,9 @@ class MultipoleMoment:
                     single_index = next((k for k, v in counts.items() if v == 1), None)
                     if single_index is not None:
                         replacements.append({"to_be_replaced": Index(str(single_index)), "replacement": Index("y"), "dummy": False})
+                if len(counts) == 1 and not self.indices[0].is_coordinate():
+                    # only one index -> has to be y to not vanish
+                    replacements.append( {"to_be_replaced": self.indices[0], "replacement": Index("y"), "dummy": False} )
             #
         elif len(self.indices) == 4:
             coordinates = [i for i in self.indices if i.is_coordinate()]
