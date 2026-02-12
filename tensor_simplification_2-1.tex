@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+\usepackage{amsmath}% for equation environment
+\usepackage{mathtools}% for xRightarrow
+\allowdisplaybreaks % allows breaks in subequations
+\begin{document}
+\subsubsection{Interacting Multipoles of Rank 2 and 1}
+\begin{equation}
+- \frac{1}{3} \cdot T_{\alpha{}\beta{}\gamma{}} \Theta{}^{B}_{\alpha{}\beta{}} \mu{}^{A}_{\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}}
+ \end{array}\right] 
+\end{equation}
+
+
+\textbf{Simplify deltas:}
+\begin{subequations}\begin{gather}
+- \frac{1}{3} \cdot T_{\alpha{}\beta{}\gamma{}} \Theta{}^{B}_{\alpha{}\beta{}} \mu{}^{A}_{\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\alpha{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \mu{}^{A}_{\gamma{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\alpha{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \mu{}^{A}_{\gamma{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\gamma{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \mu{}^{A}_{\alpha{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \mu{}^{A}_{\beta{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\textbf{Simplify R:}
+\begin{subequations}\begin{gather}
+- \frac{1}{3} \cdot T_{\alpha{}\beta{}\gamma{}} \Theta{}^{B}_{\alpha{}\beta{}} \mu{}^{A}_{\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		- 15 \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{zz} \cdot \mu{}^{A}_{z} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{z} \cdot \Theta{}^{B}_{z\beta{}} \cdot \mu{}^{A}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{z} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \mu{}^{A}_{\alpha{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{2} \cdot R_{z} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \mu{}^{A}_{z}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{z\beta{}} \cdot \mu{}^{A}_{\beta{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \mu{}^{A}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		+ 3 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \mu{}^{A}_{\alpha{}} 
+ \\[0.2em] 		 + 3 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \mu{}^{A}_{\alpha{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		+ 6 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \mu{}^{A}_{\alpha{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\textbf{Simplify Dipoles:}
+\begin{subequations}\begin{gather}
+- \frac{1}{3} \cdot T_{\alpha{}\beta{}\gamma{}} \Theta{}^{B}_{\alpha{}\beta{}} \mu{}^{A}_{\gamma{}} = R_{z}^{-7} \cdot - \frac{1}{3} \cdot  \left[ \begin{array}{c} 
+ 		+ 6 \cdot R_{z}^{3} \cdot \Theta{}^{B}_{yz} \cdot \mu{}^{A}_{y}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-7} \cdot - \frac{1}{3} \cdot \left[ + 0 \right]
+\end{gather}\end{subequations}
+
+
+\textbf{Combining everything:}
+\begin{equation}
+- \frac{1}{3} \cdot T_{\alpha{}\beta{}\gamma{}} \Theta{}^{B}_{\alpha{}\beta{}} \mu{}^{A}_{\gamma{}} = + 0
+\end{equation}
+
+
+\end{document}

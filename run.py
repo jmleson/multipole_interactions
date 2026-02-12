@@ -1,4 +1,4 @@
-from SummandTerm import MultipoleInteraction
+from MultipoleInteraction import MultipoleInteraction
 
 # s = MultipoleInteraction(multipole_order_1 = 3, multipole_order_2 = 3)
 # s.simplify_in_latex_steps()

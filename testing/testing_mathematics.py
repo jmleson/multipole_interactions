@@ -1,7 +1,7 @@
 import unittest
 from itertools import permutations
 
-from SummandTerm import MultipoleInteraction
+from MultipoleInteraction import MultipoleInteraction
 from mathematics_of_terms.add_product_terms import add_product_terms, addable_product_terms
 from mathematics_of_terms.sum_up_list import sum_up_list, add_fictitious, addable_fictitious
 from term_components.Delta import Delta
@@ -304,6 +304,18 @@ class TestMathematics(unittest.TestCase):
             strings = [i.to_string() for i in result]
             assert "- 10 * Θ_αβ" in strings
 
+        self.p1.set_elements(elements=[MultipoleMoment(["alpha", "beta", "gamma"])], prefactor=1)
+        self.p2.set_elements(elements=[MultipoleMoment(["alpha", "beta", "beta"])], prefactor=2)
+        self.p3.set_elements(elements=[MultipoleMoment(["alpha", "beta", "beta"])], prefactor=3)
+        self.p4.set_elements(elements=[MultipoleMoment(["alpha", "beta", "gamma"])], prefactor=4)
+
+        for order in list(permutations([self.p1, self.p2, self.p3, self.p4])):
+            result = sum_up_list(order,
+                                 addable_function=addable_product_terms, adding_function=add_product_terms)
+            assert len(result) == 2
+            strings = [i.to_string() for i in result]
+            assert "+ 5 * Ω_αβγ" in strings
+            assert "+ 5 * Ω_αββ" in strings
 
     # def test_add_up(self):
     #     s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)

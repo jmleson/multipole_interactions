@@ -1,4 +1,4 @@
-from SummandTerm import MultipoleInteraction
+from MultipoleInteraction import MultipoleInteraction
 from build_up_tensor_equations.construct_full_tensor import construct_all_tensor_terms
 
 

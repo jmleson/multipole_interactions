@@ -1,7 +1,7 @@
 import unittest
 import sympy as sp
 
-from SummandTerm import MultipoleInteraction
+from MultipoleInteraction import MultipoleInteraction
 from term_components.Multipole import MultipoleMoment
 from term_components.ProductTerm import ProductTerm
 from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum_all

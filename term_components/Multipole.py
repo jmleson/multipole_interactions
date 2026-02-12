@@ -160,8 +160,8 @@ class MultipoleMoment:
                     if not double_index.is_coordinate():
                         return [double_index]
             if len(counts) == 3 and not any([Index(str(i)).is_coordinate() for i in counts.keys()]):
-                # Ω_αβγ -> 2 identical -> traceless
-                return self.indices
+                # Ω_αβγ = 3 * xxx + yyy + 3 * yzz
+                return []
         if len(self.indices) == 4:
             counts = Counter(i.index for i in self.indices)
             if len(counts) == 4: # 4 different

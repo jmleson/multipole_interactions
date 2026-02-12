@@ -3,23 +3,26 @@ import unittest
 
 from term_components.Multipole import MultipoleMoment
 from term_components.ProductTerm import ProductTerm
+from term_components.R import R
 
 
 class testingOctopoles(unittest.TestCase):
-
-    m1 = MultipoleMoment(["alpha", "beta", "gamma"])# 0 identical
-    m2 = MultipoleMoment(["alpha", "beta", "beta"])# 2 identical
-    m3 = MultipoleMoment(["alpha", "alpha", "alpha"])# 3 identical
+    # 0 identical:
+    m1 = MultipoleMoment(["alpha", "beta", "gamma"])# = 3 * xxy + 1 * yyy + 3 * yzz
+    # 2 identical:
+    m2 = MultipoleMoment(["alpha", "beta", "beta"])# = y beta beta = 0
+    # 3 identical:
+    m3 = MultipoleMoment(["alpha", "alpha", "alpha"])# = yyy
 
     m4 = MultipoleMoment(["x", "alpha", "alpha"])# always 0
-    m5 = MultipoleMoment(["x", "alpha", "beta"])
-    m6 = MultipoleMoment(["y", "alpha", "alpha"])
-    m7 = MultipoleMoment(["y", "alpha", "beta"])
+    m5 = MultipoleMoment(["x", "alpha", "beta"])# = 2 * xxy
+    m6 = MultipoleMoment(["y", "alpha", "alpha"])# = xxy + yyy + yzz -> 0
+    m7 = MultipoleMoment(["y", "alpha", "beta"])# = xxy + yyy + yzz -> 0
 
-    m8 = MultipoleMoment(["x", "x", "alpha"])
-    m9 = MultipoleMoment(["x", "y", "alpha"])
+    m8 = MultipoleMoment(["x", "x", "alpha"])# = xxy
+    m9 = MultipoleMoment(["x", "y", "alpha"])# = xxy
     m10 = MultipoleMoment(["x", "z", "alpha"])# always 0
-    m11 = MultipoleMoment(["y", "y", "alpha"])
+    m11 = MultipoleMoment(["y", "y", "alpha"])# = yyy
 
     o1 = MultipoleMoment(["x", "x", "x"])
     o2 = MultipoleMoment(["x", "x", "y"])
@@ -33,9 +36,28 @@ class testingOctopoles(unittest.TestCase):
     o10 = MultipoleMoment(["x", "y", "z"])
 
 
+    def test_set_up(self):#
+        def get_simple_copy(m):
+            p = ProductTerm()
+            p.set_elements([copy.deepcopy(m)], prefactor=1)
+            p.simplify_Multipole()
+            p.use_traceless_conditions()
+            p.clean_up()
+            return p
+
+        assert get_simple_copy(self.m2).to_string() == "+ 0"
+        assert get_simple_copy(self.m3).to_string() == "+ 1 * " + self.o6.to_string()
+        assert get_simple_copy(self.m4).to_string() == "+ 0"
+        assert get_simple_copy(self.m6).to_string() == "+ 0"
+        assert get_simple_copy(self.m7).to_string() == "+ 0"
+        assert get_simple_copy(self.m8).to_string() == "+ 1 * " + self.o2.to_string()
+        assert get_simple_copy(self.m9).to_string() == "+ 1 * " + self.o2.to_string()
+        assert get_simple_copy(self.m10).to_string() == "+ 0"
+        assert get_simple_copy(self.m11).to_string() == "+ 1 * " + self.o6.to_string()
+
+
     def test_is_zero_for_whatever_reason(self):
         # zero-components:
-        assert self.m1.is_zero() or len(self.m1.traceless_condition()) > 0# additional case, because: Ω_αβγ -> 2 identical -> traceless
         assert self.m2.is_zero() or len(self.m2.traceless_condition()) > 0
         assert self.m4.is_zero() and len(self.m4.traceless_condition()) > 0
         assert self.m6.is_zero() or len(self.m6.traceless_condition()) > 0
@@ -49,7 +71,7 @@ class testingOctopoles(unittest.TestCase):
         assert self.o10.is_zero()
 
         # non-zero components:
-        # assert not self.m1.is_zero() and len(self.m1.traceless_condition()) == 0
+        assert not self.m1.is_zero() and len(self.m1.traceless_condition()) == 0
         assert not self.m3.is_zero() and len(self.m3.traceless_condition()) == 0
         assert not self.m5.is_zero() and len(self.m5.traceless_condition()) == 0
         assert not self.m7.is_zero() and len(self.m7.traceless_condition()) == 0
@@ -69,7 +91,7 @@ class testingOctopoles(unittest.TestCase):
             return p.factors[0]
 
         # unchanged:
-        assert self.m1.to_string() == get_simple_copy(self.m1).to_string()# Ω_αβγ -> 2 identical -> then traceless
+        assert self.m1.to_string() == get_simple_copy(self.m1).to_string()# Ω_αβγ -> 2 identical, but different factors
         assert self.m4.to_string() == get_simple_copy(self.m4).to_string()# but is zero
         assert self.m5.to_string() == get_simple_copy(self.m5).to_string()# Ω_xαβ (has to be xxy, but 2x)
         assert self.m6.to_string() == get_simple_copy(self.m6).to_string()# but is zero
@@ -95,6 +117,26 @@ class testingOctopoles(unittest.TestCase):
         assert get_simple_copy(self.m8).to_string() == "Ω_xxy"# -> xxy
         assert get_simple_copy(self.m9).to_string() == "Ω_xxy"# -> xxy
         assert get_simple_copy(self.m11).to_string() == "Ω_yyy"# -> yyy
+
+
+
+    def test_simplifyR(self):
+        def get_p(r_index, m):
+            r = R(r_index)
+            p = ProductTerm()
+            p.set_elements([r, copy.deepcopy(m)], prefactor = -2)
+            p.sort_elements()
+            return p
+
+        p = get_p("alpha", self.m1)
+        assert p.to_string() == "- 2 * R_α * Ω_αβγ"
+        p.simplify_Multipole()
+        assert p.to_string() == "- 2 * R_α * Ω_αβγ"
+        p.simplify_R()
+        assert p.to_string() == "- 2 * R_z * Ω_zβγ"
+        p.simplify_Multipole()
+        assert p.to_string() == "- 2 * R_z * Ω_zβγ"# zzy and zyz
+
 
 
 
