@@ -8,7 +8,9 @@ from mathematics_of_terms.sum_up_list import sum_up_list
 from settings import global_symbols, greek_names
 from term_components.Index import Index
 from term_components.Multipole import MultipoleMoment
+from term_components.ProductTerm import ProductTerm
 from term_components.R import R
+from term_components.debug_replacements import get_replacements_according_to_traceless_conditions
 from term_components.get_product_terms_from_greek_sum import get_product_terms_from_greek_sum_duplicateMultipoles, \
     get_product_terms_from_greek_sum_all
 
@@ -35,10 +37,7 @@ class MultipoleInteraction:
             self.tensor_terms.append(term)
 
         # initial values (! get changed by clean up):
-
         self.prefactor_of_expansion = abs(1 / prefactor_expansion(order=multipole_order_1)) * (1/prefactor_expansion(multipole_order_2))
-        # if multipole_order_1 > multipole_order_2:
-        #     self.prefactor_of_expansion -= self.prefactor_of_expansion
         self.initial_prefactor = self.prefactor_of_expansion
         self.set_r_prefactor()
 
@@ -242,6 +241,9 @@ class MultipoleInteraction:
             latex_doc.append("\n")
             return last_equation
 
+
+
+
     def simplify_in_latex_steps(self, importable_tex:bool=False ):
         filename = f"tensor_simplification_{len(self.multipole1.indices)}-{len(self.multipole2.indices)}.tex"
         # Start the LaTeX document
@@ -297,3 +299,40 @@ class MultipoleInteraction:
         with open(filename, "w") as f:
             f.write("\n".join(latex_doc))
         print(f"LaTeX document written to {filename}", flush=True)
+
+    def simplify_long_way(self):
+        self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
+        for term in self.tensor_terms:
+            term.clean_up()
+        self.add_up()
+        self.clean_up()
+
+
+
+    def debug_substitute_multipoles_according_to_traceless_conditions(self, molecule:str):
+        factors = []
+        for term in self.tensor_terms:
+            something_replaced = False
+            for i in get_replacements_according_to_traceless_conditions(molecule=molecule):
+                if i["to_be_replaced"] in term.factors:
+                    something_replaced = True
+                    basic_elements = [x for x in term.factors if x != i["to_be_replaced"]]
+                    for j in i["replacements"]:
+                        p = ProductTerm()
+                        p.set_elements(basic_elements+[j], prefactor=-term.prefactor)
+                        p.sort_elements()
+                        factors.append(p)
+            if not something_replaced:
+                p = ProductTerm()
+                elements = term.factors
+                p.set_elements(elements, prefactor = term.prefactor)
+                factors.append(p)
+        self.tensor_terms = factors
+
+
+    def __eq__(self, other):
+        if not isinstance(other, MultipoleInteraction):
+            return NotImplemented
+        if self.full_latex_tensor() == other.full_latex_tensor():
+            return True
+        return False

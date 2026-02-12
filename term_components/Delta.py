@@ -50,10 +50,11 @@ class Delta:
     def evaluate(self):
         if self.index1.index == self.index2.index:
             return 1
-        if self.index1.index in ["x", "y", "z"] and self.index2.index in ["x", "y", "z"]:
-            if self.index1.index != self.index2.index:
-                return 0
-        return None # unknown yet
+        if self.index1.is_coordinate() and self.index2.is_coordinate():
+            return self.index1 == self.index2
+        # else: needs to be simplified
+        return None
+
 
 
     def simplify(self) -> list[dict]:

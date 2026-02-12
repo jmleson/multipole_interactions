@@ -618,7 +618,7 @@ class TestingProductTerms(unittest.TestCase):
         assert traceless[0] == Index("beta")
 
         m = MultipoleMoment(["alpha", "beta", "gamma"])
-        assert len(m.traceless_condition()) == 0
+        assert len(m.traceless_condition()) == 3# set to it, because this sums up all existing components -> = 0
 
         m = MultipoleMoment(["alpha", "beta", "beta"])
         traceless = m.traceless_condition()
