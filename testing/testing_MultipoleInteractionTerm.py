@@ -176,93 +176,62 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
 
     def test_different_derivation_ways(self):
         # INFO ok
-        # s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
-        # t.simplify_long_way()
-        # assert s == t
-        #
-        # INFO ok
-        # s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
-        # t.simplify_long_way()
-        # assert s == t
-
-        # INFO TODO
-        # s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
-        # t.simplify_long_way()
-        # # assert s == t
-        # print(s.full_latex_tensor())
-        # print(t.full_latex_tensor())
-
-        # INFO ok
-        # s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
-        # t.simplify_long_way()
-        # assert s == t
-
-        # INFO
-        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         s.simplify_in_latex_steps()
-        t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         t.simplify_long_way()
-        # assert s == t
-        print(s.full_latex_tensor(), r"\\ ")
-        # print(t.full_latex_tensor())
+        assert s == t
 
-        s.debug_substitute_multipoles_according_to_traceless_conditions("A")
-        # print(s.full_latex_tensor(), r"\\ ")
-        # s.add_up()
-        # print(s.full_latex_tensor(), r"\\ ")
-        # s.clean_up()
-        # print(s.full_latex_tensor(), r"\\ ")
-        s.debug_substitute_multipoles_according_to_traceless_conditions("B")
-        # print(s.full_latex_tensor(), r"\\ ")
-        # s.add_up()
-        # print(s.full_latex_tensor(), r"\\ ")
-        # s.clean_up()
-        s.add_up()
-        s.clean_up()
-        print(s.full_latex_tensor(), r"\\ ")
+        # INFO ok
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
+        s.simplify_in_latex_steps()
+        t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
+        t.simplify_long_way()
+        assert s == t
 
+        # INFO ok, if yzz is replaced
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
+        s.simplify_in_latex_steps(debug=True)
+        t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
+        t.simplify_long_way(debug=True)
+        assert s == t
 
-        print()
-        print(t.full_latex_tensor(), r"\\ ")
-        t.debug_substitute_multipoles_according_to_traceless_conditions("A")
-        t.debug_substitute_multipoles_according_to_traceless_conditions("B")
-        t.add_up()
-        t.clean_up()
-        print(t.full_latex_tensor(), r"\\ ")
-        assert t == s
+        # INFO ok
+        s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
+        s.simplify_in_latex_steps()
+        t = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
+        t.simplify_long_way()
+        assert s == t
+
+        # INFO ok, if zz is replaced
+        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        s.simplify_in_latex_steps(debug=True)
+        t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
+        t.simplify_long_way(debug=True)
+        assert s == t
 
 
         # INFO ok
-        # s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=3)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=3)
-        # t.simplify_long_way()
-        # assert s == t
+        s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=3)
+        s.simplify_in_latex_steps()
+        t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=3)
+        t.simplify_long_way()
+        assert s == t
 
         # # INFO TODO
         # s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=4)
-        # s.simplify_in_latex_steps()
+        # s.simplify_in_latex_steps(debug=True)
         # t = MultipoleInteraction(multipole_order_1=2, multipole_order_2=4)
-        # t.simplify_long_way()
+        # t.simplify_long_way(debug=True)
         # assert s == t
         # print(s.full_latex_tensor())
         # print(t.full_latex_tensor())
 
-        # INFO TODO
-        # s = MultipoleInteraction(multipole_order_1=3, multipole_order_2=3)
-        # s.simplify_in_latex_steps()
-        # t = MultipoleInteraction(multipole_order_1=3, multipole_order_2=3)
-        # t.simplify_long_way()
-        # assert s == t
-        # print(s.full_latex_tensor())
-        # print(t.full_latex_tensor())
+        # INFO ok
+        s = MultipoleInteraction(multipole_order_1=3, multipole_order_2=3)
+        s.simplify_in_latex_steps(debug=True)
+        t = MultipoleInteraction(multipole_order_1=3, multipole_order_2=3)
+        t.simplify_long_way(debug=True)
+        assert s == t
 
 

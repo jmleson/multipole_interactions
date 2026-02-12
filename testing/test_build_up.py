@@ -356,30 +356,166 @@ class TestAuildUp(unittest.TestCase):
         assert "+ 1 * Θ_zz * Θ_zz" in strings
 
 
-    def test_get_product_terms_from_greek_sum_all(self):
+    def test_get_product_terms_from_greek_sum_all_mixed(self):
+        def get_p_result(list1, list2):
+            p = ProductTerm()
+            m1 = MultipoleMoment(list1)
+            m1.molecule = "A"
+            m2 = MultipoleMoment(list2)
+            m2.molecule = "B"
+            p.set_elements([m1, m2], prefactor=1)
+            return get_product_terms_from_greek_sum_all(p)
+
+
+        # different multipole kinds:
+        result = get_p_result(["alpha"], ["beta", "gamma"])
+        assert len(result) == 27
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 3*6
+
+        result = get_p_result(["beta"], ["alpha", "alpha"])
+        assert len(result) == 9
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 3*3
+
+        result = get_p_result(["alpha"], ["alpha", "gamma"])
+        assert len(result) == 9
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 9
+        assert "+ 1 * Θ^B_xx * μ^A_x" in strings
+        assert "+ 1 * Θ^B_xy * μ^A_x" in strings
+        assert "+ 1 * Θ^B_xz * μ^A_x" in strings
+        assert "+ 1 * Θ^B_xy * μ^A_y" in strings
+        assert "+ 1 * Θ^B_yy * μ^A_y" in strings
+        assert "+ 1 * Θ^B_yz * μ^A_y" in strings
+        assert "+ 1 * Θ^B_xz * μ^A_z" in strings
+        assert "+ 1 * Θ^B_yz * μ^A_z" in strings
+        assert "+ 1 * Θ^B_zz * μ^A_z" in strings
+
+
+        # combined multipoles of same kind:
+
+        result = get_p_result(["alpha", "beta", "gamma"], ["alpha", "beta", "gamma"])
+        assert len(result) == 27
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 10
+
+
+        result = get_p_result(["alpha"], ["alpha"])
+        assert len(result) == 3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 3
+
+        result = get_p_result(["alpha"], ["beta"])
+        assert len(result) == 3 * 3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 9
+        assert '+ 1 * μ^B_x * μ^A_x' in strings
+        assert '+ 1 * μ^B_x * μ^A_y' in strings
+        assert '+ 1 * μ^B_x * μ^A_z' in strings
+        assert '+ 1 * μ^B_y * μ^A_x' in strings
+        assert '+ 1 * μ^B_y * μ^A_y' in strings
+        assert '+ 1 * μ^B_y * μ^A_z' in strings
+        assert '+ 1 * μ^B_z * μ^A_x' in strings
+        assert '+ 1 * μ^B_z * μ^A_y' in strings
+        assert '+ 1 * μ^B_z * μ^A_z' in strings
+
+        result = get_p_result(["alpha", "beta"], ["alpha", "alpha"])
+        assert len(result) == 3 * 3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 9
+        assert '+ 1 * Θ^B_xx * Θ^A_xx' in strings
+        assert '+ 1 * Θ^B_xx * Θ^A_xy' in strings
+        assert '+ 1 * Θ^B_xx * Θ^A_xz' in strings
+        assert '+ 1 * Θ^B_yy * Θ^A_xy' in strings
+        assert '+ 1 * Θ^B_yy * Θ^A_yy' in strings
+        assert '+ 1 * Θ^B_yy * Θ^A_yz' in strings
+        assert '+ 1 * Θ^B_zz * Θ^A_xz' in strings
+        assert '+ 1 * Θ^B_zz * Θ^A_yz' in strings
+        assert '+ 1 * Θ^B_zz * Θ^A_zz' in strings
+
+        result = get_p_result(["alpha", "beta"], ["gamma", "delta"])
+        assert len(result) == 3 * 3 * 3 * 3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 6 * 6
+
+        result = get_p_result(["alpha", "beta"], ["gamma", "beta"])
+        assert len(result) == 3 * 3 * 3
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 9 + 3*5
+        assert "+ 1 * Θ^B_xx * Θ^A_xx" in strings
+        assert "+ 1 * Θ^B_xx * Θ^A_xy" in strings
+        assert "+ 1 * Θ^B_xx * Θ^A_xz" in strings
+        assert "+ 1 * Θ^B_yy * Θ^A_xy" in strings
+        assert "+ 1 * Θ^B_yy * Θ^A_yy" in strings
+        assert "+ 1 * Θ^B_yy * Θ^A_yz" in strings
+        assert "+ 1 * Θ^B_zz * Θ^A_xz" in strings
+        assert "+ 1 * Θ^B_zz * Θ^A_yz" in strings
+        assert "+ 1 * Θ^B_zz * Θ^A_zz" in strings
+        assert "+ 1 * Θ^B_xy * Θ^A_xx" in strings
+        assert "+ 1 * Θ^B_xy * Θ^A_xy" in strings
+        assert "+ 1 * Θ^B_xy * Θ^A_xz" in strings
+        assert "+ 1 * Θ^B_xy * Θ^A_xy" in strings# duplicate
+        assert "+ 1 * Θ^B_xy * Θ^A_yy" in strings
+        assert "+ 1 * Θ^B_xy * Θ^A_yz" in strings
+        assert "+ 1 * Θ^B_xz * Θ^A_xx" in strings
+        assert "+ 1 * Θ^B_xz * Θ^A_xy" in strings
+        assert "+ 1 * Θ^B_xz * Θ^A_xz" in strings
+        assert "+ 1 * Θ^B_xz * Θ^A_xz" in strings# duplicate
+        assert "+ 1 * Θ^B_xz * Θ^A_yz" in strings
+        assert "+ 1 * Θ^B_xz * Θ^A_zz" in strings
+        assert "+ 1 * Θ^B_yz * Θ^A_xy" in strings
+        assert "+ 1 * Θ^B_yz * Θ^A_yy" in strings
+        assert "+ 1 * Θ^B_yz * Θ^A_yz" in strings
+        assert "+ 1 * Θ^B_yz * Θ^A_xz" in strings
+        assert "+ 1 * Θ^B_yz * Θ^A_yz" in strings# duplicate
+        assert "+ 1 * Θ^B_yz * Θ^A_zz" in strings
+
+
+
+    def test_get_product_terms_from_greek_sum_all_multipoles(self):
+        # single multipoles:
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "alpha"])], prefactor=1)
         result = get_product_terms_from_greek_sum_all(p)
         assert len(result) == 3
         strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 3
         assert "+ 1 * Θ_xx" in strings
         assert "+ 1 * Θ_yy" in strings
         assert "+ 1 * Θ_zz" in strings
 
         p = ProductTerm()
-        p.set_elements([MultipoleMoment(["alpha", "alpha"]), MultipoleMoment(["alpha", "beta"])], prefactor=1)
+        p.set_elements([MultipoleMoment(["alpha", "beta"])], prefactor=1)
         result = get_product_terms_from_greek_sum_all(p)
-        assert len(result) == 3*3
+        assert len(result) == 9
         strings = [i.to_string() for i in result]
-        assert '+ 1 * Θ_xx * Θ_xx' in strings
-        assert '+ 1 * Θ_xx * Θ_xy' in strings
-        assert '+ 1 * Θ_xx * Θ_xz' in strings#
-        assert '+ 1 * Θ_xy * Θ_yy' in strings
-        assert '+ 1 * Θ_yy * Θ_yy' in strings
-        assert '+ 1 * Θ_yy * Θ_yz' in strings
-        assert '+ 1 * Θ_xz * Θ_zz' in strings
-        assert '+ 1 * Θ_yz * Θ_zz' in strings
-        assert '+ 1 * Θ_zz * Θ_zz' in strings
+        assert len(set(strings)) == 6
+        assert "+ 1 * Θ_xx" in strings
+        assert "+ 1 * Θ_xy" in strings
+        assert "+ 1 * Θ_xz" in strings
+        assert "+ 1 * Θ_yy" in strings
+        assert "+ 1 * Θ_yz" in strings
+        assert "+ 1 * Θ_zz" in strings
+
+        p = ProductTerm()
+        p.set_elements([MultipoleMoment(["alpha", "beta", "gamma"])], prefactor=1)
+        result = get_product_terms_from_greek_sum_all(p)
+        assert len(result) == 27
+        strings = [i.to_string() for i in result]
+        assert len(set(strings)) == 10
+        assert "+ 1 * Ω_xxx" in strings
+        assert "+ 1 * Ω_xxy" in strings
+        assert "+ 1 * Ω_xxz" in strings
+        assert "+ 1 * Ω_xyy" in strings
+        assert "+ 1 * Ω_xyz" in strings
+        assert "+ 1 * Ω_xzz" in strings
+        assert "+ 1 * Ω_yyy" in strings
+        assert "+ 1 * Ω_yyz" in strings
+        assert "+ 1 * Ω_yzz" in strings
+        assert "+ 1 * Ω_zzz" in strings
+
+
 
 
         p = ProductTerm()

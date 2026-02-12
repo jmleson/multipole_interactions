@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  12 FEB 2026 12:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.12.28)  12 FEB 2026 13:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**debug.tex
-(./debug.tex
+**debug_tensor_simplification_2-4.tex
+(./debug_tensor_simplification_2-4.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -154,8 +154,9 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box55
 )
-(/home/judith/Schreibtisch/Promotion/multipole_interactions/out/debug.aux)
-\openout1 = `debug.aux'.
+(/home/judith/Schreibtisch/Promotion/multipole_interactions/out/debug_tensor_si
+mplification_2-4.aux)
+\openout1 = `debug_tensor_simplification_2-4.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
@@ -252,32 +253,69 @@ e
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(/home/judith/Schreibtisch/Promotion/multipole_interactions/out/debug.aux)
+Overfull \vbox (396.76933pt too high) has occurred while \output is active []
+
+
+
+[2]
+Overfull \vbox (395.31102pt too high) has occurred while \output is active []
+
+
+
+[3]
+Overfull \vbox (279.85081pt too high) has occurred while \output is active []
+
+
+
+[4]
+Overfull \vbox (279.85081pt too high) has occurred while \output is active []
+
+
+
+[5]
+
+[6]
+
+[7]
+Overfull \vbox (100.46024pt too high) has occurred while \output is active []
+
+
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+(/home/judith/Schreibtisch/Promotion/multipole_interactions/out/debug_tensor_si
+mplification_2-4.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3180 strings out of 473197
- 50323 string characters out of 5718604
- 466674 words of memory out of 5000000
- 26439 multiletter control sequences out of 15000+600000
- 559291 words of font info for 38 fonts, out of 8000000 for 9000
+ 3184 strings out of 473197
+ 50716 string characters out of 5718604
+ 683083 words of memory out of 5000000
+ 26442 multiletter control sequences out of 15000+600000
+ 559599 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,14n,70p,240b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy7.pfb>
+ 63i,16n,70p,300b,211s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy7.pfb>
 Output written on /home/judith/Schreibtisch/Promotion/multipole_interactions/ou
-t/debug.pdf (1 page, 66586 bytes).
+t/debug_tensor_simplification_2-4.pdf (11 pages, 108948 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
- 25 compressed objects within 1 object stream
+ 80 PDF objects out of 1000 (max. 8388607)
+ 50 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

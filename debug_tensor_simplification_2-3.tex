@@ -1,0 +1,208 @@
+\documentclass{article}
+\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+\usepackage{amsmath}% for equation environment
+\usepackage{mathtools}% for xRightarrow
+\allowdisplaybreaks % allows breaks in subequations
+\begin{document}
+\subsubsection{Interacting Multipoles of Rank 2 and 3}
+\begin{equation}
+- \frac{1}{45} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}^{B}_{\alpha{}\beta{}} \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} = R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\delta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \delta{}\left(\gamma{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\beta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \delta{}\left(\delta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \delta{}\left(\gamma{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \epsilon{}\right) \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \delta{}\left(\delta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \delta{}\left(\gamma{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \epsilon{}\right) \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \delta{}\left(\delta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \delta{}\left(\beta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \epsilon{}\right) \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \delta{}\left(\beta{}, \epsilon{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \epsilon{}\right) \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \gamma{}\right) \cdot \delta{}\left(\beta{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \delta{}\right) \cdot \delta{}\left(\beta{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}}
+ \end{array}\right] 
+\end{equation}
+
+
+\textbf{Simplify deltas:}
+\begin{subequations}\begin{gather}
+- \frac{1}{45} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}^{B}_{\alpha{}\beta{}} \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} = R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \delta{}\left(\delta{}, \delta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\gamma{}, \gamma{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \delta{}\left(\alpha{}, \alpha{}\right) \cdot \delta{}\left(\beta{}, \beta{}\right) \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\epsilon{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\epsilon{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\epsilon{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\delta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 15 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot R_{\epsilon{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\delta{}\delta{}} 
+ \\[0.2em] 		 + 210 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\beta{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\gamma{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 315 \cdot R_{z}^{2} \cdot R_{\alpha{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 315 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\delta{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{\beta{}} \cdot R_{\gamma{}} \cdot R_{\delta{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\delta{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{\alpha{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{\beta{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{\beta{}\beta{}\gamma{}} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{4} \cdot R_{\gamma{}} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\gamma{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\textbf{Simplify R:}
+\begin{subequations}\begin{gather}
+- \frac{1}{45} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}^{B}_{\alpha{}\beta{}} \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} = R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		- 945 \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{zzz} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{z\delta{}\delta{}} 
+ \\[0.2em] 		 + 210 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{z\gamma{}\gamma{}} 
+ \\[0.2em] 		 + 315 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{zz\beta{}} 
+ \\[0.2em] 		 + 315 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{zz\alpha{}} 
+ \\[0.2em] 		 + 105 \cdot R_{z}^{2} \cdot R_{z} \cdot R_{z} \cdot R_{z} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{zzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{z} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{z} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot R_{z} \cdot \Theta{}^{B}_{\alpha{}\alpha{}} \cdot \Omega{}^{A}_{z\beta{}\beta{}} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{4} \cdot R_{z} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{z\alpha{}\beta{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		+ 315 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{zz\beta{}}+ 315 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{zz\alpha{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{\beta{}\gamma{}\gamma{}}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{\alpha{}\gamma{}\gamma{}} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{z\alpha{}\beta{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{reduced indices}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		+ 315 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{zz\alpha{}}+ 315 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{zz\alpha{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{z\alpha{}\beta{}}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		+ 630 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{zz\alpha{}}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\beta{}} \cdot \Omega{}^{A}_{\alpha{}\alpha{}\beta{}} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{z\alpha{}} \cdot \Omega{}^{A}_{\alpha{}\beta{}\beta{}}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{\alpha{}\beta{}} \cdot \Omega{}^{A}_{z\alpha{}\beta{}}
+ \end{array}\right] 
+\end{gather}\end{subequations}
+
+
+\textbf{Multiply Out Sum:}
+\begin{subequations}\begin{gather}
+- \frac{1}{45} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}^{B}_{\alpha{}\beta{}} \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} = R_{z}^{-11} \cdot - \frac{1}{45} \cdot  \left[ \begin{array}{c} 
+ 		+ 630 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xzz}+ 630 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 + 630 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{zzz}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xxx} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xyy}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{xxy}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yyy} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yzz}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{xxz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{yyz}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{zzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xxx}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xyy} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xzz}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yyy}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{xxz}- 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{yyz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{zzz}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xx} \cdot \Omega{}^{A}_{xxz} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xy} \cdot \Omega{}^{A}_{xyz}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xzz} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xy} \cdot \Omega{}^{A}_{xyz}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yy} \cdot \Omega{}^{A}_{yyz} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yzz}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{xz} \cdot \Omega{}^{A}_{xzz} 
+ \\[0.2em] 		 - 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{yz} \cdot \Omega{}^{A}_{yzz}- 90 \cdot R_{z}^{5} \cdot \Theta{}^{B}_{zz} \cdot \Omega{}^{A}_{zzz}
+ \end{array}\right] 
+\\ \xRightarrow{\text{cleaned up}}
+ R_{z}^{-11} \cdot - \frac{1}{45} \cdot \left[ + 0 \right]
+\end{gather}\end{subequations}
+
+
+\textbf{Combining everything:}
+\begin{equation}
+- \frac{1}{45} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}\epsilon{}} \Theta{}^{B}_{\alpha{}\beta{}} \Omega{}^{A}_{\gamma{}\delta{}\epsilon{}} = + 0
+\end{equation}
+
+
+\end{document}

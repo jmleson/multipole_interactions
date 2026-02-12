@@ -41,6 +41,8 @@ class MultipoleInteraction:
         self.initial_prefactor = self.prefactor_of_expansion
         self.set_r_prefactor()
 
+        self.full_results = []
+
     def get_orders(self):
         return (len(self.multipole1.indices), len(self.multipole2.indices))
 
@@ -244,7 +246,7 @@ class MultipoleInteraction:
 
 
 
-    def simplify_in_latex_steps(self, importable_tex:bool=False ):
+    def simplify_in_latex_steps(self, importable_tex:bool=False , debug:bool=False):
         filename = f"tensor_simplification_{len(self.multipole1.indices)}-{len(self.multipole2.indices)}.tex"
         # Start the LaTeX document
         latex_doc = []
@@ -293,6 +295,19 @@ class MultipoleInteraction:
         self.clean_up()
         prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
                                        prior_equation=prior_equation, consider_index_sorting=True)
+        self.full_results.append(prior_equation)
+        if debug:
+            self.debug_substitute_multipoles_according_to_traceless_conditions("A")
+            prior_equation = self.add_step(latex_doc=latex_doc, description="A", term_clean_up=True,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+            self.debug_substitute_multipoles_according_to_traceless_conditions("B")
+            prior_equation = self.add_step(latex_doc=latex_doc, description="B", term_clean_up=True,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+            self.clean_up()
+            prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+
+            self.full_results.append(prior_equation)
 
         if not importable_tex:
             latex_doc.append(r"\end{document}")
@@ -300,12 +315,58 @@ class MultipoleInteraction:
             f.write("\n".join(latex_doc))
         print(f"LaTeX document written to {filename}", flush=True)
 
-    def simplify_long_way(self):
-        self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
+    def simplify_long_way(self, debug=True):
+        filename = f"debug_tensor_simplification_{len(self.multipole1.indices)}-{len(self.multipole2.indices)}.tex"
+        # Start the LaTeX document
+        latex_doc = []
+        latex_doc.append(r"\documentclass{article}")
+        latex_doc.append(r"\usepackage[top=2cm,left=2cm,bottom=2cm,right=2cm]{geometry}")
+        latex_doc.append(r"\usepackage{amsmath}% for equation environment")
+        latex_doc.append(r"\usepackage{mathtools}% for xRightarrow")
+        latex_doc.append(r"\allowdisplaybreaks % allows breaks in subequations")
+        latex_doc.append(r"\begin{document}")
+        prior_equation = self.add_step(latex_doc=latex_doc, prior_equation=None,
+                                       description=f"Interacting Multipoles of Rank {len(self.multipole1.indices)} and {len(self.multipole2.indices)}",
+                                       term_clean_up=False)
+
         for term in self.tensor_terms:
-            term.clean_up()
-        self.add_up()
+            term.simplify_delta()
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Simplify deltas",
+                                       prior_equation=prior_equation, term_clean_up=True)
+
+        for term in self.tensor_terms:
+            term.simplify_R()
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Simplify R", prior_equation=prior_equation,
+                                       term_clean_up=True)
+
+        change = self.find_unresolved_multipoles(function=get_product_terms_from_greek_sum_all)
+        if change:
+            prior_equation = self.add_step(latex_doc=latex_doc, description="Multiply Out Sum",
+                                           prior_equation=prior_equation,
+                                           term_clean_up=True, consider_index_sorting=True)
+
         self.clean_up()
+        prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
+                                       prior_equation=prior_equation, consider_index_sorting=True)
+        self.full_results.append(prior_equation)
+
+        if debug:
+            self.debug_substitute_multipoles_according_to_traceless_conditions("A")
+            prior_equation = self.add_step(latex_doc=latex_doc, description="A", term_clean_up=True,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+            self.debug_substitute_multipoles_according_to_traceless_conditions("B")
+            prior_equation = self.add_step(latex_doc=latex_doc, description="B", term_clean_up=True,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+            self.clean_up()
+            prior_equation = self.add_step(latex_doc=latex_doc, description="Combining everything", term_clean_up=False,
+                                           prior_equation=prior_equation, consider_index_sorting=True)
+
+            self.full_results.append(prior_equation)
+
+        latex_doc.append(r"\end{document}")
+        with open(filename, "w") as f:
+            f.write("\n".join(latex_doc))
+        print(f"LaTeX document written to {filename}", flush=True)
 
 
 
@@ -334,5 +395,7 @@ class MultipoleInteraction:
         if not isinstance(other, MultipoleInteraction):
             return NotImplemented
         if self.full_latex_tensor() == other.full_latex_tensor():
+            return True
+        if set(self.full_results) & set(other.full_results):
             return True
         return False

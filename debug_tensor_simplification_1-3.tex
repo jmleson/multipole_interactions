@@ -89,43 +89,62 @@
 \end{gather}\end{subequations}
 
 
-\textbf{Simplify Dipoles:}
+\textbf{Multiply Out Sum:}
 \begin{subequations}\begin{gather}
 - \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{B}_{\alpha{}} \Omega{}^{A}_{\beta{}\gamma{}\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
- 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
- \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{y\beta{}\beta{}}
+ 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{x} \cdot \Omega{}^{A}_{xzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 - 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{z} \cdot \Omega{}^{A}_{zzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{x} \cdot \Omega{}^{A}_{xxx} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{x} \cdot \Omega{}^{A}_{xyy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{x} \cdot \Omega{}^{A}_{xzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{z} \cdot \Omega{}^{A}_{xxz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{z} \cdot \Omega{}^{A}_{yyz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{z} \cdot \Omega{}^{A}_{zzz}
  \end{array}\right] 
-\\ \xRightarrow{\text{reduced indices}}
+\\ \xRightarrow{\text{cleaned up}}
  R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
  		- 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
- \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{y\alpha{}\alpha{}}
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+ R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
+ 		- 36 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 + 9 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy}
  \end{array}\right] 
 \end{gather}\end{subequations}
-
-
-\textbf{Exploit Traceless Conditions:}
-\begin{equation}
-- \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{B}_{\alpha{}} \Omega{}^{A}_{\beta{}\gamma{}\delta{}} = R_{z}^{-9} \cdot - \frac{1}{15} \cdot  \left[ \begin{array}{c} 
- 		- 45 \cdot R_{z}^{4} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz}
- \end{array}\right] 
-\end{equation}
 
 
 \textbf{Combining everything:}
 \begin{equation}
 - \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{B}_{\alpha{}} \Omega{}^{A}_{\beta{}\gamma{}\delta{}} =  \left[ \begin{array}{c} 
- 		+ 3 \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz}
+ 		+ \frac{12}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yzz} 
+ \\[0.2em] 		 - \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 - \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy}
  \end{array}\right] 
 \end{equation}
 
 
 \textbf{A:}
-\begin{equation}
+\begin{subequations}\begin{gather}
 - \frac{1}{15} \cdot T_{\alpha{}\beta{}\gamma{}\delta{}} \mu{}^{B}_{\alpha{}} \Omega{}^{A}_{\beta{}\gamma{}\delta{}} =  \left[ \begin{array}{c} 
+ 		- \frac{12}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy} 
+ \\[0.2em] 		 - \frac{12}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 - \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy} 
+ \\[0.2em] 		 - \frac{3}{5} \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy}
+ \end{array}\right] 
+\\ \xRightarrow{\text{added up}}
+  \left[ \begin{array}{c} 
  		- 3 \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{yyy} 
  \\[0.2em] 		 - 3 \cdot R_{z}^{-5} \cdot \mu{}^{B}_{y} \cdot \Omega{}^{A}_{xxy}
  \end{array}\right] 
-\end{equation}
+\end{gather}\end{subequations}
 
 
 \end{document}

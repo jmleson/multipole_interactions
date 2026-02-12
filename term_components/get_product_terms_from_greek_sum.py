@@ -22,6 +22,10 @@ def get_product_terms_from_greek_sum_all(p:ProductTerm) -> list[ProductTerm]:
                     results.extend(get_product_terms_from_greek_sum_all(term))
 
                 return results
+        if isinstance(m, Delta):
+            raise Exception("delta is supposed to be cleaned beforehand")
+        if isinstance(m, R) and not m.index.is_coordinate():
+            raise Exception("R is supposed to be set to coordinate beforehand")
     return [p]
 
 
