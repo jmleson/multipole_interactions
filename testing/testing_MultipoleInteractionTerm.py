@@ -16,53 +16,53 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=1)
         assert s.order == 2
         assert s.prefactor_of_expansion == - 1 / n.subs(n, 1)
-        assert s.r_prefactor.exponent == -5
+        assert s.tensor.r_prefactor.exponent == -5
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=2)
         assert s.order == 3
         assert s.prefactor_of_expansion == +1 / n.subs(n, 3)
-        assert s.r_prefactor.exponent == -7
+        assert s.tensor.r_prefactor.exponent == -7
 
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=1)
         assert s.order == 3
         assert s.prefactor_of_expansion == -1 / n.subs(n, 3)
-        assert s.r_prefactor.exponent == -7
+        assert s.tensor.r_prefactor.exponent == -7
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=3)
         assert s.order == 4
         assert s.prefactor_of_expansion == -1 / n.subs(n, 15)
-        assert s.r_prefactor.exponent == -9
+        assert s.tensor.r_prefactor.exponent == -9
 
         s = MultipoleInteraction(multipole_order_1=3, multipole_order_2=1)
         assert s.order == 4
         assert s.prefactor_of_expansion == -1 / n.subs(n, 15)# ! here identical to switched version
-        assert s.r_prefactor.exponent == -9
+        assert s.tensor.r_prefactor.exponent == -9
 
         s = MultipoleInteraction(multipole_order_1=1, multipole_order_2=4)
         assert s.order == 5
         assert s.prefactor_of_expansion == +1 / n.subs(n, 105)
-        assert s.r_prefactor.exponent == -11
+        assert s.tensor.r_prefactor.exponent == -11
 
 
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=2)
         assert s.order == 4
         assert s.prefactor_of_expansion == +1 / n.subs(n, 9)
-        assert s.r_prefactor.exponent == -9
+        assert s.tensor.r_prefactor.exponent == -9
 
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=3)
         assert s.order == 5
         assert s.prefactor_of_expansion == -1 / n.subs(n, 3*15)
-        assert s.r_prefactor.exponent == -11
+        assert s.tensor.r_prefactor.exponent == -11
 
         s = MultipoleInteraction(multipole_order_1=2, multipole_order_2=4)
         assert s.order == 6
         assert s.prefactor_of_expansion == 1 / n.subs(n, 3 * 105)
-        assert s.r_prefactor.exponent == -13
+        assert s.tensor.r_prefactor.exponent == -13
 
         s = MultipoleInteraction(multipole_order_1=3, multipole_order_2=3)
         assert s.order == 6
         assert s.prefactor_of_expansion == -1 / n.subs(n, 15*15)
-        assert s.r_prefactor.exponent == -13
+        assert s.tensor.r_prefactor.exponent == -13
 
 
     def test_get_name(self):
@@ -85,7 +85,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         m = MultipoleInteraction(multipole_order_1 = 1, multipole_order_2 = 1)
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha"]), MultipoleMoment(["alpha"])], prefactor=1)
-        m.tensor_terms = [p]
+        m.tensor.terms = [p]
         result = m.full_string_tensor()
         assert result[result.find("="):] == "= R_z^(-5) * -1 * [ + 1 * μ_α * μ_α ]"
         m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)
@@ -96,7 +96,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         m = MultipoleInteraction(multipole_order_1 = 3, multipole_order_2 = 3)
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "x", "x"])], prefactor=1)
-        m.tensor_terms = [p]
+        m.tensor.terms = [p]
         result = m.full_string_tensor()
         assert result[result.find("="):] == "= R_z^(-13) * -1/225 * [ + 1 * Ω_xxα ]"
         m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)
@@ -110,7 +110,7 @@ class TestMultipoleInteractionTerm(unittest.TestCase):
         m = MultipoleInteraction(multipole_order_1 = 3, multipole_order_2 = 3)
         p = ProductTerm()
         p.set_elements([MultipoleMoment(["alpha", "beta", "beta"])], prefactor=1)
-        m.tensor_terms = [p]
+        m.tensor.terms = [p]
         result = m.full_string_tensor()
         assert result[result.find("="):] == "= R_z^(-13) * -1/225 * [ + 1 * Ω_αββ ]"
         m.find_unresolved_multipoles(get_product_terms_from_greek_sum_all)

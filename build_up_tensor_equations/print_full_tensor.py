@@ -6,7 +6,7 @@ from settings import global_symbols
 
 
 def full_string_tensor(order:int):
-    tensor_terms = construct_all_tensor_terms(order=order)
+    tensor.terms = construct_all_tensor_terms(order=order)
 
     r_prefactor = R("z")
     r_prefactor.exponent = - (2 * order - 1)
@@ -21,7 +21,7 @@ def full_string_tensor(order:int):
 
 
 def full_latex_tensor(order:int):
-    tensor_terms = construct_all_tensor_terms(order=order)
+    tensor.terms = construct_all_tensor_terms(order=order)
 
     r_prefactor = R("z")
     r_prefactor.exponent = - (2 * order - 1)

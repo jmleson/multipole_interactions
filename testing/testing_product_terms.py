@@ -10,7 +10,7 @@ from term_components.R import R
 
 
 
-class TestingProductTerms(unittest.TestCase):
+class TestProductTerms(unittest.TestCase):
     m1 = MultipoleMoment(["alpha"])
     m2 = MultipoleMoment(["beta"])
 

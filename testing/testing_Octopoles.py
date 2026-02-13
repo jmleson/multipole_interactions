@@ -6,7 +6,7 @@ from term_components.ProductTerm import ProductTerm
 from term_components.R import R
 
 
-class testingOctopoles(unittest.TestCase):
+class TestOctopoles(unittest.TestCase):
     # 0 identical:
     m1 = MultipoleMoment(["alpha", "beta", "gamma"])# = 3 * xxy + 1 * yyy + 3 * yzz
     # 2 identical:
