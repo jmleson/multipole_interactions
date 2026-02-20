@@ -147,8 +147,7 @@ class Tensor:
 
 if __name__ == '__main__':
 
-    for i in range(5):
-        t = Tensor(order=i)
-        print(t.full_string_tensor())
+    t = Tensor(order=6)
+    print(t.full_string_tensor_basics())
 
     t.to_tex()

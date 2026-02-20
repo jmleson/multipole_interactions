@@ -25,12 +25,12 @@ def variations_between_R_and_delta(amount_of_r: int, amount_of_delta: int):
 
     results = []
 
-    # 1️⃣ wähle R-Indizes
+    # choose R indices
     for R_indices in itertools.combinations(symbols, amount_of_r):
         rs = [R(str(i)) for i in R_indices]
         remaining = [s for s in symbols if s not in R_indices]
 
-        # 2️⃣ wähle Delta-Indizes
+        # 2️choose Delta-indices
         for delta_flat in itertools.combinations(remaining, 2 * amount_of_delta):
             for pairing in pairings(list(delta_flat)):
                 deltas = [
