@@ -22,11 +22,11 @@ The code is intended for **computational and theoretical chemists** who need to 
 ---
 ## ✅ Key Features
 
-- ✅ **Symbolic derivation** of Cartesian multipole tensors from $ \nabla_\alpha \nabla_\beta \cdots (1/R) $
-- ✅ **Stepwise simplification** for stacked systems (intermolecular distance along Z)
-- ✅ **Support for arbitrary multipole orders** (dipole, quadrupole, octopole, hexadecapole, etc.)
-- ✅ **Automated LaTeX File generation** for tensor definitions and interaction terms
-- ✅ **Human-readable derivations in compiled PDFs** showing the intermediate steps
+- **Symbolic derivation** of Cartesian multipole tensors from $ \nabla_\alpha \nabla_\beta \cdots (1/R) $
+- **Stepwise simplification** for stacked systems (intermolecular distance along Z)
+- **Support for arbitrary multipole orders** (dipole, quadrupole, octopole, hexadecapole, etc.)
+- **Automated LaTeX File generation** for tensor definitions and interaction terms
+- **Human-readable derivations in compiled PDFs** showing the intermediate steps
 
 ---
 ## 🛠️ How It Works
@@ -37,7 +37,8 @@ with $$R = |\vec{R}|=\sqrt{R_x^2 + R_y^2 + R_z^2} \quad .$$
 
 These tensors $T$ can be used to compute the interaction energy $E_{interaction}$ between two molecules A and B via a series expansion (Stone 2013). 
 Considering systems without permanent charges, the multipole expansion takes the form:   
-$$E_{interaction} =$$  
+$$E_{interaction} =
+$$  
 $$T_{\alpha\beta} \cdot (-\mu_\alpha^B \mu_\beta^A)$$   
 $$+ T_{\alpha\beta\gamma} \cdot \left( +\mu_\alpha^B \frac{1}{3} \Theta_{\beta\gamma}^A - \frac{1}{3} \Theta_{\alpha\beta}^B \mu_\gamma^A \right)$$  
 $$+ T_{\alpha\beta\gamma\delta} \cdot \left( -\frac{1}{15} \mu_\alpha^B \Omega_{\beta\gamma\delta}^A + \frac{1}{9} \Theta_{\alpha\beta}^B \Theta_{\gamma\delta}^A - \frac{1}{15} \Omega_{\alpha\beta\gamma}^B \mu_\delta^A \right)$$  
