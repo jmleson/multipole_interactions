@@ -62,10 +62,10 @@ In this work, we consider stacked systems (e.g., the "sandwich" benzene dimer), 
 $$ R_x = R_y = 0 \Rightarrow R = R_z $$
 
 
-Additionally, we assume that certain multipole components vanish due to symmetry in systems such as the benzene, chlorobenzene, and pyrazine dimer:
-$$\mu_\alpha = 0 \quad \text{if } \alpha \neq y $$
-$$\Theta_{\alpha\beta} = 0 \quad \forall \alpha \neq \beta $$
-$$ \Omega_{\alpha\beta\gamma} \quad \text{if } \alpha\beta\gamma \notin \left\lbrace xxy, yyy, yzz \right\rbrace $$
+Additionally, we assume that certain multipole components vanish due to symmetry in systems such as the benzene, chlorobenzene, and pyrazine dimer:  
+$$ \mu_\alpha = 0 \quad \text{if } \alpha \neq y $$  
+$$ \Theta_{\alpha\beta} = 0 \quad \forall \alpha \neq \beta $$  
+$$ \Omega_{\alpha\beta\gamma} \quad \text{if } \alpha\beta\gamma \notin \left\lbrace xxy, yyy, yzz \right\rbrace $$  
 $$ \Phi_{\alpha\beta\gamma\delta} \quad \text{if } \alpha\beta\gamma\delta \notin \left\lbrace xxxx, xxyy, xxzz, yyyy, yyzz, zzzz \right\rbrace $$
 
 For systems satisfying these geometric and symmetry constraints, the code performs stepwise derivations and simplifications to yield final interaction equations for specific multipole combinations.
