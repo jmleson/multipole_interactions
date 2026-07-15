@@ -3,7 +3,7 @@
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0)
 
 > **Author**: [Judith M. Leson](https://orcid.org/0009-0002-5627-2673)  
-> **Repository**: [https://github.com/jmleson/multipole_interactions](https://github.com/jmleson/multipole_interactions)  
+> **Repository**: [jmleson:multipole_interactions](https://github.com/jmleson/multipole_interactions)  
 > **Related Work**: Dissertation: *A Quantum-Chemical Analysis of Long-Range Dimer Interactions Arising From Triplet Excited States of Monocyclic Aromatics* (Judith M. Leson, University of Duisburg-Essen, 2026)  
 > **Data DOI**: [10.71955/DUEDATA-2026-MR4YY63J](https://doi.org/10.71955/DUEDATA-2026-MR4YY63J)  
 > **Reference**: [Stone, A. (2013). *The Theory of Intermolecular Forces*, 2nd ed., Oxford University Press.](https://doi.org/10.1093/acprof:oso/9780199672394.001.0001)
