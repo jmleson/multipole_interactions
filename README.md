@@ -31,18 +31,18 @@ The code is intended for **computational and theoretical chemists** who need to 
 ---
 ## 🛠️ How It Works
 ### Theoretical Foundation
-The derivation is based on the general definition of Cartesian multipole tensors:
-$$ T_{\alpha\beta\cdots\nu} = \nabla_\alpha \nabla_\beta \cdots \nabla_\nu \left( \frac{1}{R} \right) \quad, $$
-with $$ R = |\vec{R}|=\sqrt{R_x^2 + R_y^2 + R_z^2} \quad .$$
+The derivation is based on the general definition of Cartesian multipole tensors:  
+$$T_{\alpha\beta\cdots\nu} = \nabla_\alpha \nabla_\beta \cdots \nabla_\nu \left( \frac{1}{R} \right) \quad, $$  
+with $$R = |\vec{R}|=\sqrt{R_x^2 + R_y^2 + R_z^2} \quad .$$  
 
 These tensors $T$ can be used to compute the interaction energy $E_{interaction}$ between two molecules A and B via a series expansion (Stone 2013). 
-Considering systems without permanent charges, the multipole expansion takes the form: 
+Considering systems without permanent charges, the multipole expansion takes the form:   
 $$ E_{interaction} = $$
 $$ T_{\alpha\beta} \cdot (-\mu_\alpha^B \mu_\beta^A)$$ 
 $$+ T_{\alpha\beta\gamma} \cdot \left( +\mu_\alpha^B \frac{1}{3} \Theta_{\beta\gamma}^A - \frac{1}{3} \Theta_{\alpha\beta}^B \mu_\gamma^A \right) $$
-$$ + T_{\alpha\beta\gamma\delta} \cdot \left( -\frac{1}{15} \mu_\alpha^B \Omega_{\beta\gamma\delta}^A + \frac{1}{9} \Theta_{\alpha\beta}^B \Theta_{\gamma\delta}^A - \frac{1}{15} \Omega_{\alpha\beta\gamma}^B \mu_\delta^A \right) $$
+$$+ T_{\alpha\beta\gamma\delta} \cdot \left( -\frac{1}{15} \mu_\alpha^B \Omega_{\beta\gamma\delta}^A + \frac{1}{9} \Theta_{\alpha\beta}^B \Theta_{\gamma\delta}^A - \frac{1}{15} \Omega_{\alpha\beta\gamma}^B \mu_\delta^A \right) $$
 $$+ T_{\alpha\beta\gamma\delta\epsilon} \cdot \left( +\frac{1}{105} \mu_\alpha^B \Phi_{\beta\gamma\delta\epsilon}^A - \frac{1}{45} \Theta_{\alpha\beta}^B \Omega_{\gamma\delta\epsilon}^A + \frac{1}{45} \Omega_{\alpha\beta\gamma}^B \Theta_{\delta\epsilon}^A - \frac{1}{105} \Phi_{\alpha\beta\gamma\delta}^B \mu_\epsilon^A \right) $$
-$$ + \cdots$$
+$$ + \cdots$$  
 
 
 > **Notation**:
@@ -58,15 +58,15 @@ The code derives these terms systematically using symbolic differentiation and b
 
 
 ### Geometric Constraints
-In this work, we consider stacked systems (e.g., the "sandwich" benzene dimer), where the intermolecular distance is aligned along the $z$-axis. Therefore, the derivations assume:
-$$R_x = R_y = 0 \Rightarrow R = R_z$$
+In this work, we consider stacked systems (e.g., the "sandwich" benzene dimer), where the intermolecular distance is aligned along the $z$-axis. Therefore, the derivations assume:  
+$$R_x = R_y = 0 \Rightarrow R = R_z$$  
 
 
 Additionally, we assume that certain multipole components vanish due to symmetry in systems such as the benzene, chlorobenzene, and pyrazine dimer:  
-$$ \mu_\alpha = 0 \quad \text{if } \alpha \neq y $$  
-$$ \Theta_{\alpha\beta} = 0 \quad \forall \alpha \neq \beta $$  
-$$ \Omega_{\alpha\beta\gamma} \quad \text{if } \alpha\beta\gamma \notin \left\lbrace xxy, yyy, yzz \right\rbrace $$  
-$$ \Phi_{\alpha\beta\gamma\delta} \quad \text{if } \alpha\beta\gamma\delta \notin \left\lbrace xxxx, xxyy, xxzz, yyyy, yyzz, zzzz \right\rbrace $$
+$$\mu_\alpha = 0 \quad \text{if } \alpha \neq y$$  
+$$\Theta_{\alpha\beta} = 0 \quad \forall \alpha \neq \beta$$  
+$$\Omega_{\alpha\beta\gamma} \quad \text{if } \alpha\beta\gamma \notin \left\lbrace xxy, yyy, yzz \right\rbrace$$  
+$$\Phi_{\alpha\beta\gamma\delta} \quad \text{if } \alpha\beta\gamma\delta \notin \left\lbrace xxxx, xxyy, xxzz, yyyy, yyzz, zzzz \right\rbrace$$
 
 For systems satisfying these geometric and symmetry constraints, the code performs stepwise derivations and simplifications to yield final interaction equations for specific multipole combinations.
 We note that while these constraints apply only to certain symmetric systems, the code remains useful for general use: it generates derivations step-by-step, enabling full traceability and verification of used simplifications.
