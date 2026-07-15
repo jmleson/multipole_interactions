@@ -37,11 +37,11 @@ with $$R = |\vec{R}|=\sqrt{R_x^2 + R_y^2 + R_z^2} \quad .$$
 
 These tensors $T$ can be used to compute the interaction energy $E_{interaction}$ between two molecules A and B via a series expansion (Stone 2013). 
 Considering systems without permanent charges, the multipole expansion takes the form:   
-$$E_{interaction} = $$
+$$E_{interaction} =$$  
 $$T_{\alpha\beta} \cdot (-\mu_\alpha^B \mu_\beta^A)$$   
-$$+ T_{\alpha\beta\gamma} \cdot \left( +\mu_\alpha^B \frac{1}{3} \Theta_{\beta\gamma}^A - \frac{1}{3} \Theta_{\alpha\beta}^B \mu_\gamma^A \right) $$  
-$$+ T_{\alpha\beta\gamma\delta} \cdot \left( -\frac{1}{15} \mu_\alpha^B \Omega_{\beta\gamma\delta}^A + \frac{1}{9} \Theta_{\alpha\beta}^B \Theta_{\gamma\delta}^A - \frac{1}{15} \Omega_{\alpha\beta\gamma}^B \mu_\delta^A \right) $$  
-$$+ T_{\alpha\beta\gamma\delta\epsilon} \cdot \left( +\frac{1}{105} \mu_\alpha^B \Phi_{\beta\gamma\delta\epsilon}^A - \frac{1}{45} \Theta_{\alpha\beta}^B \Omega_{\gamma\delta\epsilon}^A + \frac{1}{45} \Omega_{\alpha\beta\gamma}^B \Theta_{\delta\epsilon}^A - \frac{1}{105} \Phi_{\alpha\beta\gamma\delta}^B \mu_\epsilon^A \right) $$  
+$$+ T_{\alpha\beta\gamma} \cdot \left( +\mu_\alpha^B \frac{1}{3} \Theta_{\beta\gamma}^A - \frac{1}{3} \Theta_{\alpha\beta}^B \mu_\gamma^A \right)$$  
+$$+ T_{\alpha\beta\gamma\delta} \cdot \left( -\frac{1}{15} \mu_\alpha^B \Omega_{\beta\gamma\delta}^A + \frac{1}{9} \Theta_{\alpha\beta}^B \Theta_{\gamma\delta}^A - \frac{1}{15} \Omega_{\alpha\beta\gamma}^B \mu_\delta^A \right)$$  
+$$+ T_{\alpha\beta\gamma\delta\epsilon} \cdot \left( +\frac{1}{105} \mu_\alpha^B \Phi_{\beta\gamma\delta\epsilon}^A - \frac{1}{45} \Theta_{\alpha\beta}^B \Omega_{\gamma\delta\epsilon}^A + \frac{1}{45} \Omega_{\alpha\beta\gamma}^B \Theta_{\delta\epsilon}^A - \frac{1}{105} \Phi_{\alpha\beta\gamma\delta}^B \mu_\epsilon^A \right)$$  
 $$+ \cdots$$  
 
 
