@@ -121,23 +121,9 @@ def run(result):
     result = sum_up_list(result, addable_function=addable_product_terms, adding_function=add_product_terms)
     help_print(result)
 
-print("sphärisch:")
+print("spherical:")
 run(result_1)
 print()
-print("karthesisch:")
+print("cartesian:")
 run(results_2)
-
-
-
-# # alpha alpha beta     beta gamma gamma
-# count = 0
-# for alpha in ["x", "y", "z"]:
-#     for beta in ["x", "y", "z"]:
-#         for gamma in ["x", "y", "z"]:
-#             m1 = "".join(sorted([alpha,alpha, beta]))
-#             m2 = "".join(sorted([gamma, gamma, beta]))
-#             s = m1 + "-" + m2
-#             count += 1
-#             if m1 in ["xxy", "yyy", "yzz"] and m2 in ["xxy", "yyy", "yzz"]:
-#                 print(s)
 

@@ -1,0 +1,12 @@
+# CFF
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the information below."
+authors:
+  - family-names: Leson
+    given-names: Judith M.
+    orcid: 0009-0002-5627-2673
+title: "Multipole Interactions: Automated Derivation of Intermolecular Interaction Formulas"
+version: 1.0.0
+url: https://github.com/jmleson/multipole_interactions
+license: CC-BY-NC-4.0
+date-released: 2026-07-15
