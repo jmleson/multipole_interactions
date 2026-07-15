@@ -58,8 +58,8 @@ The code derives these terms systematically using symbolic differentiation and b
 
 
 ### Geometric Constraints
-In this work, we consider stacked systems (e.g., the "sandwich" benzene dimer), where the intermolecular distance is aligned along the $ z $-axis. Therefore, the derivations assume:
-$$ R_x = R_y = 0 \Rightarrow R = R_z $$
+In this work, we consider stacked systems (e.g., the "sandwich" benzene dimer), where the intermolecular distance is aligned along the $z$-axis. Therefore, the derivations assume:
+$$R_x = R_y = 0 \Rightarrow R = R_z$$
 
 
 Additionally, we assume that certain multipole components vanish due to symmetry in systems such as the benzene, chlorobenzene, and pyrazine dimer:  
