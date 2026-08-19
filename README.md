@@ -1,6 +1,6 @@
 # Multipole Interactions: Automated Derivation of Cartesian Multipole Terms
 
-[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0)
+[![License: Multipole Interactions Non-Commercial Software License](https://img.shields.io/badge/License-Non--Commercial%20Software-blue.svg)](LICENSE)
 
 > **Author**: [Judith M. Leson](https://orcid.org/0009-0002-5627-2673)  
 > **Repository**: [jmleson:multipole_interactions](https://github.com/jmleson/multipole_interactions)  
