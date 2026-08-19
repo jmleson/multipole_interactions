@@ -12,7 +12,7 @@ When sharing or publishing this software, a modified version of it, or output
 generated using it, you must:
 - give appropriate credit to the original author;
 - retain this copyright notice and this license;
-- provide a [link](https://github.com/jmleson/building_dimer_from_monomer_symmetries_and_civectors) to the original project; and
+- provide a [link](https://github.com/jmleson/multipole_interactions) to the original project; and
 - clearly indicate if you made changes to the software.
 
 ## Non-Commercial Use Only
